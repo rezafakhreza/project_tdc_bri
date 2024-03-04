@@ -47,16 +47,16 @@
             var titleWithoutSpace = row.title.replace(/\s/g, '');
   
             // Memecah waktu menjadi komponen-komponen (jam, menit, dan detik)
-            var dateComponents = dateWithoutDash.split(':');
-            var year = dateComponents[0];
+            var dateComponents = row.deploy_date.split('-');
+            var day = dateComponents[0];
             var month = dateComponents[1];
-            var day = dateComponents[2];
+            var year = dateComponents[2];
 
             // Menggabungkan kembali dalam format yang diinginkan (HHmmss)
-            var formattedDate = day + month + year;
+            var date = day + month + year;
 
             // Mengembalikan hasil tanpa spasi antara judul dan waktu
-            return titleWithoutSpace + '_' + formattedDate;
+            return titleWithoutSpace + '_' + date;
 
         }},
         { data: 'title', name: 'title' },
