@@ -48,9 +48,9 @@
   
             // Memecah waktu menjadi komponen-komponen (jam, menit, dan detik)
             var dateComponents = dateWithoutDash.split(':');
-            var year = timeComponents[0];
-            var month = timeComponents[1];
-            var day = timeComponents[2];
+            var year = dateComponents[0];
+            var month = dateComponents[1];
+            var day = dateComponents[2];
 
             // Menggabungkan kembali dalam format yang diinginkan (HHmmss)
             var formattedDate = day + month + year;
