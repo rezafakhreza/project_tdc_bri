@@ -38,7 +38,27 @@
             type: 'GET',
         },
         columns: [
-        { data: 'id', name: 'id' },
+        { data: 'id', name: 'id',
+            render: function(data, type, row) {
+         // Menghapus tanda "-" dari tanggal
+            var dateWithoutDash = row.deploy_date.replace(/-/g, '');
+
+            // Menghapus spasi dari judul
+            var titleWithoutSpace = row.title.replace(/\s/g, '');
+  
+            // Memecah waktu menjadi komponen-komponen (jam, menit, dan detik)
+            var dateComponents = dateWithoutDash.split(':');
+            var year = timeComponents[0];
+            var month = timeComponents[1];
+            var day = timeComponents[2];
+
+            // Menggabungkan kembali dalam format yang diinginkan (HHmmss)
+            var formattedDate = day + month + year;
+
+            // Mengembalikan hasil tanpa spasi antara judul dan waktu
+            return titleWithoutSpace + '_' + formattedDate;
+
+        }},
         { data: 'title', name: 'title' },
         { data: 'module', name: 'module' },
         { data: 'server_type', name: 'server_type' },

@@ -10,6 +10,7 @@ class Deployment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'title',
         'module_id',
         'server_type_id',

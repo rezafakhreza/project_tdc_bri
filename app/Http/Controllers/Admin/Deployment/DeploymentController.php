@@ -8,6 +8,7 @@ use App\Models\Deployment\Deployment;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Deployment\DeploymentModule;
 use App\Models\Deployment\DeploymentServerType;
+use Illuminate\Support\Facades\DB;
 
 class DeploymentController extends Controller
 {
@@ -16,9 +17,9 @@ class DeploymentController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            $query = Deployment::with(['module', 'serverType']);
-
+            if (request()->ajax()) {
+            $query=Deployment::with(['module', 'serverType']);
+            
             return DataTables::of($query)
                 ->addColumn('module', function ($deployment) {
                     return $deployment->module->name;
@@ -68,6 +69,7 @@ class DeploymentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id'=>['required|string|max:50'],
             'title' => 'required|string|max:200',
             'module_id' => 'required|exists:deployment_modules,id',
             'server_type_id' => 'required|exists:deployment_server_types,id',
@@ -77,6 +79,12 @@ class DeploymentController extends Controller
             'cm_status' => 'required|in:Draft,Reviewer,Checker,Signer,Done Deploy',
             'cm_description' => 'required|string',
         ]);
+
+        $title = $request->input('title');
+        $deploy_date = $request->input('deploy_date');
+        $id = $title . '_' . str_replace('-', '', $deploy_date);
+
+        $request->merge(['id' => $id]); // Menggabungkan 'id' baru ke dalam request
 
         if (Deployment::where('title', $request->title)->exists()) {
             return redirect()->back()
@@ -113,6 +121,7 @@ class DeploymentController extends Controller
     public function update(Request $request, Deployment $deployment)
     {
         $request->validate([
+            'id'=>['required|string|max:50'], //tambahan
             'title' => 'required|string|max:200',
             'module_id' => 'required|exists:deployment_modules,id',
             'server_type_id' => 'required|exists:deployment_server_types,id',
@@ -122,6 +131,13 @@ class DeploymentController extends Controller
             'cm_status' => 'required|in:Draft,Reviewer,Checker,Signer,Done Deploy',
             'cm_description' => 'required|string',
         ]);
+
+        $title = $request->input('title');
+        $deploy_date = $request->input('deploy_date');
+        $id = $title . '_' . str_replace('-', '', $deploy_date);
+
+        $request->merge(['id' => $id]); // Menggabungkan 'id' baru ke dalam request
+
 
         // check if deployment already exists
         if ($deployment->title != $request->title) {
