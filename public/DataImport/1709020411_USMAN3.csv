@@ -1,0 +1,26 @@
+NO,TANGGAL DISETUJUI,JENIS PENGAJUAN,PN (8 DIGIT),NAMA,JABATAN,BAGIAN,UNIT KERJA,BRANCH CODE,USER ID (8 DIGIT),EMAIL,EMAIL PEMIMPIN UKER,ALASAN,STATUS PENGAJUAN,"STATUS EMAIL
+(khusus create user)",TANGGAL DIKERJAKAN,KETERANGAN,STATUS CREATE USER SAP,ACTION / REMARK,
+1,45261,Create User,00341040,Ardya Jati Garini,CUSTOMER SERVICE,UNIT MAYANG - UNIT MAYANG,UNIT MAYANG,06233,00341040,"ardyajati@corp.bri.co.id
+",,penggantian PN membuat saya tidak bisa mengakses brifirst saya dengan PN yang lama.,Diterima,Dikirim,45261,,Belum Ada,=T3,9
+2,45261,Create User,00348632,Devi Octafiani,CUSTOMER SERVICE,UNIT WONOBOYO - BRI UNIT WONOBOYO, BRI UNIT WONOBOYO,06958,00348632,"devi.octafiani26@corp.bri.co.id
+","mochtar.nofiyanto@corp.bri.co.id
+",Dari Teller menjadi Customer Service,Diterima,Dikirim,45261,,Belum Ada,,9
+3,45261,Create User,00348669,Mutia Firdha Aulia,CUSTOMER SERVICE,UNIT PUCUK - BRI UNIT PUCUK,BRI UNIT PUCUK,06313,00348669,"mutia.firdha.a@corp.bri.co.id
+","tik.naryo.slamet@corp.bri.co.id
+",PERUBAHAN PN DARI MAGANG KE KONTRAK,Diterima,Dikirim,45261,,Belum Ada,,0
+4,45261,Create User,00344791,Wina Qurratu A'yun,CUSTOMER SERVICE,UNIT TJ. SELOR KOTA - BRI UNIT TANJUNG SELOR KOTA, BRI UNIT TANJUNG SELOR KOTA,03438,,"wina.qurratu0306@corp.bri.co.id
+",,,Diterima,Dikirim,45261,,Belum Ada,,
+5,45261,Create User,00349192,Muhammad Rizal,CUSTOMER SERVICE,UNIT PLUMBON - UNIT PLUMBON,UNIT PLUMBON,04146,00349192,"muhammadr.rizal20@corp.bri.co.id
+","bayu.sugianto@corp.bri.co.id
+",PERUBAHAN PN ,Diterima,Dikirim,45261,,Belum Ada,,
+6,45261,Create User,00336152,Sulthonin Naim,CUSTOMER SERVICE,UNIT SARANG - BRI UNIT SARANG, BRI UNIT SARANG,06033,00336152,"sulthonin.n@corp.bri.co.id
+","purwaningsih.setyarini@corp.bri.co.id
+",Mutasi pekerja baru,Diterima,Dikirim,45261,,Sudah Ada,Change Role,
+7,45261,Create User,00054165,Gada Sudarsono,PJ. ASISTEN MANAJER OPERASIONAL,SUB FUNGSI OPERASIONAL LAYANAN - KANCA KETAPANG, KANCA KETAPANG,00208,00054165,"gada.sudarsono@corp.bri.co.id
+","muzaiyin@corp.bri.co.id
+",Pengajuan User untuk keperluan approval SAP FAM,Diterima,Dikirim,45261,,Sudah Ada,Change Role,
+8,45261,Create User,00310700,Intan Kharisma,CUSTOMER SERVICE,UNIT WONOREJO - UNIT WONOREJO, UNIT WONOREJO,03301,310700,"intan.kharisma310700@corp.bri.co.id
+",,,Diterima,Dikirim,45261,,Belum Ada,,
+9,45261,Create User,00343606,Andita Nur Safitri,CUSTOMER SERVICE,UNIT PALOLO - BRI UNIT PALOLO,BRI UNIT PALOLO,05187,00343606,"andita.nur.safitri@corp.bri.co.id
+","reni.j.effendy.m.se@corp.co.id
+",PN BARU DAN BELUM BISA MELAKUKAN PEMBUKUAN BIAYA,Diterima,Dikirim,45261,,,,

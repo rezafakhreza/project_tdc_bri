@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+a.bg-blue-500 {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 15px; 
+    border-radius: 4px;
+    color: white;
+ }
+ 
+ a.bg-blue-500:hover {
+   background: #0056b3;
+ }
+ 
+a.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(52 144 220 / var(--tw-text-opacity));
+}
