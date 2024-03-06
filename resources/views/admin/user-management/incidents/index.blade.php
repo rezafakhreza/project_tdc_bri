@@ -62,7 +62,26 @@
                 columns: [{
                         data: 'id',
                         name: 'id',
-                    },
+            orderable: true,
+            searchable: true,
+            render: function(data, type, row) {
+
+                var id = row.id; // id diambil langsung dari objek row
+                // URL edit dengan id sebagai string varchar
+                var url = '{{ route("admin.incidents.incident.edit", ":id") }}';
+                url = url.replace(':id', id);
+                
+            // Menghapus spasi dari judul
+            // var titleWithoutSpace = row.title.replace(/\s/g, '');
+            // var dateComponents = row.deploy_date.split('-');
+            // var day = dateComponents[0];
+            // var month = dateComponents[1];
+            // var year = dateComponents[2];
+            // var date = day + month + year;
+
+            // // Mengembalikan hasil tanpa spasi antara judul dan waktu
+            return $reqType + '_' + $branchCode;
+                    }},
                     {
                         data: 'reported_date',
                         name: 'reported_date',
