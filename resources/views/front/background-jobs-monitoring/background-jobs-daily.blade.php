@@ -14,30 +14,13 @@
                 <option value="{{ route('background-jobs-monitoring.duration') }}">Chart - Duration</option>
             </select>
             <div class="mt-6">
-                <!-- Dropdown untuk Bulan Awal -->
-                <select id="start-month-selector"
+                <!-- Dropdown untuk Tanggal Awal -->
+                <input type="date" id="start-date-selector"
                     class="px-8 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    @foreach (range(1, 12) as $month)
-                        <option value="{{ $month }}">{{ DateTime::createFromFormat('!m', $month)->format('F') }}
-                        </option>
-                    @endforeach
-                </select>
 
-                <!-- Dropdown untuk Bulan Akhir -->
-                <select id="end-month-selector"
+                <!-- Dropdown untuk Tanggal Akhir -->
+                <input type="date" id="end-date-selector"
                     class="px-8 py-2 ml-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    @foreach (range(1, 12) as $month)
-                        <option value="{{ $month }}">{{ DateTime::createFromFormat('!m', $month)->format('F') }}
-                        </option>
-                    @endforeach
-                </select>
-                <!-- Dropdown untuk Tahun -->
-                <select id="year-selector"
-                    class="px-8 py-2 ml-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                </select>
 
                 <!-- Button untuk apply filter -->
                 <button id="apply-filter-button"
@@ -100,20 +83,15 @@
         });
 
         function applyFilter() {
-            const startMonthSelector = document.getElementById('start-month-selector');
-            const endMonthSelector = document.getElementById('end-month-selector');
-            const yearSelector = document.getElementById('year-selector');
+            const startDateSelector = document.getElementById('start-date-selector');
+            const endDateSelector = document.getElementById('end-date-selector');
 
-            const startMonth = startMonthSelector.options[startMonthSelector.selectedIndex].value;
-            const endMonth = endMonthSelector.options[endMonthSelector.selectedIndex].value;
-            const year = yearSelector.options[yearSelector.selectedIndex].value;
+            const startDate = startDateSelector.value;
+            const endDate = endDateSelector.value;
 
-            const startDate = new Date(year, startMonth - 1, 1); // 1-based month index to 0-based
-            const endDate = new Date(year, endMonth, 0); // Get the last day of the end month
+            const dates = getDatesInRange(new Date(startDate), new Date(endDate));
 
-            const dates = getDatesInRange(startDate, endDate);
-
-            fetchData(startMonth, endMonth, year, dates);
+            fetchData(startDate, endDate, dates);
         }
 
         function getDatesInRange(startDate, endDate) {
@@ -128,11 +106,12 @@
             return dates;
         }
 
-        function fetchData(startMonth, endMonth, year, dates) {
-            const startDate = new Date(year, startMonth - 1, 1).toISOString().slice(0, 10); // Format: YYYY-MM-DD
-            const endDate = new Date(year, endMonth - 1, dates.length).toISOString().slice(0, 10); // Format: YYYY-MM-DD
-
-            fetch(`/api/bjm/get-background-jobs-daily?start_date=${startDate}&end_date=${endDate}`)
+        function fetchData(startDate, endDate, dates) {
+            fetch(/api/bjm / get - background - jobs - daily ? start_date = $ {
+                    startDate
+                } & end_date = $ {
+                    endDate
+                })
                 .then(response => response.json())
                 .then(data => {
                     initializeChart('heatmap-container-type1', data.type1.processes || {}, dates, 'Product');
@@ -208,7 +187,15 @@
                 xAxis: {
                     categories: dates.map(date => {
                         const [year, month, day] = date.split('-');
-                        return `${day} ${Highcharts.getOptions().lang.shortMonths[parseInt(month) - 1]} ${year}`;
+                        return $ {
+                            day
+                        }
+                        $ {
+                            Highcharts.getOptions().lang.shortMonths[parseInt(month) - 1]
+                        }
+                        $ {
+                            year
+                        };
                     }),
                     title: {
                         text: 'Tanggal'
