@@ -39,20 +39,21 @@
         },
         columns: [
         { data: 'id', name: 'id',
+            orderable: true,
+            searchable: true,
             render: function(data, type, row) {
-         // Menghapus tanda "-" dari tanggal
-            var dateWithoutDash = row.deploy_date.replace(/-/g, '');
 
+                var id = row.id; // id diambil langsung dari objek row
+                // URL edit dengan id sebagai string varchar
+                var url = '{{ route("admin.deployments.deployment.edit", ":id") }}';
+                url = url.replace(':id', id);
+                
             // Menghapus spasi dari judul
             var titleWithoutSpace = row.title.replace(/\s/g, '');
-  
-            // Memecah waktu menjadi komponen-komponen (jam, menit, dan detik)
             var dateComponents = row.deploy_date.split('-');
             var day = dateComponents[0];
             var month = dateComponents[1];
             var year = dateComponents[2];
-
-            // Menggabungkan kembali dalam format yang diinginkan (HHmmss)
             var date = day + month + year;
 
             // Mengembalikan hasil tanpa spasi antara judul dan waktu

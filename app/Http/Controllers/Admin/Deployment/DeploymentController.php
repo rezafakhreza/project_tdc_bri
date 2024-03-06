@@ -102,21 +102,42 @@ class DeploymentController extends Controller
      * Show the form to edit a deployment.
      */
 
+    // public function edit(Deployment $deployment)
+    // {
+    //     $id = $deployment->id;
+    //     $modules = DeploymentModule::where('is_active', 1)->get();
+    //     $serverTypes = DeploymentServerType::where('is_active', 1)->get();
+
+    //     if ($deployment->module->is_active == 0) {
+    //         $modules->push($deployment->module);
+    //     }
+
+    //     if ($deployment->serverType->is_active == 0) {
+    //         $serverTypes->push($deployment->serverType);
+    //     }
+
+    //     return view('admin.deployment.deployments.edit', compact('id','deployment', 'modules', 'serverTypes'));
+    // }
+
     public function edit(Deployment $deployment)
-    {
-        $modules = DeploymentModule::where('is_active', 1)->get();
-        $serverTypes = DeploymentServerType::where('is_active', 1)->get();
+{
+    $id = $deployment->id;
+    $module = $deployment->module;
+    $serverType = $deployment->serverType;
+    $modules = DeploymentModule::where('is_active', 1)->get();
+    $serverTypes = DeploymentServerType::where('is_active', 1)->get();
 
-        if ($deployment->module->is_active == 0) {
-            $modules->push($deployment->module);
-        }
-
-        if ($deployment->serverType->is_active == 0) {
-            $serverTypes->push($deployment->serverType);
-        }
-
-        return view('admin.deployment.deployments.edit', compact('deployment', 'modules', 'serverTypes'));
+    if ($module->is_active == 0) {
+        $modules->push($module);
     }
+
+    if ($serverType->is_active == 0) {
+        $serverTypes->push($serverType);
+    }
+
+    return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'module', 'serverType', 'modules', 'serverTypes'));
+}
+
 
     public function update(Request $request, Deployment $deployment)
     {
