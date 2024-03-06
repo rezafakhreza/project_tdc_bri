@@ -107,11 +107,7 @@
         }
 
         function fetchData(startDate, endDate, dates) {
-            fetch(/api/bjm / get - background - jobs - daily ? start_date = $ {
-                    startDate
-                } & end_date = $ {
-                    endDate
-                })
+            fetch(`/api/bjm/get-background-jobs-daily?start_date=${startDate}&end_date=${endDate}`)
                 .then(response => response.json())
                 .then(data => {
                     initializeChart('heatmap-container-type1', data.type1.processes || {}, dates, 'Product');
@@ -187,15 +183,7 @@
                 xAxis: {
                     categories: dates.map(date => {
                         const [year, month, day] = date.split('-');
-                        return $ {
-                            day
-                        }
-                        $ {
-                            Highcharts.getOptions().lang.shortMonths[parseInt(month) - 1]
-                        }
-                        $ {
-                            year
-                        };
+                        return `${day} ${Highcharts.getOptions().lang.shortMonths[parseInt(month) - 1]} ${year}`;
                     }),
                     title: {
                         text: 'Tanggal'
