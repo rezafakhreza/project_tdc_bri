@@ -10,11 +10,8 @@ class Incident extends Model
     use HasFactory;
 
     protected $table = 'usman_incident';
-    protected $primaryKey = 'id';
-    public $incrementing = false;
 
     protected $fillable = [
-        'id',
         'reported_date',
         'req_type',
         'branch_code',

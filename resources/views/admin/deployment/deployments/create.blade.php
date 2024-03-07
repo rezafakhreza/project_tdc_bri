@@ -20,32 +20,63 @@
                             <!-- Title -->
                             <div class="mb-4">
                                 <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
-                                <input type="text" id="title" name="title"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    value="{{ old('title') }}" required>
+                                <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title') }}" required>
                             </div>
+
+                            <!-- <div class="grid grid-cols-2 gap-4">
+                                <div class="mb-4">
+                                    <label for="jModul" class="block mb-2 text-sm font-bold text-gray-600">Jumlah Modul</label>
+                                    <input type="text" id="jModul" name="jModul" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('jModul') }}" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="jServer" class="block mb-2 text-sm font-bold text-gray-600">Jumlah Server</label>
+                                    <input type="text" id="jServer" name="jServer" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('jServer') }}" required>
+                                </div>
+                            </div> -->
+
+                            <div class="grid grid-cols-4 gap-4">
+                                <div class="mb-4 col-span-1">
+                                    <label for="title1" class="block mb-2 text-sm font-bold text-gray-600">Jumlah Modul 1</label>
+                                    <input type="text" id="jmodul1" name="jmodul1" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('jmodul1') }}" required>
+                                </div>
+                                <div class="mb-4 col-span-1">
+                                    <label for="title2" class="block mb-2 text-sm font-bold text-gray-600">Jumlah Modul 2</label>
+                                    <input type="text" id="jmodul2" name="jmodul2" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('jmodul2') }}" required>
+                                </div>
+                                <div class="mb-4 col-span-1">
+                                    <label class="block mb-2 text-sm font-bold text-gray-600"></label> <!-- Tambah label kosong untuk mengatur ukuran kolom -->
+                                </div>
+                                <div class="mb-4 col-span-1 flex justify-end">
+                                    <button onclick="submitForm()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">Kirim</button>
+                                </div>
+                            </div>
+
+
+                            <script>
+                                function submitForm() {
+                                    var jmodul1Value = document.getElementById("jmodul1").value;
+                                    var jmodul2Value = document.getElementById("jmodul2").value;
+                                    var valuesArray = [jmodul1Value, jmodul2Value];
+                                    console.log(valuesArray);
+                                    // Kirim data ke server atau lakukan aksi lainnya di sini
+                                }
+                            </script>
+
 
                             <!-- Module ID Dropdown -->
                             <div id="module-dropdowns">
                                 <div class="module-dropdown mb-4">
-                                    <label for="module_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
+                                    <label for="module_id" class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
                                     <div class="flex items-center">
-                                        <select id="module_id" name="module_id[]"
-                                            class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                            required>
+                                        <select id="module_id" name="module_id[]" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                             <option value="" disabled selected>-- Pilih Module --</option>
                                             @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                            <option value="{{ $module->id }}">{{ $module->name }}</option>
                                             @endforeach
                                         </select>
-                                        <button type="button"
-                                            class="ml-2 p-2 bg-blue-500 rounded-full text-white focus:outline-none"
-                                            onclick="addModule()">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        <button type="button" class="ml-2 p-2 bg-blue-500 rounded-full text-white focus:outline-none" onclick="addModule()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                             </svg>
                                         </button>
                                     </div>
@@ -54,24 +85,17 @@
                             <!-- Server Type Dropdown -->
                             <div id="server-type-dropdowns">
                                 <div class="server-type-dropdown mb-4">
-                                    <label for="server_type_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Server
+                                    <label for="server_type_id" class="block mb-2 text-sm font-bold text-gray-600">Server
                                         Type:</label>
                                     <div class="flex items-center">
-                                        <select id="server_type_id" name="server_type_id[]"
-                                            class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                            required>
+                                        <select id="server_type_id" name="server_type_id[]" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                             <option value="" disabled selected>-- Pilih Server Type (Pilih Module
                                                 Terlebih Dahulu)--</option>
                                             <!-- Options will be populated based on the selected module -->
                                         </select>
-                                        <button type="button"
-                                            class="ml-2 p-2 bg-blue-500 rounded-full text-white focus:outline-none"
-                                            onclick="addServerType()">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        <button type="button" class="ml-2 p-2 bg-blue-500 rounded-full text-white focus:outline-none" onclick="addServerType()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                             </svg>
                                         </button>
                                     </div>
@@ -82,9 +106,7 @@
                             <div class="mb-4">
                                 <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy
                                     Date:</label>
-                                <input type="date" id="deploy_date" name="deploy_date"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    value="{{ old('deploy_date') }}" required>
+                                <input type="date" id="deploy_date" name="deploy_date" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('deploy_date') }}" required>
                             </div>
                         </div>
 
@@ -95,9 +117,7 @@
                             <div class="mb-4">
                                 <label for="document_status" class="block mb-2 text-sm font-bold text-gray-600">Document
                                     Status:</label>
-                                <select id="document_status" name="document_status"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required>
+                                <select id="document_status" name="document_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                     <option value="" selected disabled>-- Pilih Status Dokumen --</option>
                                     <option value="Not Done">Not Done</option>
                                     <option value="In Progress">In Progress</option>
@@ -107,20 +127,15 @@
 
                             <!-- Document Description -->
                             <div class="mb-4">
-                                <label for="document_description"
-                                    class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
-                                <textarea id="document_description" name="document_description" rows="4"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required></textarea>
+                                <label for="document_description" class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
+                                <textarea id="document_description" name="document_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required></textarea>
                             </div>
 
                             <!-- CM Status -->
                             <div class="mb-4">
                                 <label for="cm_status" class="block mb-2 text-sm font-bold text-gray-600">CM
                                     Status:</label>
-                                <select id="cm_status" name="cm_status"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required>
+                                <select id="cm_status" name="cm_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                     <option value="" selected disabled>-- Pilih Status CM --</option>
                                     <option value="Draft">Draft</option>
                                     <option value="Reviewer">Reviewer</option>
@@ -134,16 +149,13 @@
                             <div class="mb-4">
                                 <label for="cm_description" class="block mb-2 text-sm font-bold text-gray-600">CM
                                     Description:</label>
-                                <textarea id="cm_description" name="cm_description" rows="4"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required></textarea>
+                                <textarea id="cm_description" name="cm_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="text-right">
-                        <button type="submit"
-                            class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Add
+                        <button type="submit" class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Add
                             Deployment</button>
                     </div>
 
@@ -205,7 +217,7 @@
                         }, []);
 
                         // Update all server type dropdowns
-                        var serverTypeSelects = document.querySelectorAll('[name="server_type_id[]"]');
+                        var serverTypeSelects = document.querySelectorAll('[name="server_type_id[]"]'); //ini array
                         serverTypeSelects.forEach(function(serverTypeSelect) {
                             serverTypeSelect.innerHTML = '';
 
@@ -227,7 +239,7 @@
             }
 
             document.addEventListener('DOMContentLoaded', function() {
-                var moduleDropdowns = document.querySelectorAll('[name="module_id[]"]');
+                var moduleDropdowns = document.querySelectorAll('[name="module_id[]"]'); //ini array diubah
                 moduleDropdowns.forEach(function(moduleDropdown) {
                     moduleDropdown.addEventListener('change', function() {
                         rebuildServerTypeDropdowns();
