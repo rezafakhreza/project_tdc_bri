@@ -20,31 +20,22 @@
                             <!-- Title -->
                             <div class="mb-4">
                                 <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
-                                <input type="text" id="title" name="title"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    value="{{ old('title') }}" required>
+                                <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title') }}" required>
                             </div>
 
 
                             <div class="flex gap-4 mb-4">
                                 <div class="flex-1">
-                                    <label for="jmodul" class="block mb-2 text-sm font-bold text-gray-600">Jumlah
-                                        Modul</label>
-                                    <input type="number" id="jmodul" name="jmodul"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        value="" required>
+                                    <label for="jmodul" class="block mb-2 text-sm font-bold text-gray-600">Jumlah Modul</label>
+                                    <input type="number" id="jmodul" name="jmodul" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="" required>
                                 </div>
                                 <div class="flex-1">
-                                    <label for="jserver" class="block mb-2 text-sm font-bold text-gray-600">Jumlah
-                                        Server Type</label>
-                                    <input type="number" id="jserver" name="jserver"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        value="" required>
+                                    <label for="jserver" class="block mb-2 text-sm font-bold text-gray-600">Jumlah Server Type</label>
+                                    <input type="number" id="jserver" name="jserver" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="" required>
                                 </div>
                                 <!-- <div class="mb-4 col-span-1"></div> Menghapus label kosong -->
                                 <div class="flex-1 flex items-end justify-end">
-                                    <button onclick="createArray()"
-                                        class="block w-full px-4 py-3 leading-tight bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">Tambahkan</button>
+                                    <button onclick="createArray()" class="block w-full px-4 py-3 leading-tight bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">Tambahkan</button>
                                 </div>
                             </div>
 
@@ -89,9 +80,7 @@
                                         moduleDropdownContainer.appendChild(moduleDropdown);
 
                                         // Tambahkan event listener untuk setiap dropdown module
-                                        var moduleDropdownSelect = moduleDropdown.querySelector(#module_id_$ {
-                                            i
-                                        });
+                                        var moduleDropdownSelect = moduleDropdown.querySelector(`#module_id_${i}`);
                                         moduleDropdownSelect.addEventListener('change', function(event) {
                                             updateServerTypeDropdowns(event.target);
                                         });
@@ -127,63 +116,59 @@
                                 function updateServerTypeDropdowns(selectedModuleDropdown) {
                                     var moduleId = selectedModuleDropdown.value;
                                     var serverTypeDropdowns = document.querySelectorAll('[name="server_type_id[]"]');
-                                    var serverTypeDropdownId = selectedModuleDropdown.id.replace("module_id_",
-                                    ""); // Mendapatkan index dropdown modul
+                                    var serverTypeDropdownId = selectedModuleDropdown.id.replace("module_id_", ""); // Mendapatkan index dropdown modul
 
                                     // Mengecek apakah module dipilih
                                     if (moduleId) {
                                         // Fetch server types untuk module yang dipilih
-                                        fetch(/api/modules / $ {
-                                                moduleId
-                                            }
-                                            /server-types, {
-                                            method: 'GET',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                        })
-                                    .then(response => response.json())
-                                        .then(serverTypes => {
-                                            // Simpan pilihan server type untuk modul yang dipilih
-                                            selectedServerTypes[serverTypeDropdownId] = serverTypes;
+                                        fetch(`/api/modules/${moduleId}/server-types`, {
+                                                method: 'GET',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                            })
+                                            .then(response => response.json())
+                                            .then(serverTypes => {
+                                                // Simpan pilihan server type untuk modul yang dipilih
+                                                selectedServerTypes[serverTypeDropdownId] = serverTypes;
 
-                                            // Gabungkan opsi server type dari semua modul yang dipilih
-                                            var combinedServerTypes = [];
-                                            Object.values(selectedServerTypes).forEach(types => {
-                                                combinedServerTypes = combinedServerTypes.concat(types);
-                                            });
-
-                                            // Tambahkan opsi baru ke semua dropdown Server Type
-                                            serverTypeDropdowns.forEach(serverTypeDropdown => {
-                                                // Kosongkan dropdown Server Type
-                                                serverTypeDropdown.innerHTML = "";
-                                                combinedServerTypes.forEach(serverType => {
-                                                    var option = document.createElement('option');
-                                                    option.value = serverType.id;
-                                                    option.textContent = serverType.name;
-                                                    serverTypeDropdown.appendChild(option);
+                                                // Gabungkan opsi server type dari semua modul yang dipilih
+                                                var combinedServerTypes = [];
+                                                Object.values(selectedServerTypes).forEach(types => {
+                                                    combinedServerTypes = combinedServerTypes.concat(types);
                                                 });
-                                            });
-                                        })
-                                        .catch(error => {
-                                            console.error('Error fetching server types:', error);
-                                        });
-                                } else {
-                                    // Kosongkan dropdown Server Type jika module tidak dipilih
-                                    serverTypeDropdowns.forEach(serverTypeDropdown => {
-                                        serverTypeDropdown.innerHTML = "";
-                                        serverTypeDropdown.disabled = true; // Menonaktifkan dropdown Server Type
-                                        var defaultOption = document.createElement('option');
-                                        defaultOption.value = "";
-                                        defaultOption.textContent = "-- Pilih Module Terlebih Dahulu --";
-                                        defaultOption.disabled = true;
-                                        defaultOption.selected = true;
-                                        serverTypeDropdown.appendChild(defaultOption);
-                                    });
 
-                                    // Hapus pilihan server type untuk modul yang dipilih
-                                    delete selectedServerTypes[serverTypeDropdownId];
-                                }
+                                                // Tambahkan opsi baru ke semua dropdown Server Type
+                                                serverTypeDropdowns.forEach(serverTypeDropdown => {
+                                                    // Kosongkan dropdown Server Type
+                                                    serverTypeDropdown.innerHTML = "";
+                                                    combinedServerTypes.forEach(serverType => {
+                                                        var option = document.createElement('option');
+                                                        option.value = serverType.id;
+                                                        option.textContent = serverType.name;
+                                                        serverTypeDropdown.appendChild(option);
+                                                    });
+                                                });
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching server types:', error);
+                                            });
+                                    } else {
+                                        // Kosongkan dropdown Server Type jika module tidak dipilih
+                                        serverTypeDropdowns.forEach(serverTypeDropdown => {
+                                            serverTypeDropdown.innerHTML = "";
+                                            serverTypeDropdown.disabled = true; // Menonaktifkan dropdown Server Type
+                                            var defaultOption = document.createElement('option');
+                                            defaultOption.value = "";
+                                            defaultOption.textContent = "-- Pilih Module Terlebih Dahulu --";
+                                            defaultOption.disabled = true;
+                                            defaultOption.selected = true;
+                                            serverTypeDropdown.appendChild(defaultOption);
+                                        });
+
+                                        // Hapus pilihan server type untuk modul yang dipilih
+                                        delete selectedServerTypes[serverTypeDropdownId];
+                                    }
                                 }
                             </script>
 
@@ -201,9 +186,7 @@
                             <div class="mb-4">
                                 <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy
                                     Date:</label>
-                                <input type="date" id="deploy_date" name="deploy_date"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    value="{{ old('deploy_date') }}" required>
+                                <input type="date" id="deploy_date" name="deploy_date" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('deploy_date') }}" required>
                             </div>
                         </div>
 
@@ -214,9 +197,7 @@
                             <div class="mb-4">
                                 <label for="document_status" class="block mb-2 text-sm font-bold text-gray-600">Document
                                     Status:</label>
-                                <select id="document_status" name="document_status"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required>
+                                <select id="document_status" name="document_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                     <option value="" selected disabled>-- Pilih Status Dokumen --</option>
                                     <option value="Not Done">Not Done</option>
                                     <option value="In Progress">In Progress</option>
@@ -226,20 +207,15 @@
 
                             <!-- Document Description -->
                             <div class="mb-4">
-                                <label for="document_description"
-                                    class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
-                                <textarea id="document_description" name="document_description" rows="4"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required></textarea>
+                                <label for="document_description" class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
+                                <textarea id="document_description" name="document_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required></textarea>
                             </div>
 
                             <!-- CM Status -->
                             <div class="mb-4">
                                 <label for="cm_status" class="block mb-2 text-sm font-bold text-gray-600">CM
                                     Status:</label>
-                                <select id="cm_status" name="cm_status"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required>
+                                <select id="cm_status" name="cm_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                     <option value="" selected disabled>-- Pilih Status CM --</option>
                                     <option value="Draft">Draft</option>
                                     <option value="Reviewer">Reviewer</option>
@@ -253,16 +229,13 @@
                             <div class="mb-4">
                                 <label for="cm_description" class="block mb-2 text-sm font-bold text-gray-600">CM
                                     Description:</label>
-                                <textarea id="cm_description" name="cm_description" rows="4"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    required></textarea>
+                                <textarea id="cm_description" name="cm_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required></textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="text-right">
-                        <button type="submit"
-                            class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Add
+                        <button type="submit" class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Add
                             Deployment</button>
                     </div>
 
@@ -305,47 +278,44 @@
 
                 // Fetch server types for all selected modules
                 var promises = uniqueSelectedModules.map(moduleId => {
-                        return fetch(/api/modules / $ {
-                                moduleId
-                            }
-                            /server-types, {
+                    return fetch(`/api/modules/${moduleId}/server-types`, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
                         })
-                    .then(response => {
-                        return response.json();
-                    });
-                });
-
-            Promise.all(promises)
-                .then(results => {
-                    // Merge server types from all modules
-                    var combinedServerTypes = results.reduce((accumulator, currentValue) => {
-                        return accumulator.concat(currentValue);
-                    }, []);
-
-                    // Update all server type dropdowns
-                    var serverTypeSelects = document.querySelectorAll('[name="server_type_id[]"]'); //ini array
-                    serverTypeSelects.forEach(function(serverTypeSelect) {
-                        serverTypeSelect.innerHTML = '';
-
-                        combinedServerTypes.forEach(function(serverType) {
-                            var option = new Option(serverType.name, serverType.id);
-                            serverTypeSelect.appendChild(option);
+                        .then(response => {
+                            return response.json();
                         });
-
-                        // Set the selected server type to the one previously selected if it exists
-                        var previouslySelectedServerType = serverTypeSelect.dataset.previouslySelected;
-                        if (previouslySelectedServerType) {
-                            serverTypeSelect.value = previouslySelectedServerType;
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching server types:', error);
                 });
+
+                Promise.all(promises)
+                    .then(results => {
+                        // Merge server types from all modules
+                        var combinedServerTypes = results.reduce((accumulator, currentValue) => {
+                            return accumulator.concat(currentValue);
+                        }, []);
+
+                        // Update all server type dropdowns
+                        var serverTypeSelects = document.querySelectorAll('[name="server_type_id[]"]'); //ini array
+                        serverTypeSelects.forEach(function(serverTypeSelect) {
+                            serverTypeSelect.innerHTML = '';
+
+                            combinedServerTypes.forEach(function(serverType) {
+                                var option = new Option(serverType.name, serverType.id);
+                                serverTypeSelect.appendChild(option);
+                            });
+
+                            // Set the selected server type to the one previously selected if it exists
+                            var previouslySelectedServerType = serverTypeSelect.dataset.previouslySelected;
+                            if (previouslySelectedServerType) {
+                                serverTypeSelect.value = previouslySelectedServerType;
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching server types:', error);
+                    });
             }
 
             document.addEventListener('DOMContentLoaded', function() {

@@ -190,7 +190,7 @@ class DeploymentController extends Controller
             'cm_status' => $request->input('cm_status'),
             'cm_description' => $request->input('cm_description'),
         ];
-
+        
         if ($deployment->title != $request->title) {
             if (Deployment::where('title', $request->title)->first()) {
                 return redirect()->back()->with('error', 'Deployment already exists.');

@@ -123,7 +123,8 @@
                         <th style="max-width: 1%">Action</th>
                     </tr>
                     </thead>
-                <tbody></tbody>
+                <tbody>
+                </tbody>
             </table>
 
         </div>
