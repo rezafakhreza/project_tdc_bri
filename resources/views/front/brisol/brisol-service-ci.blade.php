@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="p-10 mx-auto my-10 rounded-lg shadow-lg">
+<div class="p-10 mx-auto my-10 rounded-lg shadow-lg" style="background-color: white; border: 1px solid #d9d9d9;">
     <h1 class="mb-4 text-2xl font-semibold sm:text-3xl">Brisol Incident Management</h1>
     <div class="flex items-center justify-between mt-12">
         <div class="w-1/3">

@@ -10,12 +10,8 @@
                     </a>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <!-- Dashboard Link - Visible to all authenticated users -->
-                    <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex mt-6">
+                    
                     <!-- Deployments Link - Visible to Admin Deployments and user deployments -->
                     @role('Super Admin|Admin Deployments|User Deployments')
                     <x-nav-link href="{{ route('admin.deployments.deployment.index') }}" :active="request()->routeIs('admin.deployments.*')">

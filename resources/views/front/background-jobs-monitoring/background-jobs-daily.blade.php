@@ -5,59 +5,54 @@
 @endsection
 
 @section('content')
-    <div class="p-10 mx-auto my-10 rounded-lg shadow-lg">
-        <div class="flex flex-col">
-            <select id="navigationDropdown"
-                class="w-56 text-white rounded-lg cursor-pointer focus:outline-none focus:border-blue-900 focus:shadow-outline-blue bg-darker-blue">
-                <option value="{{ route('background-jobs-monitoring.daily') }}">Daily</option>
-                <option value="{{ route('background-jobs-monitoring.data-amount') }}">Chart - Data Amount</option>
-                <option value="{{ route('background-jobs-monitoring.duration') }}">Chart - Duration</option>
-            </select>
-            <div class="mt-6">
-                <!-- Dropdown untuk Tanggal Awal -->
-                <input type="date" id="start-date-selector"
-                    class="px-8 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+    <div class="p-10 mx-auto my-10 rounded-lg shadow-xl" style="background-color: white; border: 1px solid #d9d9d9;">
+        <div class="flex flex-col mb-5">
+            <div class="flex justify-between">
+                <!-- Dropdown navigasi -->
+                <select id="navigationDropdown"
+                    class="w-56 text-white rounded-lg cursor-pointer focus:outline-none focus:border-blue-900 focus:shadow-outline-blue bg-darker-blue">
+                    <option value="{{ route('background-jobs-monitoring.daily') }}">Daily</option>
+                    <option value="{{ route('background-jobs-monitoring.data-amount') }}">Chart - Data Amount</option>
+                    <option value="{{ route('background-jobs-monitoring.duration') }}">Chart - Duration</option>
+                </select>
+                <!-- Container untuk filter dan input tanggal -->
+                <div class="flex items-center">
+                    <!-- Dropdown untuk Tanggal Awal -->
+                    <input type="date" id="start-date-selector"
+                        class="px-8 py-2 ml-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <!-- Dropdown untuk Tanggal Akhir -->
+                    <input type="date" id="end-date-selector"
+                        class="px-8 py-2 ml-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                    <!-- Button untuk apply filter -->
+                    <button id="apply-filter-button"
+                        class="px-6 py-2 ml-2 text-white rounded-md bg-darker-blue focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">Filter</button>
 
-                <!-- Dropdown untuk Tanggal Akhir -->
-                <input type="date" id="end-date-selector"
-                    class="px-8 py-2 ml-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
-
-                <!-- Button untuk apply filter -->
-                <button id="apply-filter-button"
-                    class="px-6 py-2 ml-2 text-white rounded-md bg-darker-blue focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">Filter</button>
+                </div>
             </div>
         </div>
 
-        <div id="heatmap-container-type1"></div>
-        <div class="p-4">
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #2FB489"></span> Normal Run
+
+
+
+        <div id="heatmap-container-type1" class="mt-10"></div>
+
+        <div class="flex justify-center">
+            <div class="flex items-center mx-2 mb-10">
+                <span class="w-8 h-4 mr-3 rounded-lg" style="background-color: #2FB489"></span> Normal Run
             </div>
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #9BD95A"></span> Rerun Background Job
+            <div class="flex items-center mx-2 mb-10">
+                <span class="w-8 h-4 mr-3 rounded-lg" style="background-color: #9BD95A"></span> Rerun Background Job
             </div>
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #FFBB46"></span> Manual Run Background Job
+            <div class="flex items-center mx-2 mb-10">
+                <span class="w-8 h-4 mr-3 rounded-lg" style="background-color: #FFBB46"></span> Manual Run Background Job
             </div>
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #FE504F"></span> Pending
+            <div class="flex items-center mx-2 mb-10">
+                <span class="w-8 h-4 mr-3 rounded-lg" style="background-color: #FE504F"></span> Pending
             </div>
         </div>
+
         <div id="heatmap-container-type2"></div>
-        <div class="p-4">
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #2FB489"></span> Normal Run
-            </div>
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #9BD95A"></span> Rerun Background Job
-            </div>
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #FFBB46"></span> Manual Run Background Job
-            </div>
-            <div class="flex items-center mb-2">
-                <span class="w-5 h-5 mr-2" style="background-color: #FE504F"></span> Pending
-            </div>
-        </div>
+
     </div>
 @endsection
 

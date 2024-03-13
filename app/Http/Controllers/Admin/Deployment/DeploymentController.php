@@ -70,10 +70,10 @@ class DeploymentController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:200',
-            'module_name' => 'required|array|min:1', // Ubah menjadi nama modul
-            'module_name.*' => 'exists:modules,name', // Pastikan nama modul valid
+            'module_id' => 'required|array|min:1', // Ubah menjadi nama modul
+            'module_id.*' => 'required|exists:deployment_modules,id', // Pastikan nama modul valid
             'server_type_id' => 'required|array|min:1',
-            'server_type_id.*' => 'exists:deployment_server_types,id',
+            'server_type_id.*' => 'required|exists:deployment_server_types,id',
             'deploy_date' => 'required|date',
             'document_status' => 'required|in:Done,Not Done,In Progress',
             'document_description' => 'required|string',
@@ -81,30 +81,50 @@ class DeploymentController extends Controller
             'cm_description' => 'required|string',
         ]);
 
-        // Ambil ID modul berdasarkan nama modul
-        $moduleIds = [];
-        foreach ($request->input('module_name') as $moduleName) {
-            $moduleId = Module::where('name', $moduleName)->value('id');
-            if ($moduleId) {
-                $moduleIds[] = $moduleId;
-            }
-        }
+        $title = $request->input('title');
+        $deploy_date = $request->input('deploy_date');
+        $id = $title . '_' . str_replace('-', '', $deploy_date);
 
-        $modules = implode(', ', $moduleIds);
-        $serverTypes = implode(', ', $request->input('server_type_id'));
-
-        $id = $request->input('title') . '_' . str_replace('-', '', $request->input('deploy_date'));
-
-        $data = $request->all();
-        $data['id'] = $id;
-        $data['module_id'] = $modules;
-        $data['server_type_id'] = $serverTypes;
+        $request->merge(['id' => $id]);
 
         if (Deployment::where('title', $request->title)->exists()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Deployment already exists. Please choose another title.');
         }
+
+        // $moduleId = DeploymentModule::whereIn('id', $request->input('module_id'))->pluck('id')->toArray();
+        // $serverId = DeploymentServerType::whereIn('id', $request->input('server_type_id'))->pluck('id')->toArray();
+
+        $moduleId = $request->input('module_id');
+        $serverId = $request->input('server_type_id');
+
+        // $data = [
+        //     'id' => $id,
+        //     'title' => $title,
+        //     'module_id' => $moduleId,
+        //     'server_type_id' => $serverId,
+        //     'deploy_date' => $deploy_date,
+        //     'document_status' => $request->input('document_status'),
+        //     'document_description' => $request->input('document_description'),
+        //     'cm_status' => $request->input('cm_status'),
+        //     'cm_description' => $request->input('cm_description'),
+        // ];
+
+        $data = [
+            'id' => $id,
+            'title' => $title,
+            'module_id' => implode('|', $moduleId),
+            'server_type_id' => implode('|', $serverId),
+            'deploy_date' => $deploy_date,
+            'document_status' => $request->input('document_status'),
+            'document_description' => $request->input('document_description'),
+            'cm_status' => $request->input('cm_status'),
+            'cm_description' => $request->input('cm_description'),
+        ];
+
+        // dd($moduleId);
+        // dd($serverId);
 
         Deployment::create($data);
 
@@ -116,22 +136,6 @@ class DeploymentController extends Controller
      * Show the form to edit a deployment.
      */
 
-    // public function edit(Deployment $deployment)
-    // {
-    //     $id = $deployment->id;
-    //     $modules = DeploymentModule::where('is_active', 1)->get();
-    //     $serverTypes = DeploymentServerType::where('is_active', 1)->get();
-
-    //     if ($deployment->module->is_active == 0) {
-    //         $modules->push($deployment->module);
-    //     }
-
-    //     if ($deployment->serverType->is_active == 0) {
-    //         $serverTypes->push($deployment->serverType);
-    //     }
-
-    //     return view('admin.deployment.deployments.edit', compact('id','deployment', 'modules', 'serverTypes'));
-    // }
 
     public function edit(Deployment $deployment)
     {
@@ -148,19 +152,17 @@ class DeploymentController extends Controller
         if ($serverType->is_active == 0) {
             $serverTypes->push($serverType);
         }
-
         return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'module', 'serverType', 'modules', 'serverTypes'));
     }
 
-
-    public function update(Request $request, Deployment $deployment)
+    public function update(Request $request, Deployment $deployment) //masih error
     {
         $request->validate([
             'title' => 'required|string|max:200',
             'module_id' => 'required|array|min:1',
-            'module_id.*' => 'exists:deployment_modules,id',
+            'module_id.*' => 'required|exists:deployment_modules,id',
             'server_type_id' => 'required|array|min:1',
-            'server_type_id.*' => 'exists:deployment_server_types,id',
+            'server_type_id.*' => 'required|exists:deployment_server_types,id',
             'deploy_date' => 'required|date',
             'document_status' => 'required|in:Done,Not Done,In Progress',
             'document_description' => 'required|string',
@@ -174,19 +176,26 @@ class DeploymentController extends Controller
 
         $request->merge(['id' => $id]);
 
+        $moduleId = DeploymentModule::whereIn('id', $request->input('module_id'))->pluck('id')->toArray();
+        $serverId = DeploymentServerType::whereIn('id', $request->input('server_type_id'))->pluck('id')->toArray();
+
+        $data = [
+            'id' => $id,
+            'title' => $title,
+            'module_id' => implode(' ', $moduleId),
+            'server_type_id' => implode(' ', $serverId),
+            'deploy_date' => $deploy_date,
+            'document_status' => $request->input('document_status'),
+            'document_description' => $request->input('document_description'),
+            'cm_status' => $request->input('cm_status'),
+            'cm_description' => $request->input('cm_description'),
+        ];
+
         if ($deployment->title != $request->title) {
             if (Deployment::where('title', $request->title)->first()) {
                 return redirect()->back()->with('error', 'Deployment already exists.');
             }
         }
-
-        $modules = implode(', ', $request->input('module_id'));
-        $serverTypes = implode(', ', $request->input('server_type_id'));
-
-        $data = $request->all();
-        $data['id'] = $id;
-        $data['module_id'] = $modules;
-        $data['server_type_id'] = $serverTypes;
 
         $deployment->update($data);
 

@@ -22,6 +22,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        body {
+            background-image: url('img/cover.jpg');
+            /* Ganti path_to_your_image.jpg dengan path gambar yang benar */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
         #navbar {
             position: absolute;
             /* Keeps the navbar at the top */
@@ -46,7 +54,7 @@
 
 </head>
 
-<body>
+<body style="background-image: url('/img/cover.jpg'); background-size:cover;">
     <div>
         <!-- <nav class="flex justify-between p-5 bg-white font-poppins" id="navbar"> -->
         <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
@@ -69,7 +77,8 @@
                                         {{ __('Deployments') }}
                                     </x-nav-link>
 
-                                    <x-nav-link href="{{ route('background-jobs-monitoring.daily') }}" :active="request()->routeIs('background-jobs-monitoring.daily')">
+                                    <x-nav-link href="{{ route('background-jobs-monitoring.daily') }}"
+                                        :active="request()->routeIs('background-jobs-monitoring.daily')">
                                         {{ __('Background Jobs') }}
                                     </x-nav-link>
 
@@ -97,9 +106,13 @@
         </nav>
     </div>
 
-    <div class="px-10 mx-auto font-poppins" style="margin-top: 130px">
+
+    <div class="px-10 mx-auto font-poppins">
         @yield('content')
     </div>
+
+
+
 
     @yield('script')
 

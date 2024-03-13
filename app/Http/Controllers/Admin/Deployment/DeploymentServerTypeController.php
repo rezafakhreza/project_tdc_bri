@@ -60,7 +60,7 @@ class DeploymentServerTypeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:10',
+            'name' => 'required|max:15',
             'module_id' => 'required|exists:deployment_modules,id',
             'is_active' => 'required|boolean'
         ]);
