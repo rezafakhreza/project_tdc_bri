@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.homepage')
 
 @section('content')
     <div class="p-8 mx-auto my-8 bg-white shadow-lg max-w-7xl">

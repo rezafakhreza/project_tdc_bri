@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.homepage')
 
 @section('title')
     <title>Brisol Top Issue</title>

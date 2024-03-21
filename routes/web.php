@@ -29,7 +29,7 @@ use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController 
 */
 
 Route::get('/', function () {
-    return view('front.user-management.user-management-request');
+    return view('front.DashView');
 });
 
 Route::get('/deployments/chart', [FrontDeploymentController::class, 'index'])->name('deployments.index');
@@ -46,6 +46,8 @@ Route::get('/brisol/slm-status', [FrontBrisolController::class, 'showSLMStatusCh
 Route::get('/brisol/reported-source', [FrontBrisolController::class, 'showReportedSourceChart'])->name('brisol.reported-source');
 Route::get('/brisol/monthly-target', [FrontBrisolController::class, 'showMonthlyDataTargetActualChart'])->name('brisol.monthly-target');
 Route::get('/brisol/service-ci-top-issue', [FrontBrisolController::class, 'showServiceCITopIssueChart'])->name('brisol.service-ci-top-issue');
+
+
 
 Route::middleware([
     'auth:sanctum',

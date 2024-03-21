@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.homepage')
 
 @section('title')
     <title>User Management Request</title>
@@ -6,39 +6,47 @@
 
 @section('content')
     <div class="p-10 mx-auto my-10 rounded-lg shadow-lg" style="background-color: white; border: 1px solid #d9d9d9;">
-        <h1 class="mb-4 text-2xl font-semibold sm:text-3xl">User Management</h1>
-        <div class="flex items-center justify-between gap-3">
-            <div class="w-1/3">
+        <h1 class="mb-4 text-4xl font-bold sm:text-4xl" style="color: #152C5B">User Management</h1>
+        <div class="flex w-1/3 text-center" style="margin-left: 67%; margin-top: -60px; margin-bottom: 50px;">
+            <select id="chartDropdownSelector"
+                class="w-full px-4 py-4 text-xl text-dark-blue rounded-lg font-semibold cursor-pointer bg-white focus:border-blue-900 focus:shadow-outline-blue shadow-lg"
+                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;"> <!-- Menambahkan outline -->
+                <option value="{{ route('user-management.top-branch') }}" style="margin-top: 20px;">Top 5 Kanwil Request
+                </option>
+                <option value="{{ route('user-management.request-by-type') }}" style="margin-top: 20px;">User Management
+                    Request</option>
+                <option value="{{ route('user-management.monthly-target') }}" style="margin-top: 20px;">Target Realization
+                </option>
+                <option value="{{ route('user-management.sla-category') }}" style="margin-top: 20px;">SLA Monitoring
+                </option>
+            </select>
+        </div>
+
+        <div class="flex items-center justify-between gap-3 mt-8">
+            <div class=" w-1/3 flex">
+                <div id="monthFilter" class="mr-2">
+                    <select name="month" id="monthSelect" onchange="fetchData()" class="rounded-xl">
+                        @foreach (range(1, 12) as $month)
+                            <option value="{{ $month }}" {{ $month == date('m') ? 'selected' : '' }}>
+                                {{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div id="yearFilter">
+                    <select name="year" id="yearSelect" onchange="fetchData()" class="rounded-xl">
+                        @foreach (range(2020, date('Y')) as $year)
+                            <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>
+                                {{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="w-1/2 mx-auto text-center">
-                <select id="chartDropdownSelector"
-                    class="w-full px-4 py-4 text-xl text-white border rounded cursor-pointer bg-dark-blue focus:outline-none focus:border-blue-900 focus:shadow-outline-blue">
-                    <option value="{{ route('user-management.top-branch') }}">Top 5 Kanwil Request</option>
-                    <option value="{{ route('user-management.request-by-type') }}">User Management Request</option>
-                    <option value="{{ route('user-management.monthly-target') }}">Target Realization</option>
-                    <option value="{{ route('user-management.sla-category') }}">SLA Monitoring</option>
-                </select>
-            </div>
+
             <div class="w-1/3">
                 <div class="flex items-end justify-end gap-4">
-                    <div id="monthFilter">
-                        <select name="month" id="monthSelect" onchange="fetchData()">
-                            @foreach (range(1, 12) as $month)
-                                <option value="{{ $month }}" {{ $month == date('m') ? 'selected' : '' }}>
-                                    {{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div id="yearFilter">
-                        <select name="year" id="yearSelect" onchange="fetchData()">
-                            @foreach (range(2020, date('Y')) as $year)
-                                <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>
-                                    {{ $year }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div id="reqTypeFilter">
-                        <select name="req_type" id="reqTypeSelect" onchange="fetchData()">
+                    <div id="reqTypeFilter"> <!-- Menambahkan kelas w-full di sini -->
+                        <select name="req_type" id="reqTypeSelect" onchange="fetchData()" class="rounded-xl w-60">
+                            <!-- Menambahkan kelas w-full di sini juga -->
                             <option value="all">All Requests</option>
                             <option value="Create User">Create User</option>
                             <option value="Change Role">Change Role</option>
@@ -49,6 +57,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <canvas id="branchPieChart" class="mt-6 w-full max-w-lg h-[300px] mx-auto"></canvas>
     </div>

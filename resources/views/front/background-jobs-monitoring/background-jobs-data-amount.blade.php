@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.homepage')
 
 @section('title')
     <title>Background Jobs - Data Amount</title>
