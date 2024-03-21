@@ -12,11 +12,7 @@
         href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
 </head>
 
-
-
 <body>
-
-
     <x-app-layout>
         <x-slot name="header">
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
@@ -55,7 +51,7 @@
                                         <!-- <option value="" disabled selected>-- Pilih Module --</option> -->
                                         @foreach ($modules as $module)
                                             <option value="{{ $module->id }}"
-                                                {{ $deployment->module_id == $module->id ? 'selected' : '' }}>
+                                                {{ $deployment->module_id == $module->name ? 'selected' : '' }}>
                                                 {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
                                             </option>
                                         @endforeach
@@ -183,24 +179,21 @@
         <x-slot name="script">
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    var previouslySelectedServerTypeId = "{{ $deployment->server_type_id }}";
+                    var previouslySelectedServerTypeIds = @json($deployment->server_type_id);
 
                     var moduleSelect = document.getElementById('module_id');
                     var serverTypeSelect = document.getElementById('server_type_id');
 
                     if (moduleSelect.value) {
-                        fetchServerTypes(moduleSelect.value, previouslySelectedServerTypeId);
+                        fetchServerTypes(moduleSelect.value, previouslySelectedServerTypeIds);
                     }
 
                     moduleSelect.addEventListener('change', function() {
                         fetchServerTypes(this.value);
                     });
 
-                    function fetchServerTypes(selectedModule, selectedServerType = null) {
+                    function fetchServerTypes(selectedModule, selectedServerTypes) {
                         var url = `/api/modules/${selectedModule}/server-types`;
-                        if (selectedServerType) {
-                            url += `/${selectedServerType}`;
-                        }
 
                         fetch(url)
                             .then(response => response.json())
@@ -213,8 +206,9 @@
                                     }
 
                                     var option = new Option(optionText, serverType.id);
-                                    option.selected = selectedServerType && serverType.id.toString() ===
-                                        selectedServerType;
+                                    if (selectedServerTypes.includes(serverType.id.toString())) {
+                                        option.setAttribute('selected', 'selected');
+                                    }
                                     serverTypeSelect.appendChild(option);
                                 });
                             })
@@ -222,58 +216,58 @@
                     }
                 });
             </script>
-
-
         </x-slot>
-        <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
-        <script>
-            new MultiSelectTag('module_id', {
-                rounded: true, // default true
-                shadow: true, // default false
-                placeholder: 'Search', // default Search...
-                tagColor: {
-                    textColor: '#327b2c',
-                    borderColor: '#92e681',
-                    bgColor: '#eaffe6',
-                },
-                onChange: function(values) {
-                    var modules = values;
-                    var name = $("input[name='name']").val();
-                    if (modules.length > 0) {
-                        $.ajax({
-                            url: "{{ route('admin.deployments.deployment.store') }}",
-                            type: 'POST',
-                            data: {
-                                name: modules,
-                            },
-                        })
-                    }
-                }
-            })
 
-            new MultiSelectTag('server_type_id', {
-                rounded: true, // default true
-                shadow: true, // default false
-                placeholder: 'Search', // default Search...
-                tagColor: {
-                    textColor: '#327b2c',
-                    borderColor: '#92e681',
-                    bgColor: '#eaffe6',
-                },
-                onChange: function(values) {
-                    var server_type_id = values;
-                    var name = $("input[name='name']").val();
-                    if (server_type_id.length > 0) {
-                        $.ajax({
-                            url: "{{ route('admin.deployments.deployment.store') }}",
-                            type: 'POST',
-                            data: {
-                                name: server_type_id,
-                            },
-                        })
-                    }
-                }
-            })
-        </script>
     </x-app-layout>
+
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+    <script>
+        new MultiSelectTag('module_id', {
+            rounded: true, // default true
+            shadow: true, // default false
+            placeholder: 'Search', // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function(values) {
+                var modules = values;
+                var name = $("input[name='name']").val();
+                if (modules.length > 0) {
+                    $.ajax({
+                        url: "{{ route('admin.deployments.deployment.store') }}",
+                        type: 'POST',
+                        data: {
+                            name: modules,
+                        },
+                    })
+                }
+            }
+        })
+
+        new MultiSelectTag('server_type_id', {
+            rounded: true, // default true
+            shadow: true, // default false
+            placeholder: 'Search', // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function(values) {
+                var server_type_id = values;
+                var name = $("input[name='name']").val();
+                if (server_type_id.length > 0) {
+                    $.ajax({
+                        url: "{{ route('admin.deployments.deployment.store') }}",
+                        type: 'POST',
+                        data: {
+                            name: server_type_id,
+                        },
+                    })
+                }
+            }
+        })
+    </script>
 </body>
