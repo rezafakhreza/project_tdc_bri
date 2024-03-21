@@ -44,6 +44,7 @@
             render: function(data, type, row) {
 
                 var id = row.id; // id diambil langsung dari objek row
+
                 // URL edit dengan id sebagai string varchar
                 var url = '{{ route("admin.deployments.deployment.edit", ":id") }}';
                 url = url.replace(':id', id);
@@ -61,8 +62,12 @@
 
         }},
         { data: 'title', name: 'title' },
-        { data: 'module', name: 'module' },
-        { data: 'server_type', name: 'server_type' },
+        { data: 'module', name: 'module' 
+        
+        },
+        { data: 'server_type', name: 'server_type' 
+        
+        },
         { data: 'deploy_date', name: 'deploy_date' },
         { data: 'document_status', name: 'document_status' },
         { data: 'cm_status', name: 'cm_status' },

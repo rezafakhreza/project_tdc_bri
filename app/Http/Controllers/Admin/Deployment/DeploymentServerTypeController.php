@@ -16,7 +16,7 @@ class DeploymentServerTypeController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = DeploymentServerType::with('module');
+            $query = DeploymentServerType::query();
 
             return DataTables::of($query)
                 ->addColumn('action', function ($serverType) {
@@ -34,9 +34,9 @@ class DeploymentServerTypeController extends Controller
                         </form>
                         </div>';
                 })
-                ->editColumn('module.name', function ($serverType) {
-                    return $serverType->module->name;
-                })
+                // ->editColumn('module.name', function ($serverType) {
+                //     return $serverType->module->name;
+                // })
                 ->rawColumns(['action'])
                 ->make();
         }
@@ -49,9 +49,9 @@ class DeploymentServerTypeController extends Controller
      */
     public function create()
     {
-        $modules = DeploymentModule::where('is_active', true)->get();
+        // $modules = DeploymentModule::where('is_active', true)->get();
 
-        return view('admin.deployment.deployment-server-types.create', compact('modules'));
+        return view('admin.deployment.deployment-server-types.create');
     }
 
     /**
@@ -61,16 +61,20 @@ class DeploymentServerTypeController extends Controller
     {
         $request->validate([
             'name' => 'required|max:15',
-            'module_id' => 'required|exists:deployment_modules,id',
+            // 'module_id' => 'required|exists:deployment_modules,id',
             'is_active' => 'required|boolean'
         ]);
 
         // check if server type already exists
-        if (DeploymentServerType::where('name', $request->name)->where('module_id', $request->module_id)->first()) {
-            return redirect()->back()->with('error', 'Server Type already exists in the same module.');
+        // if (DeploymentServerType::where('name', $request->name)->where('module_id', $request->module_id)->first()) {
+        //     return redirect()->back()->with('error', 'Server Type already exists in the same module.');
+        // }
+
+        if (DeploymentServerType::where('name', $request->name)->where('name', $request->name)->first()) {
+            return redirect()->back()->with('error', 'Server Type already exists.');
         }
 
-        DeploymentServerType::create($request->only('name', 'module_id'));
+        DeploymentServerType::create($request->only('name', 'is_active'));
 
         return redirect()->route('admin.deployments.server-types.index')->with('success', 'Server Type created successfully.');
     }
@@ -81,12 +85,12 @@ class DeploymentServerTypeController extends Controller
     public function edit($id)
     {
         $serverType = DeploymentServerType::findOrFail($id);
-        $modules = DeploymentModule::where('is_active', true)->get();
+        // $modules = DeploymentModule::where('is_active', true)->get();
 
         // Add the current module if it's non-active
-        if ($serverType->module->is_active == 0 && !in_array($serverType->module_id, $modules->pluck('id')->toArray())) {
-            $modules->push($serverType->module);
-        }
+        // if ($serverType->module->is_active == 0 && !in_array($serverType->module_id, $modules->pluck('id')->toArray())) {
+        //     $modules->push($serverType->module);
+        // }
 
         return view('admin.deployment.deployment-server-types.edit', compact('serverType', 'modules'));
     }
@@ -98,18 +102,27 @@ class DeploymentServerTypeController extends Controller
     {
         $request->validate([
             'name' => 'required|max:10',
-            'module_id' => 'required|exists:deployment_modules,id',
+            // 'module_id' => 'required|exists:deployment_modules,id',
             'is_active' => 'required|boolean'
         ]);
 
         $serverType = DeploymentServerType::findOrFail($id);
 
         // check if server type already exists
-        if (DeploymentServerType::where('name', $request->name)->where('module_id', $request->module_id)->where('id', '!=', $id)->first()) {
-            return redirect()->back()->with('error', 'Server Type already exists in the same module.');
+        // if (DeploymentServerType::where('name', $request->name)->where('module_id', $request->module_id)->where('id', '!=', $id)->first()) {
+        //     return redirect()->back()->with('error', 'Server Type already exists in the same module.');
+        // }
+
+        // $serverType->update($request->only('name', 'module_id', 'is_active'));
+
+        if ($serverType->name != $request->name) {
+            if (DeploymentServerType::where('name', $request->name)->first()) {
+                return redirect()->back()->with('error', 'Module already exists.');
+            }
         }
 
-        $serverType->update($request->only('name', 'module_id', 'is_active'));
+        $serverType->update($request->only('name', 'is_active'));
+
         return redirect()->route('admin.deployments.server-types.index')->with('success', 'Server Type updated successfully.');
     }
 

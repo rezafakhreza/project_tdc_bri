@@ -11,14 +11,12 @@ class DeploymentServerType extends Model
 
     protected $fillable = [
         'name',
-        'module_id',
         'is_active',
     ];
 
-    // Relationships
     public function module()
     {
-        return $this->belongsTo(DeploymentModule::class);
+        return $this->hasMany(DeploymentModule::class);
     }
 
     public function deployments()

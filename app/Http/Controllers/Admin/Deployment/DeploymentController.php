@@ -19,13 +19,24 @@ class DeploymentController extends Controller
     {
         if (request()->ajax()) {
             $query = Deployment::with(['module', 'serverType']);
+            // $query = Deployment::query();
 
             return DataTables::of($query)
+                // ->addColumn('module', function ($deployment) {
+                //     return $deployment->module->name;
+                // })
+                // ->addColumn('server_type', function ($deployment) {
+                //     return $deployment->serverType->name;
+                // })
                 ->addColumn('module', function ($deployment) {
-                    return $deployment->module->name;
+                    $moduleIds = explode(',', $deployment->module_id);
+                    $moduleNames = DeploymentModule::whereIn('name', $moduleIds)->pluck('name')->implode(', ');
+                    return $moduleNames;
                 })
                 ->addColumn('server_type', function ($deployment) {
-                    return $deployment->serverType->name;
+                    $serverTypeIds = explode(',', $deployment->server_type_id);
+                    $serverTypeNames = DeploymentServerType::whereIn('name', $serverTypeIds)->pluck('name')->implode(', ');
+                    return $serverTypeNames;
                 })
                 ->addColumn('updated_at', function ($deployment) {
                     return $deployment->updated_at->format('d F Y H:i:s'); // Format the date as needed
@@ -68,19 +79,10 @@ class DeploymentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:200',
-            'module_id' => 'required|array|min:1', // Ubah menjadi nama modul
-            'module_id.*' => 'required|exists:deployment_modules,id', // Pastikan nama modul valid
-            'server_type_id' => 'required|array|min:1',
-            'server_type_id.*' => 'required|exists:deployment_server_types,id',
-            'deploy_date' => 'required|date',
-            'document_status' => 'required|in:Done,Not Done,In Progress',
-            'document_description' => 'required|string',
-            'cm_status' => 'required|in:Draft,Reviewer,Checker,Signer,Done Deploy',
-            'cm_description' => 'required|string',
-        ]);
+        $modules = implode(',', $request->module_id);
+        $serverType = implode(',', $request->server_type_id);
 
+        // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
         $id = $title . '_' . str_replace('-', '', $deploy_date);
@@ -93,29 +95,11 @@ class DeploymentController extends Controller
                 ->with('error', 'Deployment already exists. Please choose another title.');
         }
 
-        // $moduleId = DeploymentModule::whereIn('id', $request->input('module_id'))->pluck('id')->toArray();
-        // $serverId = DeploymentServerType::whereIn('id', $request->input('server_type_id'))->pluck('id')->toArray();
-
-        $moduleId = $request->input('module_id');
-        $serverId = $request->input('server_type_id');
-
-        // $data = [
-        //     'id' => $id,
-        //     'title' => $title,
-        //     'module_id' => $moduleId,
-        //     'server_type_id' => $serverId,
-        //     'deploy_date' => $deploy_date,
-        //     'document_status' => $request->input('document_status'),
-        //     'document_description' => $request->input('document_description'),
-        //     'cm_status' => $request->input('cm_status'),
-        //     'cm_description' => $request->input('cm_description'),
-        // ];
-
         $data = [
             'id' => $id,
             'title' => $title,
-            'module_id' => implode('|', $moduleId),
-            'server_type_id' => implode('|', $serverId),
+            'module_id' => $modules,
+            'server_type_id' => $serverType,
             'deploy_date' => $deploy_date,
             'document_status' => $request->input('document_status'),
             'document_description' => $request->input('document_description'),
@@ -123,13 +107,24 @@ class DeploymentController extends Controller
             'cm_description' => $request->input('cm_description'),
         ];
 
-        // dd($moduleId);
-        // dd($serverId);
-
         Deployment::create($data);
+
+        // echo '<pre>';
+        // var_dump($_POST);
+        // echo '</pre>';
+
+        // echo '<pre>';
+        // var_dump($modules);
+        // echo '</pre>';
+
+        // echo '<pre>';
+        // var_dump($serverType);
+        // echo '</pre>';
 
         return redirect()->route('admin.deployments.deployment.index')
             ->with('success', 'Success Create Deployment');
+
+        
     }
 
     /**
@@ -145,30 +140,21 @@ class DeploymentController extends Controller
         $modules = DeploymentModule::where('is_active', 1)->get();
         $serverTypes = DeploymentServerType::where('is_active', 1)->get();
 
-        if ($module->is_active == 0) {
-            $modules->push($module);
-        }
+        // if ($module->is_active == 0) {
+        //     $modules->push($module);
+        // }
 
-        if ($serverType->is_active == 0) {
-            $serverTypes->push($serverType);
-        }
-        return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'module', 'serverType', 'modules', 'serverTypes'));
+        // if ($serverType->is_active == 0) {
+        //     $serverTypes->push($serverType);
+        // }
+        return view('admin.deployment.deployments.edit', compact('id','deployment', 'modules', 'serverTypes'));
     }
 
-    public function update(Request $request, Deployment $deployment) //masih error
+    public function update(Request $request, Deployment $deployment)
     {
-        $request->validate([
-            'title' => 'required|string|max:200',
-            'module_id' => 'required|array|min:1',
-            'module_id.*' => 'required|exists:deployment_modules,id',
-            'server_type_id' => 'required|array|min:1',
-            'server_type_id.*' => 'required|exists:deployment_server_types,id',
-            'deploy_date' => 'required|date',
-            'document_status' => 'required|in:Done,Not Done,In Progress',
-            'document_description' => 'required|string',
-            'cm_status' => 'required|in:Draft,Reviewer,Checker,Signer,Done Deploy',
-            'cm_description' => 'required|string',
-        ]);
+
+        $modules = implode(',', $request->module_id);
+        $serverType = implode(',', $request->server_type_id);
 
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
@@ -176,21 +162,18 @@ class DeploymentController extends Controller
 
         $request->merge(['id' => $id]);
 
-        $moduleId = DeploymentModule::whereIn('id', $request->input('module_id'))->pluck('id')->toArray();
-        $serverId = DeploymentServerType::whereIn('id', $request->input('server_type_id'))->pluck('id')->toArray();
-
         $data = [
             'id' => $id,
             'title' => $title,
-            'module_id' => implode(' ', $moduleId),
-            'server_type_id' => implode(' ', $serverId),
+            'module_id' => $modules,
+            'server_type_id' => $serverType,
             'deploy_date' => $deploy_date,
             'document_status' => $request->input('document_status'),
             'document_description' => $request->input('document_description'),
             'cm_status' => $request->input('cm_status'),
             'cm_description' => $request->input('cm_description'),
         ];
-        
+
         if ($deployment->title != $request->title) {
             if (Deployment::where('title', $request->title)->first()) {
                 return redirect()->back()->with('error', 'Deployment already exists.');
@@ -204,9 +187,9 @@ class DeploymentController extends Controller
     /**
      * Delete a deployment.
      */
-    public function destroy($id)
+    public function destroy($idDeploy)
     {
-        $deployment = Deployment::findOrFail($id);
+        $deployment = Deployment::findOrFail($idDeploy);
         $deployment->delete();
 
         return redirect()->route('admin.deployments.deployment.index')->with('success', 'Deployment deleted successfully.');

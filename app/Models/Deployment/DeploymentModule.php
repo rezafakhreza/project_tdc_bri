@@ -4,6 +4,7 @@ namespace App\Models\Deployment;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class DeploymentModule extends Model
 {
@@ -14,7 +15,7 @@ class DeploymentModule extends Model
         'is_active',
     ];
 
-    // Relationships
+
     public function deployments()
     {
         return $this->hasMany(Deployment::class);

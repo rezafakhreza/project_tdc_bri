@@ -32,4 +32,6 @@ class Deployment extends Model
     {
         return $this->belongsTo(DeploymentServerType::class);
     }
+
+    
 }

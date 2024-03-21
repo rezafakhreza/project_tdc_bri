@@ -64,7 +64,7 @@ class DeploymentModuleController extends Controller
         }
 
         DeploymentModule::create($request->only('name', 'is_active'));
-
+        
         return redirect()->route('admin.deployments.modules.index')->with('success', 'Module created successfully.');
     }
 
