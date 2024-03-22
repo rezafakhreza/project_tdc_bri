@@ -30,12 +30,12 @@ class DeploymentController extends Controller
                 // })
                 ->addColumn('module', function ($deployment) {
                     $moduleIds = explode(',', $deployment->module_id);
-                    $moduleNames = DeploymentModule::whereIn('name', $moduleIds)->pluck('name')->implode(', ');
+                    $moduleNames = DeploymentModule::whereIn('id', $moduleIds)->pluck('name')->implode(', ');
                     return $moduleNames;
                 })
                 ->addColumn('server_type', function ($deployment) {
                     $serverTypeIds = explode(',', $deployment->server_type_id);
-                    $serverTypeNames = DeploymentServerType::whereIn('name', $serverTypeIds)->pluck('name')->implode(', ');
+                    $serverTypeNames = DeploymentServerType::whereIn('id', $serverTypeIds)->pluck('name')->implode(', ');
                     return $serverTypeNames;
                 })
                 ->addColumn('updated_at', function ($deployment) {
@@ -82,7 +82,7 @@ class DeploymentController extends Controller
         $modules = implode(',', $request->module_id);
         $serverType = implode(',', $request->server_type_id);
 
-        // ini untuk mengubah id
+        // // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
         $id = $title . '_' . str_replace('-', '', $deploy_date);
@@ -123,8 +123,6 @@ class DeploymentController extends Controller
 
         return redirect()->route('admin.deployments.deployment.index')
             ->with('success', 'Success Create Deployment');
-
-        
     }
 
     /**
@@ -147,7 +145,7 @@ class DeploymentController extends Controller
         // if ($serverType->is_active == 0) {
         //     $serverTypes->push($serverType);
         // }
-        return view('admin.deployment.deployments.edit', compact('id','deployment', 'modules', 'serverTypes'));
+        return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'modules', 'serverTypes'));
     }
 
     public function update(Request $request, Deployment $deployment)
@@ -216,5 +214,29 @@ class DeploymentController extends Controller
         }
 
         return response()->json($serverTypes);
+    }
+
+    public function jabar(Request $request)
+    {
+        // if (isset($_POST['module_id'])) {
+        //     $module = join("','", $request->get('module_id'));
+        //     $data = DB::select("SELECT * FROM deployment_modules WHERE name IN ('" . $module . "')");
+
+        //     $hasil = '';
+        //     foreach ($data as $value) {
+        //         $hasil .= '<option value="' . $value->name . '">' . $value->id . '/'.$value->name.'</option>';
+        //     }
+        //     echo $hasil;
+        // }
+        if ($request->has('module_id')) {
+            $moduleIds = $request->input('module_id');
+            $data = DB::table('deployment_modules')->whereIn('id', $moduleIds)->get();
+    
+            $hasil = '';
+            foreach ($data as $value) {
+                $hasil .= '<option value="' . $value->name . '">' . $value->id . '/' . $value->name . '</option>';
+            }
+            echo $hasil;
+        }
     }
 }

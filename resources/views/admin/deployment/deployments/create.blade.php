@@ -48,7 +48,7 @@
                                     <select id="module_id" name="module_id[]" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" multiple="multiple" required>
                                         <!-- <option value="" disabled selected>-- Pilih Module --</option> -->
                                         @foreach($modules as $module)
-                                        <option value="{{ $module->name }}">{{ $module->name }}</option>
+                                        <option value="{{ $module->id }}">{{ $module->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -60,7 +60,7 @@
                                         <!-- <option value="" disabled selected>-- Pilih Server Type --</option> -->
                                         <!-- Options will be populated based on the selected module -->
                                         @foreach ($serverTypes as $serverType)
-                                        <option value="{{ $serverType->name }}">{{ $serverType->name }}</option>
+                                        <option value="{{ $serverType->id }}">{{ $serverType->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
