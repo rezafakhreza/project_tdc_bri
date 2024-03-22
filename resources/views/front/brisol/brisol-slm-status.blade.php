@@ -38,6 +38,10 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-12">
+                        <div class="w-1/3">
+                        </div>
                         <div class="flex justify-center">
                             <select id="yearFilter" style="padding-right: 90px; font-size: 20px; margin-right:10px;"
                                 class="rounded-lg font-semibold mx-auto">

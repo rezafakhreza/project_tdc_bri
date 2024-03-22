@@ -92,7 +92,7 @@ class DeploymentServerTypeController extends Controller
         //     $modules->push($serverType->module);
         // }
 
-        return view('admin.deployment.deployment-server-types.edit', compact('serverType', 'modules'));
+        return view('admin.deployment.deployment-server-types.edit', compact('serverType'));
     }
 
     /**
