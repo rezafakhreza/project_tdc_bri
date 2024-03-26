@@ -47,7 +47,6 @@
             }
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
-                processing: true,
                 serverSide: false,
                 scrollX: true,
                 stateSave: true,
@@ -63,7 +62,7 @@
                         data: 'id',
                         name: 'id',
                         searchable: true,
-                },
+                    },
                     {
                         data: 'reported_date',
                         name: 'reported_date',
@@ -88,11 +87,25 @@
                     },
                     {
                         data: 'req_status',
-                        name: 'req_status'
+                        name: 'req_status',
+                        render: function(data, type, row) {
+                            var status = row.req_status;
+                            var statusClass = '';
+                            var textColorClass = 'text-white';
+
+                            if (status == 'Diterima') {
+                                statusClass = 'bg-green-500';
+                            } else if (status == 'Ditolak') {
+                                statusClass = 'bg-red-600';
+                            }
+
+                            return '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' +
+                                statusClass + ' ' + textColorClass + '">' + status + '</span>';
+                        }
                     },
                     {
                         data: 'exec_status',
-                        name: 'exec_status'
+                        name: 'exec_status',
                     },
                     {
                         data: 'execution_date',
@@ -118,37 +131,112 @@
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden shadow sm:rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
-                    <div class="flex gap-4 mb-10">
-                        <a href="{{ route('admin.user-management.incidents.create') }}"
-                            class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
-                            + Import Data
-                        </a>
-                        <a href=# class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
-                            Export Data
-                        </a>
-                        <a href="{{ route('user-management.request-by-type') }}" target="_blank"
-                            class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
-                            View Chart
-                        </a>
+                    <div class="flex justify-between mb-10">
+                        <div class="dataTables_filter">
+                            <!-- Filter search akan muncul di sini -->
+                        </div>
+
+                        <div class="button-container flex gap-4">
+                            <a href="{{ route('admin.user-management.incidents.create') }}"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                + Import Data
+                            </a>
+                            <a href=#
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                Export Data
+                            </a>
+                            <a href="{{ route('user-management.request-by-type') }}" target="_blank"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                View Chart
+                            </a>
+                        </div>
                     </div>
-                    <table id="dataTable">
-                        <thead>
-                            <tr>
-                                <th style="max-width: 1%">ID</th>
-                                <th>Reported Date</th>
-                                <th>Type</th>
-                                <th>Unit Kerja</th>
-                                <th>Kantor Wilayah</th>
-                                <th>Request Status</th>
-                                <th>Execution Status</th>
-                                <th>Execution Date</th>
-                                <th>SLA Category</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                    <div class="dataTables_wrapper">
+                        <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
+                            <thead>
+                                <tr>
+                                    <th style="max-width: 1%"
+                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">ID
+                                    </th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Reported Date</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Type</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Unit Kerja</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Kantor Wilayah</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Request Status</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Execution Status</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Execution Date</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">SLA
+                                        Category</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .table-responsive {
+            display: flex;
+            align-items: center;
+        }
+
+        .dataTables_wrapper {
+            margin-top: -80px;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            float: left;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .dataTables_wrapper .dataTables_length {
+            display: none;
+        }
+
+        .rounded-table {
+            border-collapse: separate;
+            border-radius: 0.5rem;
+            /* Atur radius lengkungan sesuai keinginan */
+            overflow: hidden;
+            /* Memastikan sudut melengkung tidak terpotong */
+        }
+
+        .rounded-table th:first-child {
+            border-top-left-radius: 0.5rem;
+            /* Atur radius lengkungan pada sudut kiri atas */
+        }
+
+        .rounded-table th:last-child {
+            border-top-right-radius: 0.5rem;
+            /* Atur radius lengkungan pada sudut kanan atas */
+        }
+
+        .rounded-table tr:last-child td:first-child {
+            border-bottom-left-radius: 0.5rem;
+            /* Atur radius lengkungan pada sudut kiri bawah */
+        }
+
+        .rounded-table tr:last-child td:last-child {
+            border-bottom-right-radius: 0.5rem;
+            /* Atur radius lengkungan pada sudut kanan bawah */
+        }
+
+        .button-container a {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </x-app-layout>

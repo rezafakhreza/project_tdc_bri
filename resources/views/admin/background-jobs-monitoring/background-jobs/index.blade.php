@@ -160,35 +160,67 @@
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="flex gap-4 mb-10">
-                            <a href="{{ route('admin.background-jobs-monitoring.jobs.create') }}"
-                                class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
-                                + Add Jobs
-                            </a>
-                            <a href="{{ route('background-jobs-monitoring.daily') }}" target="_blank"
-                                class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
-                                View Chart
-                            </a>
+                        <div class="flex justify-between mb-10">
+                            <div class="dataTables_filter">
+                                <!-- Filter search akan muncul di sini -->
+                            </div>
+                            <div class="button-container flex gap-4">
+                                <a href="{{ route('admin.background-jobs-monitoring.jobs.create') }}"
+                                    class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                    style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                    + Add Jobs
+                                </a>
+                                <a href="{{ route('background-jobs-monitoring.daily') }}" target="_blank"
+                                    class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                    style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                    View Chart
+                                </a>
+                            </div>
                         </div>
-                        <table id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th style="max-width: 1%">ID</th>
-                                    <th>Module</th>
-                                    <th>Job</th>
-                                    <th>Data Amount to EIM</th>
-                                    <th>Data Amount to S4GL</th>
-                                    <th>Status</th>
-                                    <th>Duration To EIM</th>
-                                    <th>Duration To S4GL</th>
-                                    <th>Notes</th>
-                                    <th>Monitoring Date</th>
-                                    <th>Last Updated</th>
-                                    <th style="max-width: 1%">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                        <div class="dataTables_wrapper">
+                            <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
+                                <thead>
+                                    <tr>
+                                        <th style="max-width: 1%"
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            ID</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Module</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Job</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Data Amount to EIM</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Data Amount to S4GL</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Status</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Duration To EIM</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Duration To S4GL</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Notes</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Monitoring Date</th>
+                                        <th
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Last Updated</th>
+                                        <th style="max-width: 1%"
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -199,4 +231,48 @@
                 {!! session('error') !!}
             </div>
         @endif
+
+        <style>
+            .table-responsive {
+                display: flex;
+                align-items: center;
+            }
+
+            .dataTables_wrapper {
+                margin-top: -80px;
+            }
+
+            .dataTables_wrapper .dataTables_filter {
+                float: left;
+                text-align: left;
+                margin-bottom: 30px;
+            }
+
+            .dataTables_wrapper .dataTables_length {
+                display: none;
+            }
+
+            .rounded-table {
+                border-collapse: separate;
+                border-radius: 0.5rem;
+                /* Atur radius lengkungan sesuai keinginan */
+                overflow: hidden;
+                /* Memastikan sudut melengkung tidak terpotong */
+            }
+
+            .rounded-table th:first-child {
+                border-top-left-radius: 0.5rem;
+                /* Atur radius lengkungan pada sudut kiri atas */
+            }
+
+            .rounded-table th:last-child {
+                border-top-right-radius: 0.5rem;
+                /* Atur radius lengkungan pada sudut kanan atas */
+            }
+
+            .button-container a {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
     </x-app-layout>

@@ -179,6 +179,8 @@
             margin-top: -80px;
         }
 
+        
+
         .dataTables_wrapper .dataTables_filter {
             float: left;
             text-align: left;

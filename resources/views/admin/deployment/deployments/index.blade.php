@@ -38,7 +38,6 @@
         <script>
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
-                processing: true,
                 serverSide: true,
                 stateSave: true,
                 ajax: {
