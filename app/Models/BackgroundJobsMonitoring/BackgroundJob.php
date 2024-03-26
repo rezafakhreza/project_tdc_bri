@@ -10,8 +10,11 @@ class BackgroundJob extends Model
     use HasFactory;
 
     protected $table = 'bjm_background_jobs';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
 
     protected $fillable = [
+        'id',
         'type',
         'process_id',
         'data_amount_to_EIM',

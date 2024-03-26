@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,13 +49,14 @@
                                 <div class="mb-4">
                                     <label for="module_id"
                                         class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
-                                    <select id="module_id" name="module_id[]"
+                                    <select id="module_id" name="module_id[]" multiple="multiple"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        multiple="multiple" required>
-                                        <!-- <option value="" disabled selected>-- Pilih Module --</option> -->
+                                        required>
                                         @foreach ($modules as $module)
-                                            <option value="{{ $module->id }}"
-                                                {{ $deployment->module_id == $module->id ? 'selected' : '' }}>
+                                            @php
+                                                $selected = in_array($module->id, explode(',', $deployment->module_id));
+                                            @endphp
+                                            <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
                                                 {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
                                             </option>
                                         @endforeach
@@ -68,21 +66,25 @@
                                 <!-- Server Type ID Dropdown -->
                                 <div class="mb-4">
                                     <label for="server_type_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Server
-                                        Type:</label>
-                                    <select id="server_type_id" name="server_type_id[]"
+                                        class="block mb-2 text-sm font-bold text-gray-600">Server Type:</label>
+                                    <select id="server_type_id" name="server_type_id[]" multiple="multiple"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        multiple="multiple" required>
-                                        <!-- <option value="" disabled selected>-- Pilih Server Type --</option> -->
-                                        <!-- Options will be populated based on the selected module -->
+                                        required>
                                         @foreach ($serverTypes as $serverType)
-                                            <option value="{{ $serverType->id }}"
-                                                {{ $deployment->server_type_id == $serverType->id ? 'selected' : '' }}>
+                                            @php
+                                                $selected = in_array(
+                                                    $serverType->id,
+                                                    explode(',', $deployment->server_type_id),
+                                                );
+                                            @endphp
+                                            <option value="{{ $serverType->id }}" {{ $selected ? 'selected' : '' }}>
                                                 {{ $serverType->name }}{{ $serverType->is_active == 0 ? ' (Currently Non-Active)' : '' }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
+
+
 
 
 
@@ -280,4 +282,3 @@
         </script>
     </x-app-layout>
 </body>
-

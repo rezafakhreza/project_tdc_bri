@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bjm_background_jobs', function (Blueprint $table) {
-            $table->id();
+            $table->string('id',100)->primary();
             $table->enum('type', ['Product', 'Non-Product']);
             $table->foreignId('process_id')->constrained('bjm_processes');
             $table->integer('data_amount_to_EIM');

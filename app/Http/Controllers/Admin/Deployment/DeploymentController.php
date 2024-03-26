@@ -22,21 +22,10 @@ class DeploymentController extends Controller
             // $query = Deployment::query();
 
             return DataTables::of($query)
-                // ->addColumn('module', function ($deployment) {
-                //     return $deployment->module->name;
-                // })
-                // ->addColumn('server_type', function ($deployment) {
-                //     return $deployment->serverType->name;
-                // })
                 ->addColumn('module', function ($deployment) {
                     $moduleIds = explode(',', $deployment->module_id);
                     $moduleNames = DeploymentModule::whereIn('id', $moduleIds)->pluck('name')->implode(', ');
                     return $moduleNames;
-                })
-                ->addColumn('server_type', function ($deployment) {
-                    $serverTypeIds = explode(',', $deployment->server_type_id);
-                    $serverTypeNames = DeploymentServerType::whereIn('id', $serverTypeIds)->pluck('name')->implode(', ');
-                    return $serverTypeNames;
                 })
                 ->addColumn('updated_at', function ($deployment) {
                     return $deployment->updated_at->format('d F Y H:i:s'); // Format the date as needed
@@ -85,7 +74,7 @@ class DeploymentController extends Controller
         // // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
-        $id = $title . '_' . str_replace('-', '', $deploy_date);
+        $id = str_replace('-', '', $deploy_date) . substr($title, 0, 3);
 
         $request->merge(['id' => $id]);
 
@@ -109,18 +98,6 @@ class DeploymentController extends Controller
 
         Deployment::create($data);
 
-        // echo '<pre>';
-        // var_dump($_POST);
-        // echo '</pre>';
-
-        // echo '<pre>';
-        // var_dump($modules);
-        // echo '</pre>';
-
-        // echo '<pre>';
-        // var_dump($serverType);
-        // echo '</pre>';
-
         return redirect()->route('admin.deployments.deployment.index')
             ->with('success', 'Success Create Deployment');
     }
@@ -138,13 +115,6 @@ class DeploymentController extends Controller
         $modules = DeploymentModule::where('is_active', 1)->get();
         $serverTypes = DeploymentServerType::where('is_active', 1)->get();
 
-        // if ($module->is_active == 0) {
-        //     $modules->push($module);
-        // }
-
-        // if ($serverType->is_active == 0) {
-        //     $serverTypes->push($serverType);
-        // }
         return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'modules', 'serverTypes'));
     }
 
@@ -156,7 +126,7 @@ class DeploymentController extends Controller
 
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
-        $id = $title . '_' . str_replace('-', '', $deploy_date);
+        $id = str_replace('-', '', $deploy_date) . substr($title, 0, 3);
 
         $request->merge(['id' => $id]);
 
@@ -218,20 +188,10 @@ class DeploymentController extends Controller
 
     public function jabar(Request $request)
     {
-        // if (isset($_POST['module_id'])) {
-        //     $module = join("','", $request->get('module_id'));
-        //     $data = DB::select("SELECT * FROM deployment_modules WHERE name IN ('" . $module . "')");
-
-        //     $hasil = '';
-        //     foreach ($data as $value) {
-        //         $hasil .= '<option value="' . $value->name . '">' . $value->id . '/'.$value->name.'</option>';
-        //     }
-        //     echo $hasil;
-        // }
         if ($request->has('module_id')) {
             $moduleIds = $request->input('module_id');
             $data = DB::table('deployment_modules')->whereIn('id', $moduleIds)->get();
-    
+
             $hasil = '';
             foreach ($data as $value) {
                 $hasil .= '<option value="' . $value->name . '">' . $value->id . '/' . $value->name . '</option>';
