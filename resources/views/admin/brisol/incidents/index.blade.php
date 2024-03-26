@@ -34,8 +34,7 @@
             $(document).ready(function() {
                 // Initialize DataTable
                 var datatable = $('#dataTable').DataTable({
-                    processing: true,
-                    serverSide: true,
+                    serverSide: false,
                     stateSave: true,
                     scrollX: true,
                     ajax: {

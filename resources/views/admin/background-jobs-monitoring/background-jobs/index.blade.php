@@ -32,13 +32,15 @@
             <script>
                 // AJAX DataTable
                 var datatable = $('#dataTable').DataTable({
-                    processing: true,
-                    serverSide: true,
+                    serverSide: false,
                     scrollX: true,
                     stateSave: true,
                     ajax: {
                         url: '{{ route('admin.background-jobs-monitoring.jobs.index') }}',
                         type: 'GET',
+                    },
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                     },
                     columns: [{
                             data: 'id',
