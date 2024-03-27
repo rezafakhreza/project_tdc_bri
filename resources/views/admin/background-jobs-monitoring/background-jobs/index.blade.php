@@ -216,6 +216,7 @@
                                         <th
                                             class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
                                             Last Updated</th>
+                                            
                                         <th style="max-width: 1%"
                                             class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
                                             Action</th>

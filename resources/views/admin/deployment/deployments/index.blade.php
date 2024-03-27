@@ -38,8 +38,10 @@
         <script>
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
-                serverSide: true,
+                serverSide: false,
                 stateSave: true,
+                scrollX: true,
+                
                 ajax: {
                     url: '{{ route('admin.deployments.deployment.index') }}',
                     type: 'GET',

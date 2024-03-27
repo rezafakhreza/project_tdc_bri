@@ -45,8 +45,8 @@ function updateLegend() {
     for (const [module, color] of Object.entries(moduleColors)) {
         const colorBox = document.createElement("div");
         colorBox.style.backgroundColor = color;
-        colorBox.style.width = "20px";
-        colorBox.style.height = "20px";
+        colorBox.style.width = "600px";
+        colorBox.style.height = "60px";
         colorBox.style.display = "inline-block";
 
         const text = document.createElement("span");

@@ -38,8 +38,7 @@
             var isAuthorized = @json(auth()->user()->hasAnyRole(['Super Admin', 'Admin Deployments']));
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
-                processing: true,
-                serverSide: true,
+                serverSide: false,
                 stateSave: true,
                 ajax: {
                     url: '{{ route('admin.deployments.server-types.index') }}',
