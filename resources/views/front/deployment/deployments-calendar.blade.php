@@ -60,7 +60,7 @@
         </div>
     </div>
 </div>
-
+                                                              
 <!-- Modal -->
 <div id="eventInfoModal" class="fixed inset-0 z-50 items-center justify-center hidden">
     <div class="relative w-1/3 p-8 bg-white rounded-lg shadow-lg"> <!-- Added "relative" class -->

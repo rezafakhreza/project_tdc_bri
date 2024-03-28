@@ -57,6 +57,7 @@ function updateLegend() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    ``
     const calendarEl = document.getElementById("calendar");
 
     // Initialize and render the full calendar
