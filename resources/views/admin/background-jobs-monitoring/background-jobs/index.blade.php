@@ -184,41 +184,41 @@
                                 <thead>
                                     <tr>
                                         <th style="max-width: 1%"
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             ID</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Module</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Job</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Data Amount to EIM</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Data Amount to S4GL</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Status</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Duration To EIM</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Duration To S4GL</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Notes</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Monitoring Date</th>
                                         <th
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Last Updated</th>
                                             
                                         <th style="max-width: 1%"
-                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                            class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider rounded-tl-md">
                                             Action</th>
                                     </tr>
                                 </thead>
