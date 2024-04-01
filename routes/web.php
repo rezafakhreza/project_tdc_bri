@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\Brisol\MonthlyTargetController as BrisolMonthlyTa
 use App\Http\Controllers\Admin\UserManagement\MonthlyTargetController as UsmanMonthlyTargetController;
 use App\Http\Controllers\Front\UserManagement\UserManagementController as FrontUserManagementController;
 use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController as FrontBackgroundJobController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +28,7 @@ use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController 
 */
 
 Route::get('/', function () {
-    return view('front.DashView');
+    return view('front.user-management.user-management-request');
 });
 
 Route::get('/deployments/chart', [FrontDeploymentController::class, 'index'])->name('deployments.index');
@@ -46,7 +45,6 @@ Route::get('/brisol/slm-status', [FrontBrisolController::class, 'showSLMStatusCh
 Route::get('/brisol/reported-source', [FrontBrisolController::class, 'showReportedSourceChart'])->name('brisol.reported-source');
 Route::get('/brisol/monthly-target', [FrontBrisolController::class, 'showMonthlyDataTargetActualChart'])->name('brisol.monthly-target');
 Route::get('/brisol/service-ci-top-issue', [FrontBrisolController::class, 'showServiceCITopIssueChart'])->name('brisol.service-ci-top-issue');
-
 
 
 Route::middleware([
@@ -80,6 +78,8 @@ Route::middleware([
 
             // only view incidents user management and monthly target user management
             Route::get('/monthly-target', [UsmanMonthlyTargetController::class, 'index'])->name('monthly-target.index')->middleware('permission:view monthly target user management');
+            // Route::get('/get-incidents-data', [UsmanMonthlyTargetController::class, 'index'])->name('get.incidents.data'); //tambahan dhila 
+
         });
 
         Route::prefix('brisol')->name('brisol.')->group(function () {
@@ -91,5 +91,6 @@ Route::middleware([
         });
 
         Route::resource('users', UserController::class)->middleware('permission:manage users');
+        Route::post('/deployments/deployment/jabar', [DeploymentController::class, 'jabar'])->name('deployments.deployment.jabar');
     });
 });

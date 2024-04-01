@@ -36,8 +36,8 @@ class IncidentsImport implements ToModel, WithHeadingRow
             $date = $this->parseIndonesianDate($row['tanggal_disetujui']);
             $branch = Branch::where('branch_code', $branchCode)->first(); // Menggunakan first() untuk mendapatkan satu objek
             $title = $branch->branch_name; // Mengambil nilai 'name' dari objek $process
-            $randomDigits = mt_rand(100, 999);
-            
+            $randomDigits = mt_rand(0, 999999);
+
             $id = str_replace('-', '', $date) . substr($title, 0, 2) . $randomDigits;
             $row['id'] = [$id];
 

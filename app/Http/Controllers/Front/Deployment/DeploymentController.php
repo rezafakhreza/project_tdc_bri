@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Deployment\Deployment;
 use App\Models\Deployment\DeploymentModule;
+use App\Models\Deployment\DeploymentServerType;
 
 class DeploymentController extends Controller
 {
@@ -30,12 +31,17 @@ class DeploymentController extends Controller
         $events = [];
 
         foreach ($deployments as $deployment) {
+            $moduleIds = explode(',', $deployment->module_id);
+            $moduleNames = DeploymentModule::whereIn('id', $moduleIds)->pluck('name')->implode(', ');
+            $serverTypeIds = explode(',', $deployment->server_type_id);
+            $serverTypeNames = DeploymentServerType::whereIn('id', $serverTypeIds)->pluck('name')->implode(', '); // Ubah ke toArray() agar menjadi array
+
             $events[] = [
                 'id' => $deployment->id,
                 'title' => $deployment->title,
                 'start' => $deployment->deploy_date,
-                'module' => $deployment->module->name,
-                'server_type' => $deployment->serverType->name,
+                'module' => $moduleNames,
+                'server_type' => $serverTypeNames,
                 'status_doc' => $deployment->document_status,
                 'document_description' => $deployment->document_description,
                 'status_cm' => $deployment->cm_status,
@@ -65,5 +71,4 @@ class DeploymentController extends Controller
 
         return response()->json($data);
     }
-
 }
