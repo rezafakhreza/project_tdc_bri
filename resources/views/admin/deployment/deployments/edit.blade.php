@@ -4,19 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('assets/multiselect.css') }}">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
-
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+    <link rel="stylesheet" href="{{ asset('CSS/multiselect.css') }}">
 </head>
 
-
-
 <body>
-
-
     <x-app-layout>
         <x-slot name="header">
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
@@ -38,86 +29,65 @@
                             <div>
                                 <!-- Title -->
                                 <div class="mb-4">
-                                    <label for="title"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
-                                    <input type="text" id="title" name="title"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        value="{{ old('title', $deployment->title) }}" required>
+                                    <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
+                                    <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title', $deployment->title) }}" required>
+                                </div>
+
+                                <!-- Deploy Date -->
+                                <div class="mb-4">
+                                    <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy
+                                        Date:</label>
+                                    <input type="date" id="deploy_date" name="deploy_date" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('deploy_date', $deployment->deploy_date) }}" required>
                                 </div>
 
                                 <!-- Module ID Dropdown -->
                                 <div class="mb-4">
-                                    <label for="module_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
-                                    <select id="module_id" name="module_id[]" multiple="multiple"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        required>
+                                    <label for="module_id" class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
+                                    <select id="module_id" name="module_id[]" multiple="multiple" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                         @foreach ($modules as $module)
-                                            @php
-                                                $selected = in_array($module->id, explode(',', $deployment->module_id));
-                                            @endphp
-                                            <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
-                                                {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
-                                            </option>
+                                        @php
+                                        $selected = in_array($module->id, explode(',', $deployment->module_id));
+                                        @endphp
+                                        <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
+                                            {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <!-- Server Type ID Dropdown -->
                                 <div class="mb-4">
-                                    <label for="server_type_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Server Type:</label>
-                                    <select id="server_type_id" name="server_type_id[]" multiple="multiple"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        required>
+                                    <label for="server_type_id" class="block mb-2 text-sm font-bold text-gray-600">Server Type:</label>
+                                    <select id="server_type_id" name="server_type_id[]" multiple="multiple" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                         @foreach ($serverTypes as $serverType)
-                                            @php
-                                                $selected = in_array(
-                                                    $serverType->id,
-                                                    explode(',', $deployment->server_type_id),
-                                                );
-                                            @endphp
-                                            <option value="{{ $serverType->id }}" {{ $selected ? 'selected' : '' }}>
-                                                {{ $serverType->name }}{{ $serverType->is_active == 0 ? ' (Currently Non-Active)' : '' }}
-                                            </option>
+                                        @php
+                                        $selected = in_array(
+                                        $serverType->id,
+                                        explode(',', $deployment->server_type_id),
+                                        );
+                                        @endphp
+                                        <option value="{{ $serverType->id }}" {{ $selected ? 'selected' : '' }}>
+                                            {{ $serverType->name }}{{ $serverType->is_active == 0 ? ' (Currently Non-Active)' : '' }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
 
-
-
-
-
-
-                                <!-- Deploy Date -->
-                                <div class="mb-4">
-                                    <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy
-                                        Date:</label>
-                                    <input type="date" id="deploy_date" name="deploy_date"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        value="{{ old('deploy_date', $deployment->deploy_date) }}" required>
-                                </div>
                             </div>
 
                             <div>
                                 <!-- Document Status -->
                                 <div class="mb-4">
-                                    <label for="document_status"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Document
+                                    <label for="document_status" class="block mb-2 text-sm font-bold text-gray-600">Document
                                         Status:</label>
-                                    <select id="document_status" name="document_status"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        required>
-                                        <option value="Not Done"
-                                            {{ old('document_status', $deployment->document_status) == 'Not Done' ? 'selected' : '' }}>
+                                    <select id="document_status" name="document_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                        <option value="Not Done" {{ old('document_status', $deployment->document_status) == 'Not Done' ? 'selected' : '' }}>
                                             Not Done
                                         </option>
-                                        <option value="In Progress"
-                                            {{ old('document_status', $deployment->document_status) == 'In Progress' ? 'selected' : '' }}>
+                                        <option value="In Progress" {{ old('document_status', $deployment->document_status) == 'In Progress' ? 'selected' : '' }}>
                                             In Progress
                                         </option>
-                                        <option value="Done"
-                                            {{ old('document_status', $deployment->document_status) == 'Done' ? 'selected' : '' }}>
+                                        <option value="Done" {{ old('document_status', $deployment->document_status) == 'Done' ? 'selected' : '' }}>
                                             Done
                                         </option>
                                     </select>
@@ -125,38 +95,28 @@
 
                                 <!-- Document Description -->
                                 <div class="mb-4">
-                                    <label for="document_description"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
-                                    <textarea id="document_description" name="document_description" rows="4"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        required>{{ old('document_description', $deployment->document_description) }}</textarea>
+                                    <label for="document_description" class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
+                                    <textarea id="document_description" name="document_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>{{ old('document_description', $deployment->document_description) }}</textarea>
                                 </div>
 
                                 <!-- CM Status -->
                                 <div class="mb-4">
                                     <label for="cm_status" class="block mb-2 text-sm font-bold text-gray-600">CM
                                         Status:</label>
-                                    <select id="cm_status" name="cm_status"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        required>
-                                        <option value="Draft"
-                                            {{ old('cm_status', $deployment->cm_status) == 'Draft' ? 'selected' : '' }}>
+                                    <select id="cm_status" name="cm_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                        <option value="Draft" {{ old('cm_status', $deployment->cm_status) == 'Draft' ? 'selected' : '' }}>
                                             Draft
                                         </option>
-                                        <option value="Reviewer"
-                                            {{ old('cm_status', $deployment->cm_status) == 'Reviewer' ? 'selected' : '' }}>
+                                        <option value="Reviewer" {{ old('cm_status', $deployment->cm_status) == 'Reviewer' ? 'selected' : '' }}>
                                             Reviewer
                                         </option>
-                                        <option value="Checker"
-                                            {{ old('cm_status', $deployment->cm_status) == 'Checker' ? 'selected' : '' }}>
+                                        <option value="Checker" {{ old('cm_status', $deployment->cm_status) == 'Checker' ? 'selected' : '' }}>
                                             Checker
                                         </option>
-                                        <option value="Signer"
-                                            {{ old('cm_status', $deployment->cm_status) == 'Signer' ? 'selected' : '' }}>
+                                        <option value="Signer" {{ old('cm_status', $deployment->cm_status) == 'Signer' ? 'selected' : '' }}>
                                             Signer
                                         </option>
-                                        <option value="Done Deploy"
-                                            {{ old('cm_status', $deployment->cm_status) == 'Done Deploy' ? 'selected' : '' }}>
+                                        <option value="Done Deploy" {{ old('cm_status', $deployment->cm_status) == 'Done Deploy' ? 'selected' : '' }}>
                                             Done Deploy
                                         </option>
                                     </select>
@@ -166,119 +126,72 @@
                                 <div class="mb-4">
                                     <label for="cm_description" class="block mb-2 text-sm font-bold text-gray-600">CM
                                         Description:</label>
-                                    <textarea id="cm_description" name="cm_description" rows="4"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                        required>{{ old('cm_description', $deployment->cm_description) }}</textarea>
+                                    <textarea id="cm_description" name="cm_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>{{ old('cm_description', $deployment->cm_description) }}</textarea>
                                 </div>
                             </div>
                         </div>
-
-
-
                         <div class="text-right">
-                            <button type="submit"
-                                class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Update
+                            <button type="submit" class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Update
                                 Deployment</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <x-slot name="script">
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var previouslySelectedServerTypeId = "{{ $deployment->server_type_id }}";
-
-                    var moduleSelect = document.getElementById('module_id');
-                    var serverTypeSelect = document.getElementById('server_type_id');
-
-                    if (moduleSelect.value) {
-                        fetchServerTypes(moduleSelect.value, previouslySelectedServerTypeId);
-                    }
-
-                    moduleSelect.addEventListener('change', function() {
-                        fetchServerTypes(this.value);
-                    });
-
-                    function fetchServerTypes(selectedModule, selectedServerType = null) {
-                        var url = `/api/modules/${selectedModule}/server-types`;
-                        if (selectedServerType) {
-                            url += `/${selectedServerType}`;
-                        }
-
-                        fetch(url)
-                            .then(response => response.json())
-                            .then(data => {
-                                serverTypeSelect.innerHTML = '';
-                                data.forEach(function(serverType) {
-                                    var optionText = serverType.name;
-                                    if (serverType.is_active === 0) {
-                                        optionText += ' (Currently Non-Active)';
-                                    }
-
-                                    var option = new Option(optionText, serverType.id);
-                                    option.selected = selectedServerType && serverType.id.toString() ===
-                                        selectedServerType;
-                                    serverTypeSelect.appendChild(option);
-                                });
-                            })
-                            .catch(error => console.error('Error:', error));
-                    }
-                });
-            </script>
-
-
-        </x-slot>
-        <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
-        <script>
-            new MultiSelectTag('module_id', {
-                rounded: true, // default true
-                shadow: true, // default false
-                placeholder: 'Search', // default Search...
-                tagColor: {
-                    textColor: '#327b2c',
-                    borderColor: '#92e681',
-                    bgColor: '#eaffe6',
-                },
-                onChange: function(values) {
-                    var modules = values;
-                    var name = $("input[name='name']").val();
-                    if (modules.length > 0) {
-                        $.ajax({
-                            url: "{{ route('admin.deployments.deployment.store') }}",
-                            type: 'POST',
-                            data: {
-                                name: modules,
-                            },
-                        })
-                    }
-                }
-            })
-
-            new MultiSelectTag('server_type_id', {
-                rounded: true, // default true
-                shadow: true, // default false
-                placeholder: 'Search', // default Search...
-                tagColor: {
-                    textColor: '#327b2c',
-                    borderColor: '#92e681',
-                    bgColor: '#eaffe6',
-                },
-                onChange: function(values) {
-                    var server_type_id = values;
-                    var name = $("input[name='name']").val();
-                    if (server_type_id.length > 0) {
-                        $.ajax({
-                            url: "{{ route('admin.deployments.deployment.store') }}",
-                            type: 'POST',
-                            data: {
-                                name: server_type_id,
-                            },
-                        })
-                    }
-                }
-            })
-        </script>
     </x-app-layout>
+
+
+    <script src="{{ asset('JS/multiselect.js') }}" type="text/javascript"></script>
+    <script>
+        new MultiSelectTag('module_id', {
+            rounded: true, // default true
+            shadow: false, // default false
+            placeholder: 'Search', // default Search...
+            tagColor: {
+                textColor: '#000000',
+                borderColor: '#444444',
+                bgColor: '#eeeeee',
+            },
+            onChange: function(values) {
+                var modules = values;
+                // var name = $("input[name='name']").val();
+                if (modules.length > 0) {
+                    $.ajax({
+                        url: "{{ route('admin.deployments.deployment.jabar') }}",
+                        type: 'POST',
+                        data: {
+                            name: modules,
+                        },
+                    })
+                }
+            }
+        })
+
+        new MultiSelectTag('server_type_id', {
+            rounded: true, // default true
+            shadow: false, // default false
+            placeholder: 'Search', // default Search...
+            tagColor: {
+                textColor: '#000000',
+                borderColor: '#444444',
+                bgColor: '#eeeeee',
+            },
+            onChange: function(values) {
+                var server_type_id = values;
+                // var name = $("input[name='name']").val();
+                if (server_type_id.length > 0) {
+                    $.ajax({
+                        url: "{{ route('admin.deployments.deployment.jabar') }}",
+                        type: 'POST',
+                        data: {
+                            name: server_type_id,
+                        },
+                    })
+                }
+            }
+        })
+    </script>
+
 </body>
+
+</html>

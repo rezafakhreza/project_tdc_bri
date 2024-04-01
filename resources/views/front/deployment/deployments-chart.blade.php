@@ -12,7 +12,7 @@
 
                 <!-- Year Select -->
                 <select id="yearSelect" class="p-2 mx-2 text-white border rounded cursor-pointer w-28 bg-darker-blue">
-                    <option value="2023">2023</option>
+                    <!-- <option value="2023">2023</option> -->
                     <option value="2024">2024</option>
                     <option value="2025">2025</option>
                     <option value="2026">2026</option>
@@ -160,6 +160,3 @@
 
 </script>
 @endsection
-
-
-

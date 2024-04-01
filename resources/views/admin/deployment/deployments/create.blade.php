@@ -4,10 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('assets/multiselect.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.min.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+    <link rel="stylesheet" href="{{ asset('CSS/multiselect.css') }}">
 </head>
 
 <body>
@@ -122,16 +119,16 @@
 
     </x-app-layout>
 
-    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+    <script src="{{ asset('JS/multiselect.js') }}" type="text/javascript"></script>
     <script>
         new MultiSelectTag('module_id', {
             rounded: true, // default true
-            shadow: true, // default false
+            shadow: false, // default false
             placeholder: 'Search', // default Search...
             tagColor: {
-                textColor: '#327b2c',
-                borderColor: '#92e681',
-                bgColor: '#eaffe6',
+                textColor: '#000000',
+                borderColor: '#444444',
+                bgColor: '#eeeeee',
             },
             onChange: function(values) {
                 var modules = values;
@@ -141,7 +138,7 @@
                         url: "{{ route('admin.deployments.deployment.jabar') }}",
                         type: 'POST',
                         data: {
-                            module_id: modules,
+                            name: modules,
                         },
                     })
                 }
@@ -150,12 +147,12 @@
 
         new MultiSelectTag('server_type_id', {
             rounded: true, // default true
-            shadow: true, // default false
+            shadow: false, // default false
             placeholder: 'Search', // default Search...
             tagColor: {
-                textColor: '#327b2c',
-                borderColor: '#92e681',
-                bgColor: '#eaffe6',
+                textColor: '#000000',
+                borderColor: '#444444',
+                bgColor: '#eeeeee',
             },
             onChange: function(values) {
                 var server_type_id = values;

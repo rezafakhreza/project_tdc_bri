@@ -55,7 +55,7 @@ class DeploymentController extends Controller
     /**
      * Get chart data
      */
-    public function getChartData(Request $request)
+    public function getChartData(Request $request) //ini masih error gamau nampilin array dari server_type
     {
         $module_id = $request->input('module_id');
         $year = $request->input('year', date('Y'));
