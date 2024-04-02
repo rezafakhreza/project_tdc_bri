@@ -48,10 +48,6 @@
                     url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                 },
                 columns: [{
-                        data: 'id',
-                        name: 'id',
-                    },
-                    {
                         data: 'name',
                         name: 'name'
                     },
@@ -137,7 +133,7 @@
                                 <a href="{{ route('admin.deployments.server-types.create') }}"
                                     class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                     style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                    + Add Module
+                                    + Add Server Type
                                 </a>
                             @endhasanyrole
                         </div>
@@ -146,9 +142,6 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 1%"
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
-                                        ID</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
                                         Server Type Name</th>

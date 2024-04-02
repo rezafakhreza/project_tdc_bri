@@ -46,10 +46,6 @@
                 },
 
                 columns: [{
-                        data: 'id',
-                        name: 'id',
-                    },
-                    {
                         data: 'type',
                         name: 'type',
                     },
@@ -148,9 +144,6 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 1%"
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
-                                        ID</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
                                         Type</th>

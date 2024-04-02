@@ -47,10 +47,6 @@
                     type: 'GET',
                 },
                 columns: [{
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
                         data: 'title',
                         name: 'title'
                     },
@@ -150,8 +146,6 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 1%"
-                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">ID
                                     </th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Title

@@ -124,18 +124,11 @@ class DeploymentController extends Controller
         $modules = implode(',', $request->module_id);
         $serverType = implode(',', $request->server_type_id);
 
-        $title = $request->input('title');
-        $deploy_date = $request->input('deploy_date');
-        $id = str_replace('-', '', $deploy_date) . substr($title, 0, 3);
-
-        $request->merge(['id' => $id]);
-
         $data = [
-            'id' => $id,
-            'title' => $title,
+            'title' => $request->input('title'),
             'module_id' => $modules,
             'server_type_id' => $serverType,
-            'deploy_date' => $deploy_date,
+            'deploy_date' => $request->input('deploy_date'),
             'document_status' => $request->input('document_status'),
             'document_description' => $request->input('document_description'),
             'cm_status' => $request->input('cm_status'),
@@ -166,25 +159,6 @@ class DeploymentController extends Controller
     /**
      * Get server types by module id.
      */
-    public function getServerTypesByModule($module_id, $selectedServerTypeId = null)
-    {
-        $serverTypes = DeploymentServerType::where('module_id', $module_id)
-            ->where('is_active', 1)
-            ->get();
-
-        // Tambahkan server type yang saat ini dipilih jika tidak aktif
-        if ($selectedServerTypeId) {
-            $selectedServerType = DeploymentServerType::where('id', $selectedServerTypeId)
-                ->where('is_active', 0)
-                ->first();
-
-            if ($selectedServerType) {
-                $serverTypes->push($selectedServerType);
-            }
-        }
-
-        return response()->json($serverTypes);
-    }
 
     public function jabar(Request $request)
     {

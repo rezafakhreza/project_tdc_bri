@@ -92,15 +92,6 @@ class BackgroundJobController extends Controller
         $id = str_replace('-', '', $date) . substr($title, 0, 1) . substr($title2, 0, 2) . $randomDigits;
         $request->merge(['id' => $id]);
 
-        //cek apakah digit angka sudah digunakan atau belum
-        // $cek = BackgroundJob::where('id', $randomDigits)->first();
-        // // Jika angka acak sudah digunakan, maka generate angka acak baru hingga ditemukan yang belum digunakan
-        // while ($cek) {
-        //     $randomDigits = mt_rand(100, 999);
-        //     $cek = BackgroundJob::where('id', $randomDigits)->first();
-        // }
-        // $id .= $randomDigits;
-
         $data = [
             'id' => $id,
             'type' => $request->input('type'),
@@ -149,18 +140,7 @@ class BackgroundJobController extends Controller
         
         $job = BackgroundJob::findOrFail($id);
 
-        // // ini untuk mengubah id
-        $date = $request->input('execution_date');
-        $title = $request->input('type');
-        $process = Process::where('id', $request->input('process_id'))->first(); // Menggunakan first() untuk mendapatkan satu objek
-        $title2 = $process->name; // Mengambil nilai 'name' dari objek $process
-        $randomDigits = mt_rand(100, 999);
-
-        $id = str_replace('-', '', $date) . substr($title, 0, 1) . substr($title2, 0, 2) . $randomDigits;
-        $request->merge(['id' => $id]);
-
         $data = [
-            'id' => $id,
             'type' => $request->input('type'),
             'process_id' => $request->input('process_id'),
             'data_amount_to_EIM' => $request->input('process_id'),

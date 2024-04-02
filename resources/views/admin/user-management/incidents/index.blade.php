@@ -59,11 +59,6 @@
                 },
 
                 columns: [{
-                        data: 'id',
-                        name: 'id',
-                        searchable: true,
-                    },
-                    {
                         data: 'reported_date',
                         name: 'reported_date',
                         render: function(data, type, row) {
@@ -142,11 +137,11 @@
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Import Data
                             </a>
-                            <a href=#
+                            <!-- <a href=#
                                 class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 Export Data
-                            </a>
+                            </a> -->
                             <a href="{{ route('user-management.request-by-type') }}" target="_blank"
                                 class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
@@ -158,8 +153,6 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 1%"
-                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">ID
                                     </th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Reported Date</th>
