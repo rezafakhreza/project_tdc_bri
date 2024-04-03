@@ -25,9 +25,10 @@ class RolePermissionSeeder extends Seeder
             'view process background jobs', 'manage process background jobs',
             'view incidents user management', 'manage incidents user management',
             'view monthly target user management', 'manage monthly target user management',
+            'view branch user management', 'manage branch user management', 
             'view incidents brisol', 'manage incidents brisol',
             'view monthly target brisol', 'manage monthly target brisol',
-            'view users', 'manage users',
+            'view users', 'manage users', 
         ];
 
         foreach ($permissions as $permission) {
@@ -56,13 +57,13 @@ class RolePermissionSeeder extends Seeder
         $userBackgroundJobsRole = Role::create(['name' => 'User Background Jobs']);
         $userBackgroundJobsRole->givePermissionTo(['manage background jobs', 'view background jobs', 'view process background jobs']);
 
-        // Admin User Management - can manage incidents and manage monthly target
+        // Admin User Management - can manage incidents and manage monthly target and (manage branch (masih forbidden))
         $adminUserManagementRole = Role::create(['name' => 'Admin Usman']);
-        $adminUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'manage monthly target user management', 'view monthly target user management']);
+        $adminUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'manage monthly target user management', 'view monthly target user management', 'manage branch user management', 'view branch user management']);
 
-        // User User Management - can manage incidents and view monthly target
+        // User User Management - can manage incidents and view monthly target and (view branch (masih forbidden))
         $userUserManagementRole = Role::create(['name' => 'User Usman']);
-        $userUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'view monthly target user management']);
+        $userUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'view monthly target user management', 'view branch user management']);
 
         // Admin Brisol - can manage incidents and manage monthly target
         $adminBrisolRole = Role::create(['name' => 'Admin Brisol']);

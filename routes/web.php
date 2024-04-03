@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\Brisol\BrisolController as FrontBrisolController;
 use App\Http\Controllers\Admin\Brisol\IncidentsController as BrisolIncidentsController;
 use App\Http\Controllers\Front\Deployment\DeploymentController as FrontDeploymentController;
 use App\Http\Controllers\Admin\UserManagement\IncidentsController as UsmanIncidentsController;
+use App\Http\Controllers\Admin\UserManagement\BranchController as UsmanBranchController;
 use App\Http\Controllers\Admin\Brisol\MonthlyTargetController as BrisolMonthlyTargetController;
 use App\Http\Controllers\Admin\UserManagement\MonthlyTargetController as UsmanMonthlyTargetController;
 use App\Http\Controllers\Front\UserManagement\UserManagementController as FrontUserManagementController;
@@ -75,11 +76,11 @@ Route::middleware([
         Route::prefix('user-management')->name('user-management.')->group(function () {
             Route::resource('incidents', UsmanIncidentsController::class)->middleware('permission:manage incidents user management');
             Route::resource('monthly-target', UsmanMonthlyTargetController::class)->middleware('permission:manage monthly target user management');
+            Route::resource('branch', UsmanBranchController::class)->middleware('permission:manage branch user management');
 
             // only view incidents user management and monthly target user management
             Route::get('/monthly-target', [UsmanMonthlyTargetController::class, 'index'])->name('monthly-target.index')->middleware('permission:view monthly target user management');
-            // Route::get('/get-incidents-data', [UsmanMonthlyTargetController::class, 'index'])->name('get.incidents.data'); //tambahan dhila 
-
+            Route::get('/branch', [UsmanBranchController::class, 'index'])->name('branch.index')->middleware('permission:view branch user management');
         });
 
         Route::prefix('brisol')->name('brisol.')->group(function () {
