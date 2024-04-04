@@ -34,8 +34,8 @@ class BranchImport implements ToCollection, WithHeadingRow
     {
         return [
             'branch_code' => $row['kode_uker'],
-            'branc_name' => $row['nama_uker'],
-            'kanwil_code' => $row['uker_induk'],
+            'branch_name' => $row['nama_uker'],
+            'kanwil_code' => $row['uker_induk_kanwil'],
             'kanwil_name' => $row['level_uker'],
         ];
     }
@@ -54,15 +54,15 @@ class BranchImport implements ToCollection, WithHeadingRow
         return $changes;
     }
 
-    private function convertExcelDate($excelDate)
-    {
-        if (is_numeric($excelDate)) {
-            $unixDate = ($excelDate - 25569) * 86400;
-            return gmdate("Y-m-d", $unixDate);
-        }
+    // private function convertExcelDate($excelDate)
+    // {
+    //     if (is_numeric($excelDate)) {
+    //         $unixDate = ($excelDate - 25569) * 86400;
+    //         return gmdate("Y-m-d", $unixDate);
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     /**
      * @return int
@@ -70,6 +70,6 @@ class BranchImport implements ToCollection, WithHeadingRow
     // heading
     public function headingRow(): int
     {
-        return 4;
+        return 3;
     }
 }
