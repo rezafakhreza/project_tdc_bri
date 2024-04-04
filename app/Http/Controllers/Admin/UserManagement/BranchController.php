@@ -22,26 +22,12 @@ class BranchController extends Controller
     {
         if (request()->ajax()) {
             $query = DB::table('usman_branch')
-                ->select('usman_branch.branch_code', 'usman_branch.branch_name', 'usman_branch.branch_code', 'usman_branch.kanwil_name')
+                ->select('usman_branch.branch_code', 'usman_branch.branch_name', 'usman_branch.kanwil_code', 'usman_branch.kanwil_name')
                 ->get();
 
                 return DataTables::of($query)
                 ->make();
-
-            // return DataTables::of($query)
-            //     ->addColumn('branch_name', function ($row) {
-            //         return $row->branch_name;
-            //     })
-            //     ->addColumn('kanwil_name', function ($row) {
-            //         return $row->kanwil_name;
-            //     })
-            //     ->addColumn('req_type', function ($row) {
-            //         return $row->req_type;
-            //     })
-            //     ->rawColumns(['branch_name', 'req_type'])
-            //     ->make(true);
-        } //tinggal masukkin else biar bisa detek soalnya ini masih yg kondisi berhasil aja jd semua kemungkinan bisa muncul popup berhasil tp ada pesan error dari website
-
+        } 
         return view('admin.user-management.branch.index');
     }
 

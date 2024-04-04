@@ -3,26 +3,73 @@
 namespace App\Imports\UserManagement;
 
 use App\Models\UserManagement\Branch;
-use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\Importable;
 
-
-class BranchImport implements ToModel, WithHeadingRow
+class BranchImport implements ToCollection, WithHeadingRow
 {
-    public function model(array $row)
+    use Importable;
+
+    public function collection(Collection $rows)
     {
-        return DB::transaction(function () use ($row) {
+        foreach ($rows as $row) {
+            $rowArray = $row->toArray();
 
-            return new Branch([
-                'branch_code' => $row['kode_kerja'],
-                'branc_name' => $row['nama_uker'],
-                'kanwil_code' => $row['uker_induk'],
-                'kanwil_name' => $row['level_uker'],
+            $branch = Branch::where('branch_code', $rowArray['kode_uker'])->first();
 
-            ]);
-        });
+            if ($branch) {
+                $updatedFields = $this->checkForUpdates($branch, $rowArray);
+                if (!empty($updatedFields)) {
+                    $branch->update($updatedFields);
+                }
+            } else {
+                Branch::create($this->modelArray($rowArray));
+            }
+        }
     }
 
-    
+    private function modelArray(array $row)
+    {
+        return [
+            'branch_code' => $row['kode_uker'],
+            'branc_name' => $row['nama_uker'],
+            'kanwil_code' => $row['uker_induk'],
+            'kanwil_name' => $row['level_uker'],
+        ];
+    }
+
+    private function checkForUpdates(Branch $branch, array $row)
+    {
+        $attributes = $this->modelArray($row);
+        $changes = [];
+
+        foreach ($attributes as $key => $value) {
+            if ($branch->$key != $value) {
+                $changes[$key] = $value;
+            }
+        }
+
+        return $changes;
+    }
+
+    private function convertExcelDate($excelDate)
+    {
+        if (is_numeric($excelDate)) {
+            $unixDate = ($excelDate - 25569) * 86400;
+            return gmdate("Y-m-d", $unixDate);
+        }
+
+        return null;
+    }
+
+    /**
+     * @return int
+     */
+    // heading
+    public function headingRow(): int
+    {
+        return 4;
+    }
 }

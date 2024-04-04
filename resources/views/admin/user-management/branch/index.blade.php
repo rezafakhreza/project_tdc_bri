@@ -27,6 +27,7 @@
 
     <x-slot name="script">
         <script>
+    
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
                 serverSide: false,
@@ -79,30 +80,18 @@
                             <a href="{{ route('admin.user-management.branch.create') }}" class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Import Data
                             </a>
-                            <!-- <a href=#
-                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
-                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                Export Data
-                            </a> -->
-                            <!-- <a href="{{ route('user-management.request-by-type') }}" target="_blank"
-                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
-                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                View Chart
-                            </a> -->
                         </div>
                     </div>
                     <div class="dataTables_wrapper">
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    </th>
-
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Kode Unit Kerja</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Unit Kerja</th>
+                                    Unit Kerja</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Kode Kantor Wilayah</th>                
+                                        Kode Kantor Wilayah</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Kantor Wilayah</th>
                                 </tr>
