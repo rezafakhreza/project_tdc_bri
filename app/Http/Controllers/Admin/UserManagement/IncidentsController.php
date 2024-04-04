@@ -84,7 +84,7 @@ class IncidentsController extends Controller
         // Pindahkan file baru ke direktori tujuan
         $file->move('DataImport', $namaFile);
 
-        
+
 
         // Import data dari file baru
         Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
