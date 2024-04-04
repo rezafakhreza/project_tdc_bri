@@ -46,8 +46,28 @@ class IncidentsController extends Controller
         ]);
 
         $file = $request->file('file');
+        $namaFile = $file->getClientOriginalName();
 
-        Excel::import(new IncidentsImport, $file);
+        // Memeriksa apakah file dengan nama yang sama sudah ada
+        if (file_exists(public_path('/DataImport/' . $namaFile))) {
+            // Menampilkan pesan konfirmasi untuk menimpa file
+            if ($request->has('overwrite') && $request->overwrite == 'true') {
+                // Jika konfirmasi dilakukan, hapus file lama
+                unlink(public_path('/DataImport/' . $namaFile));
+
+                // Hapus semua insiden
+                Incident::truncate();
+            } else {
+                // Jika tidak ingin menimpa, kembalikan dengan pesan error
+                return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+            }
+        }
+
+        // Pindahkan file baru ke direktori tujuan
+        $file->move('DataImport', $namaFile);
+
+
+        Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
 
         return redirect()->route('admin.brisol.incidents.index')->with('success', 'Incidents imported successfully');
     }
