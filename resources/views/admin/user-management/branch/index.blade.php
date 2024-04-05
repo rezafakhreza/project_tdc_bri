@@ -3,21 +3,29 @@
     <x-slot name="header">
         <div x-data="{ open: false }" class="relative inline-block text-left font-poppins">
             <div>
-                <button @click="open = !open" type="button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <button @click="open = !open" type="button"
+                    class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400"
+                    id="menu-button" aria-expanded="true" aria-haspopup="true">
                     {{-- show menu apa sekarang --}}
                     Branch
-                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
                     </svg>
                 </button>
             </div>
 
-            <div x-show="open" @click.away="open = false" class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+            <div x-show="open" @click.away="open = false"
+                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                    <a href="{{ route('admin.user-management.monthly-target.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="{{ route('admin.user-management.monthly-target.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Monthly Target
                     </a>
-                    <a href="{{ route('admin.user-management.incidents.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="{{ route('admin.user-management.incidents.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         User Management
                     </a>
                 </div>
@@ -27,12 +35,11 @@
 
     <x-slot name="script">
         <script>
-    
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
                 serverSide: false,
                 scrollX: true,
-                stateSave: true,
+                stateSave: false,
                 ajax: {
                     url: '{{ route('admin.user-management.branch.index') }}',
                     type: 'GET',
@@ -77,7 +84,9 @@
                         </div>
 
                         <div class="button-container flex gap-4">
-                            <a href="{{ route('admin.user-management.branch.create') }}" class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <a href="{{ route('admin.user-management.branch.create') }}"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Import Data
                             </a>
                         </div>
@@ -86,13 +95,17 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <th style="max-width: 1%"
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Kode Unit Kerja</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                    Unit Kerja</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <th
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
+                                        Unit Kerja</th>
+                                    <th
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Kode Kantor Wilayah</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <th
+                                        style="max-width: 1%"class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Kantor Wilayah</th>
                                 </tr>
                             </thead>

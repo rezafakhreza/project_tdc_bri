@@ -42,7 +42,7 @@
             var datatable = $('#dataTable').DataTable({
                 processing: true,
                 serverSide: true,
-                stateSave: true,
+                stateSave: false,
                 ajax: {
                     url: '{{ route('admin.user-management.monthly-target.index') }}',
                     type: 'GET',

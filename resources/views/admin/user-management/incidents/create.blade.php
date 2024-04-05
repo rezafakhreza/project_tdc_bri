@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Admin</x-slot>
+
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800 font-poppins">
             <a href="#!" onclick="window.history.go(-1); return false;">
@@ -30,19 +31,28 @@
                     </div>
                 @endif
 
+                <!-- Overlay untuk loading animation -->
+                <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <div class="flex items-center">
+                            <div
+                                class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6 mr-2">
+                            </div>
+                            <span class="text-gray-700">Uploading...</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Checkbox untuk opsi "Overwrite" di luar alert -->
-
-
                 <!-- Form untuk tombol "Import" di dalam alert -->
-                <form action="{{ route('admin.user-management.incidents.store') }}" method="POST"
+                <form id="uploadForm" action="{{ route('admin.user-management.incidents.store') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <input type="file" name="file" class=" rounded-lg" required>
-                        <button type="submit"
+                        <input type="file" name="file" class="rounded-lg" required>
+                        <button id="importButton" type="submit"
                             class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
                     </div>
-
                 </form>
 
                 <form action="{{ route('admin.user-management.incidents.store') }}" method="POST"
@@ -58,4 +68,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function() {
+            showLoadingOverlay();
+        });
+
+        function showLoadingOverlay() {
+            document.getElementById("loadingOverlay").classList.remove("hidden");
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById("loadingOverlay").classList.add("hidden");
+        }
+    </script>
+
+    <style>
+        .loader {
+            border-top-color: #3498db;
+            animation: spinner 1.5s linear infinite;
+        }
+
+        @keyframes spinner {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </x-app-layout>

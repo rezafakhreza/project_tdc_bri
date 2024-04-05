@@ -10,7 +10,7 @@
         <script>
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
-                processing: true,
+                processing: false,
                 serverSide: true,
                 stateSave: true,
                 ajax: {
@@ -90,19 +90,19 @@
                             <thead>
                                 <tr>
                                     <th style="max-width: 1%"
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         ID</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider ">
                                         Name</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider ">
                                         Email</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider ">
                                         Role</th>
                                     <th style="max-width: 1%"
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider rounded-tl-md">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider ">
                                         Action</th>
                                 </tr>
                             </thead>
