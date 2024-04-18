@@ -9,6 +9,20 @@
         </h2>
     </x-slot>
 
+    <!-- Overlay untuk loading animation -->
+    <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+
+        <div class="bg-white p-4 rounded-lg shadow z-10">
+            <div class="flex items-center">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6 mr-2"></div>
+                <span class="text-gray-700">Uploading...</span>
+            </div>
+        </div>
+        <div
+            style="background-color: rgba(0, 0, 0, 0.5);  position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+        </div>
+    </div>
+
     <div class="py-12 font-poppins">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-6 bg-white rounded-lg">
@@ -31,19 +45,6 @@
                     </div>
                 @endif
 
-                <!-- Overlay untuk loading animation -->
-                <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <div class="flex items-center">
-                            <div
-                                class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6 mr-2">
-                            </div>
-                            <span class="text-gray-700">Uploading...</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Checkbox untuk opsi "Overwrite" di luar alert -->
                 <!-- Form untuk tombol "Import" di dalam alert -->
                 <form id="uploadForm" action="{{ route('admin.user-management.incidents.store') }}" method="POST"
                     enctype="multipart/form-data">

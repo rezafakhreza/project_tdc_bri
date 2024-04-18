@@ -32,16 +32,14 @@
         <script>
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
-                processing: true,
-                serverSide: true,
+                serverSide: false,
                 scrollX: true,
-                stateSave: true,
+                stateSave: false,
                 ajax: {
                     url: '{{ route('admin.background-jobs-monitoring.jobs.index') }}',
                     type: 'GET',
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'type',
                         name: 'type',
                     },
@@ -163,11 +161,13 @@
                         </div>
                         <div class="button-container flex gap-4">
                             <a href="{{ route('admin.background-jobs-monitoring.jobs.create') }}"
-                                class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Add Jobs
                             </a>
                             <a href="{{ route('background-jobs-monitoring.daily') }}" target="_blank"
-                                class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue font-poppins">
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 View Chart
                             </a>
                         </div>
@@ -176,7 +176,7 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    
+
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
                                         Module</th>

@@ -8,6 +8,20 @@
         </h2>
     </x-slot>
 
+    <!-- Overlay untuk loading animation -->
+    <div id="loadingOverlay" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+
+        <div class="bg-white p-4 rounded-lg shadow z-10">
+            <div class="flex items-center">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6 mr-2"></div>
+                <span class="text-gray-700">Uploading...</span>
+            </div>
+        </div>
+        <div
+            style="background-color: rgba(0, 0, 0, 0.5);  position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+        </div>
+    </div>
+
     <div class="py-12 font-poppins">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-6 bg-white rounded-lg">
@@ -34,7 +48,7 @@
 
 
                 <!-- Form untuk tombol "Import" di dalam alert -->
-                <form action="{{ route('admin.user-management.branch.store') }}" method="POST"
+                <form id="uploadForm" action="{{ route('admin.user-management.branch.store') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
@@ -58,4 +72,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function() {
+            showLoadingOverlay();
+        });
+
+        function showLoadingOverlay() {
+            document.getElementById("loadingOverlay").classList.remove("hidden");
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById("loadingOverlay").classList.add("hidden");
+        }
+    </script>
+
+    <style>
+        .loader {
+            border-top-color: #3498db;
+            animation: spinner 1.5s linear infinite;
+        }
+
+        @keyframes spinner {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </x-app-layout>

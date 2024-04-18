@@ -69,6 +69,16 @@
             }
         })
         document.addEventListener('DOMContentLoaded', function() {
+            // Set default start date to the beginning of the current year
+            const currentDate = new Date();
+            const startOfYear = new Date(currentDate.getFullYear(), 0, 1);
+            const startDateSelector = document.getElementById('start-date-selector');
+            startDateSelector.value = startOfYear.toISOString().slice(0, 10);
+
+            // Set default end date to the current month and year
+            const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+            const endDateSelector = document.getElementById('end-date-selector');
+            endDateSelector.value = endOfMonth.toISOString().slice(0, 10);
 
             applyFilter();
 
@@ -78,16 +88,27 @@
         });
 
         function applyFilter() {
+            const currentDate = new Date();
+
+            // Set start date to the beginning of the current year (1 Januari tahun ini)
+            const startOfYear = new Date(currentDate.getFullYear(), 0, 1);
             const startDateSelector = document.getElementById('start-date-selector');
+            startDateSelector.value = startOfYear.toISOString().slice(0, 10);
+
+            // Set end date to today's date
+            const endDate = currentDate;
             const endDateSelector = document.getElementById('end-date-selector');
+            endDateSelector.value = endDate.toISOString().slice(0, 10);
 
+            // Get the newly set start and end dates
             const startDate = startDateSelector.value;
-            const endDate = endDateSelector.value;
+            const dates = getDatesInRange(new Date(startDate), endDate);
 
-            const dates = getDatesInRange(new Date(startDate), new Date(endDate));
-
-            fetchData(startDate, endDate, dates);
+            // Fetch data based on the updated date range
+            fetchData(startDate, endDate.toISOString().slice(0, 10), dates);
         }
+
+
 
         function getDatesInRange(startDate, endDate) {
             const dates = [];
