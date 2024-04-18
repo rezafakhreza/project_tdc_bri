@@ -45,6 +45,10 @@ class IncidentsImport implements ToModel, WithHeadingRow
             return new Incident([
                 'id' => $id,
                 'reported_date' => $this->parseIndonesianDate($row['tanggal_disetujui']),
+                'pn' => $row['pn'],
+                'nama' => $row['nama'],
+                'jabatan' => $row['jabatan'],
+                'bagian' => $row['bagian'],
                 'req_type' => $row['jenis_pengajuan'],
                 'branch_code' => $branchCode,
                 'req_status' => $row['status_pengajuan'],

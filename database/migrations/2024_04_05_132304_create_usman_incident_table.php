@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('usman_incident', function (Blueprint $table) {
             $table->string('id',100)->primary();
             $table->date('reported_date');
+            $table->string('pn');
+            $table->string('nama');
+            $table->string('jabatan');
+            $table->string('bagian');
             $table->string('req_type');
             $table->string('branch_code');
             $table->foreign('branch_code')->references('branch_code')->on('usman_branch');
