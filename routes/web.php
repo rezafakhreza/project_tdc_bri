@@ -29,7 +29,7 @@ use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController 
 */
 
 Route::get('/', function () {
-    return view('front.user-management.user-management-request');
+    return view('front.DashView');
 });
 
 Route::get('/deployments/chart', [FrontDeploymentController::class, 'index'])->name('deployments.index');

@@ -27,6 +27,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.min.js"></script>
+
     {{-- <style>
         body {
             background-image: url('img/cover.jpg');
@@ -61,36 +64,41 @@
         <div class="menu-bar mt-8">
             <div class="menu">
                 <ul class="menu-link">
-                    <li class="nav-link mb-6 @if (Request::is('/')) active @endif">
+                    <li class="nav-link mb-6 @if (Request::is('/')) active @endif"
+                        data-tippy-content="Dashboard">
                         <a href="/" class="icon-link">
                             <i class='bx bx-home icon'></i>
                             <span class="text nav-text"> Dashboard </span>
                         </a>
                     </li>
 
-                    <li class="nav-link mb-6 @if (Request::is('deployments/calendar')) active @endif">
-                        <a href="/deployments/calendar" class="icon-link">
+                    <li class="nav-link mb-6 @if (request()->routeIs('deployments.*')) active @endif"
+                        data-tippy-content="Deployments">
+                        <a href="deployments.index" class="icon-link">
                             <i class='bx bx-cloud-upload icon'></i>
                             <span class="text nav-text"> Deployments </span>
                         </a>
                     </li>
 
-                    <li class="nav-link mb-6 @if (Request::is('background-jobs-monitoring/daily')) active @endif">
-                        <a href="/background-jobs-monitoring/daily" class="icon-link">
+                    <li class="nav-link mb-6 @if (request()->routeIs('background-jobs-monitoring.*')) active @endif"
+                        data-tippy-content="Background Jobs">
+                        <a href="{{ route('background-jobs-monitoring.daily') }}" class="icon-link">
                             <i class='bx bx-desktop icon'></i>
                             <span class="text nav-text"> Background Jobs </span>
                         </a>
                     </li>
 
-                    <li class="nav-link mb-6 @if (Request::is('user-management/request-by-type')) active @endif">
-                        <a href="/user-management/request-by-type" class="icon-link">
+                    <li class="nav-link mb-6 @if (request()->routeIs('user-management.*')) active @endif"
+                        data-tippy-content="User Management">
+                        <a href="{{ route('user-management.request-by-type') }}" class="icon-link">
                             <i class='bx bxs-user-voice icon'></i>
                             <span class="text nav-text"> User Management </span>
                         </a>
                     </li>
 
-                    <li class="nav-link mb-6 @if (Request::is('brisol/service-ci')) active @endif">
-                        <a href="/brisol/service-ci" class="icon-link">
+                    <li class="nav-link mb-6 @if (request()->routeIs('brisol.*')) active @endif"
+                        data-tippy-content="BRISOL">
+                        <a href="{{ route('brisol.service-ci') }}" class="icon-link">
                             <i class='bx bx-stats icon'></i>
                             <span class="text nav-text"> BRISOL </span>
                         </a>
@@ -118,6 +126,29 @@
     </section>
 
     @yield('script')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi Tippy
+            tippy('[data-tippy-content]', {
+                placement: 'right', // Letakkan tooltip di sebelah kanan
+                arrow: false, // Hilangkan panah
+                trigger: 'mouseenter', // Aktifkan tooltip saat mouse masuk
+                hideOnClick: true, // Sembunyikan tooltip saat item diklik
+                content(reference) {
+                    return reference.getAttribute('data-tippy-content');
+                },
+                onShow(instance) {
+                    const sidebar = document.querySelector('.sidebar');
+                    if (sidebar.classList.contains('open')) {
+                        instance.disable(); // Matikan tooltip saat sidebar terbuka
+                    } else {
+                        instance.enable(); // Aktifkan tooltip saat sidebar tertutup
+                    }
+                }
+            });
+        });
+    </script>
 
 
 </body>
