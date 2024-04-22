@@ -23,9 +23,12 @@ class DeploymentController extends Controller
 
             return DataTables::of($query)
                 ->addColumn('module', function ($deployment) {
-                    $moduleIds = explode(',', $deployment->module_id);
-                    $moduleNames = DeploymentModule::whereIn('id', $moduleIds)->pluck('name')->implode(', ');
+                    $moduleNames = $deployment->module()->pluck('name')->implode(', ');
                     return $moduleNames;
+                })
+                ->addColumn('server_type', function ($deployment) {
+                    $serverTypeNames = $deployment->serverType()->pluck('name')->implode(', ');
+                    return $serverTypeNames;
                 })
                 ->addColumn('updated_at', function ($deployment) {
                     return $deployment->updated_at->format('d F Y H:i:s'); // Format the date as needed
@@ -68,13 +71,10 @@ class DeploymentController extends Controller
      */
     public function store(Request $request)
     {
-        $modules = implode(',', $request->module_id);
-        $serverType = implode(',', $request->server_type_id);
-
-        // // ini untuk mengubah id
+        // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
-        $id = str_replace('-', '', $deploy_date) . substr($title, 0, 3);
+        $id = $title . '_' . str_replace('-', '', $deploy_date);
 
         $request->merge(['id' => $id]);
 
@@ -84,20 +84,19 @@ class DeploymentController extends Controller
                 ->with('error', 'Deployment already exists. Please choose another title.');
         }
 
-        $data = [
+        $data = Deployment::create([
             'id' => $id,
-            'title' => $title,
-            'module_id' => $modules,
-            'server_type_id' => $serverType,
-            'deploy_date' => $deploy_date,
+            'title' => $request->input('title'),
+            'deploy_date' => $request->input('deploy_date'),
             'document_status' => $request->input('document_status'),
             'document_description' => $request->input('document_description'),
             'cm_status' => $request->input('cm_status'),
             'cm_description' => $request->input('cm_description'),
-        ];
+        ]);
 
-        Deployment::create($data);
-
+        $data->module()->attach($request->input('module_id'));
+        $data->serverType()->attach($request->input('server_type_id'));
+        
         return redirect()->route('admin.deployments.deployment.index')
             ->with('success', 'Success Create Deployment');
     }
@@ -120,20 +119,12 @@ class DeploymentController extends Controller
 
     public function update(Request $request, Deployment $deployment)
     {
+        
+        $title = $request->input('title');
+        $deploy_date = $request->input('deploy_date');
+        $id = $title . '_' . str_replace('-', '', $deploy_date);
 
-        $modules = implode(',', $request->module_id);
-        $serverType = implode(',', $request->server_type_id);
-
-        $data = [
-            'title' => $request->input('title'),
-            'module_id' => $modules,
-            'server_type_id' => $serverType,
-            'deploy_date' => $request->input('deploy_date'),
-            'document_status' => $request->input('document_status'),
-            'document_description' => $request->input('document_description'),
-            'cm_status' => $request->input('cm_status'),
-            'cm_description' => $request->input('cm_description'),
-        ];
+        $request->merge(['id' => $id]);
 
         if ($deployment->title != $request->title) {
             if (Deployment::where('title', $request->title)->first()) {
@@ -141,7 +132,18 @@ class DeploymentController extends Controller
             }
         }
 
-        $deployment->update($data);
+        $deployment->update([
+            'id' => $id,
+            'title' => $request->input('title'),
+            'deploy_date' => $request->input('deploy_date'),
+            'document_status' => $request->input('document_status'),
+            'document_description' => $request->input('document_description'),
+            'cm_status' => $request->input('cm_status'),
+            'cm_description' => $request->input('cm_description'),
+        ]);
+
+        $deployment->module()->sync($request->input('module_id'));
+        $deployment->serverType()->sync($request->input('server_type_id'));
 
         return redirect()->route('admin.deployments.deployment.index')->with('success', 'Deployment updated successfully.');
     }

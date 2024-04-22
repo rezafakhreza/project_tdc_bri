@@ -14,13 +14,9 @@ class DeploymentServerType extends Model
         'is_active',
     ];
 
-    public function module()
-    {
-        return $this->hasMany(DeploymentModule::class);
-    }
-
     public function deployments()
     {
-        return $this->hasMany(Deployment::class);
+        return $this->belongsToMany(Deployment::class, 'deployment_has_server_type', 'server_type_id', 'deployment_id')
+        ->withTimestamps();
     }
 }

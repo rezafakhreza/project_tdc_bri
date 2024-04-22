@@ -55,6 +55,10 @@
                         name: 'module'
                     },
                     {
+                        data: 'server_type',
+                        name: 'server_type'
+                    },
+                    {
                         data: 'deploy_date',
                         name: 'deploy_date'
                     },
@@ -152,6 +156,9 @@
                                     </th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Module
+                                    </th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Server Type
                                     </th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Deploy

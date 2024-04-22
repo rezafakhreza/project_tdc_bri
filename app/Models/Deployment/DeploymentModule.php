@@ -4,7 +4,6 @@ namespace App\Models\Deployment;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class DeploymentModule extends Model
 {
@@ -18,11 +17,7 @@ class DeploymentModule extends Model
 
     public function deployments()
     {
-        return $this->hasMany(Deployment::class);
-    }
-
-    public function serverTypes()
-    {
-        return $this->hasMany(DeploymentServerType::class);
+        return $this->belongsToMany(Deployment::class, 'deployment_has_module', 'module_id', 'deployment_id')
+        ->withTimestamps();
     }
 }

@@ -13,8 +13,6 @@ class Deployment extends Model
     protected $fillable = [
         'id',
         'title',
-        'module_id',
-        'server_type_id',
         'deploy_date',
         'document_status',
         'document_description',
@@ -22,16 +20,13 @@ class Deployment extends Model
         'cm_description',
     ];
 
-    // Relationships
-    public function module()
-    {
-        return $this->belongsTo(DeploymentModule::class);
+    public function module(){
+        return $this->belongsToMany(DeploymentModule::class, 'deployment_has_module', 'deployment_id', 'module_id')
+        ->withTimestamps();
     }
 
-    public function serverType()
-    {
-        return $this->belongsTo(DeploymentServerType::class);
+    public function serverType(){
+        return $this->belongsToMany(DeploymentServerType::class, 'deployment_has_server_type', 'deployment_id', 'server_type_id')
+        ->withTimestamps();
     }
-
-    
 }

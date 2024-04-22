@@ -46,7 +46,7 @@
                                     <select id="module_id" name="module_id[]" multiple="multiple" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                         @foreach ($modules as $module)
                                         @php
-                                        $selected = in_array($module->id, explode(',', $deployment->module_id));
+                                        $selected = in_array($module->id, $deployment->module->pluck('id')->toArray());
                                         @endphp
                                         <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
                                             {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
@@ -61,10 +61,7 @@
                                     <select id="server_type_id" name="server_type_id[]" multiple="multiple" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                         @foreach ($serverTypes as $serverType)
                                         @php
-                                        $selected = in_array(
-                                        $serverType->id,
-                                        explode(',', $deployment->server_type_id),
-                                        );
+                                        $selected = in_array($serverType->id, $deployment->serverType->pluck('id')->toArray());
                                         @endphp
                                         <option value="{{ $serverType->id }}" {{ $selected ? 'selected' : '' }}>
                                             {{ $serverType->name }}{{ $serverType->is_active == 0 ? ' (Currently Non-Active)' : '' }}

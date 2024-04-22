@@ -132,13 +132,12 @@
             },
             onChange: function(values) {
                 var modules = values;
-                // var name = $("input[name='name']").val();
                 if (modules.length > 0) {
                     $.ajax({
                         url: "{{ route('admin.deployments.deployment.jabar') }}",
                         type: 'POST',
                         data: {
-                            name: modules,
+                            module_id: values,
                         },
                     })
                 }
@@ -156,13 +155,12 @@
             },
             onChange: function(values) {
                 var server_type_id = values;
-                // var name = $("input[name='name']").val();
                 if (server_type_id.length > 0) {
                     $.ajax({
                         url: "{{ route('admin.deployments.deployment.jabar') }}",
                         type: 'POST',
                         data: {
-                            name: server_type_id,
+                            server_type_id: values,
                         },
                     })
                 }

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Front\Deployment;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 use App\Models\Deployment\Deployment;
 use App\Models\Deployment\DeploymentModule;
-use App\Models\Deployment\DeploymentServerType;
 
 class DeploymentController extends Controller
 {
@@ -31,10 +31,9 @@ class DeploymentController extends Controller
         $events = [];
 
         foreach ($deployments as $deployment) {
-            $moduleIds = explode(',', $deployment->module_id);
-            $moduleNames = DeploymentModule::whereIn('id', $moduleIds)->pluck('name')->implode(', ');
-            $serverTypeIds = explode(',', $deployment->server_type_id);
-            $serverTypeNames = DeploymentServerType::whereIn('id', $serverTypeIds)->pluck('name')->implode(', '); // Ubah ke toArray() agar menjadi array
+            
+            $moduleNames = $deployment->module()->pluck('name')->implode(', ');
+            $serverTypeNames = $deployment->serverType()->pluck('name')->implode(', ');
 
             $events[] = [
                 'id' => $deployment->id,
@@ -47,6 +46,8 @@ class DeploymentController extends Controller
                 'status_cm' => $deployment->cm_status,
                 'cm_description' => $deployment->cm_description,
             ];
+
+            
         }
 
         return response()->json($events);
@@ -55,20 +56,23 @@ class DeploymentController extends Controller
     /**
      * Get chart data
      */
-    public function getChartData(Request $request) //ini masih error gamau nampilin array dari server_type
+    public function getChartData(Request $request)
     {
         $module_id = $request->input('module_id');
         $year = $request->input('year', date('Y'));
 
         $data = DB::table('deployments')
-            ->select(DB::raw('MONTH(deployments.deploy_date) as month'), 'deployment_server_types.name as server_type', DB::raw('COUNT(*) as count'))
-            ->join('deployment_server_types', 'deployments.server_type_id', '=', 'deployment_server_types.id')
-            ->join('deployment_modules', 'deployments.module_id', '=', 'deployment_modules.id')
-            ->where('deployments.module_id', $module_id)
-            ->whereYear('deployments.deploy_date', $year)
-            ->groupBy(DB::raw('MONTH(deployments.deploy_date)'), 'deployment_server_types.name')
-            ->get();
+        ->select(DB::raw('MONTH(deployments.deploy_date) as month'), 'deployment_modules.name as module','deployment_server_types.name as server_type', DB::raw('COUNT(*) as count'))
+        ->join('deployment_has_module', 'deployment_has_module.deployment_id', '=', 'deployments.id')
+        ->join('deployment_has_server_type', 'deployment_has_server_type.deployment_id', '=', 'deployments.id')
+        ->join('deployment_server_types', 'deployment_has_server_type.server_type_id', '=', 'deployment_server_types.id')
+        ->join('deployment_modules', 'deployment_has_module.module_id', '=', 'deployment_modules.id')
+        ->where('deployment_modules.id', $module_id)
+        ->whereYear('deployments.deploy_date', $year)
+        ->groupBy(DB::raw('MONTH(deployments.deploy_date)'), 'deployment_modules.name', 'deployment_server_types.name')
+        ->get();
 
         return response()->json($data);
     }
 }
+        
