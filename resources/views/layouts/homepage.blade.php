@@ -74,7 +74,7 @@
 
                     <li class="nav-link mb-6 @if (request()->routeIs('deployments.*')) active @endif"
                         data-tippy-content="Deployments">
-                        <a href="deployments.index" class="icon-link">
+                        <a href='/deployments/calendar' class="icon-link">
                             <i class='bx bx-cloud-upload icon'></i>
                             <span class="text nav-text"> Deployments </span>
                         </a>
