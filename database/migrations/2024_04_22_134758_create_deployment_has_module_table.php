@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('deployment_has_module', function (Blueprint $table) {
-            $table->id();
             $table->string('deployment_id');
             $table->foreign('deployment_id')->references('id')->on('deployments')->onDelete('cascade');
             $table->unsignedBigInteger('module_id');
             $table->foreign('module_id')->references('id')->on('deployment_modules')->onDelete('cascade');
-            $table->timestamps();
+            $table->primary(['deployment_id', 'module_id']);
         });
     }
 

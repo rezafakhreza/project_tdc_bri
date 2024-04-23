@@ -16,7 +16,6 @@ class DeploymentServerType extends Model
 
     public function deployments()
     {
-        return $this->belongsToMany(Deployment::class, 'deployment_has_server_type', 'server_type_id', 'deployment_id')
-        ->withTimestamps();
+        return $this->belongsToMany(Deployment::class, 'deployment_has_server_type', 'server_type_id', 'deployment_id');
     }
 }

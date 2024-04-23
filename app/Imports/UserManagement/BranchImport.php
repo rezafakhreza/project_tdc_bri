@@ -54,16 +54,7 @@ class BranchImport implements ToCollection, WithHeadingRow
         return $changes;
     }
 
-    // private function convertExcelDate($excelDate)
-    // {
-    //     if (is_numeric($excelDate)) {
-    //         $unixDate = ($excelDate - 25569) * 86400;
-    //         return gmdate("Y-m-d", $unixDate);
-    //     }
-
-    //     return null;
-    // }
-
+    
     /**
      * @return int
      */

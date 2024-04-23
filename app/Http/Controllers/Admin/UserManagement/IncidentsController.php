@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserManagement\Incident;
 use Yajra\DataTables\Facades\DataTables;
 use App\Imports\UserManagement\IncidentsImport;
-// use DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
@@ -84,7 +84,12 @@ class IncidentsController extends Controller
         // Pindahkan file baru ke direktori tujuan
         $file->move('DataImport', $namaFile);
 
-
+        $branchCheck = DB::table('usman_branch')->count();
+        if ($branchCheck == 0) {
+            // Jika tidak ada data branch, hapus file yang sudah diunggah
+            unlink(public_path('/DataImport/' . $namaFile));
+            return redirect()->back()->withErrors(['file' => 'Masukkan data Branch terlebih dahulu.']);
+        }
 
         // Import data dari file baru
         Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
@@ -121,9 +126,24 @@ class IncidentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
-    {
-        
+
+
+public function destroy($id)
+{
+    // Temukan data incident yang akan dihapus
+    $incident = Incident::findOrFail($id);
+
+    // Hapus terlebih dahulu file yang terkait jika ada
+    if (!empty($incident->file_path)) {
+        Storage::delete($incident->file_path);
     }
+
+    // Hapus data incident dari database
+    $incident->delete();
+
+    return redirect()->route('admin.user-management.incidents.index')
+        ->with('success', 'Incident file deleted successfully');
+}
+
 
 }

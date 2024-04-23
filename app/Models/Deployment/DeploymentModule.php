@@ -17,7 +17,6 @@ class DeploymentModule extends Model
 
     public function deployments()
     {
-        return $this->belongsToMany(Deployment::class, 'deployment_has_module', 'module_id', 'deployment_id')
-        ->withTimestamps();
+        return $this->belongsToMany(Deployment::class, 'deployment_has_module', 'module_id', 'deployment_id');
     }
 }

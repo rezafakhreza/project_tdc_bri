@@ -26,7 +26,7 @@
     <div class="py-12 font-poppins">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-6 bg-white rounded-lg">
-                <h1 class="mb-10 text-2xl font-medium">Add Data</h1>
+                <h1 class="mb-10 text-2xl font-medium">Add Data User Management</h1>
 
                 @if ($errors->any())
                     <div class="mb-5" role="alert">

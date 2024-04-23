@@ -74,7 +74,7 @@ class DeploymentController extends Controller
         // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
-        $id = $title . '_' . str_replace('-', '', $deploy_date);
+        $id = str_replace(' ','',$title) . '_' . str_replace('-', '', $deploy_date);
 
         $request->merge(['id' => $id]);
 
@@ -119,12 +119,6 @@ class DeploymentController extends Controller
 
     public function update(Request $request, Deployment $deployment)
     {
-        
-        $title = $request->input('title');
-        $deploy_date = $request->input('deploy_date');
-        $id = $title . '_' . str_replace('-', '', $deploy_date);
-
-        $request->merge(['id' => $id]);
 
         if ($deployment->title != $request->title) {
             if (Deployment::where('title', $request->title)->first()) {
@@ -133,7 +127,6 @@ class DeploymentController extends Controller
         }
 
         $deployment->update([
-            'id' => $id,
             'title' => $request->input('title'),
             'deploy_date' => $request->input('deploy_date'),
             'document_status' => $request->input('document_status'),

@@ -228,12 +228,14 @@
                             <!-- Contoh teks "Showing" -->
                         </div>
                         <div class="flex items-center space-x-4">
+
                             <!-- Tambahkan tombol Delete di sini -->
                             <button onclick="deleteSelected()"
                                 class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="margin-top: -2cm">
                                 Delete Selected
                             </button>
+
                         </div>
                     </div>
                 </div>
