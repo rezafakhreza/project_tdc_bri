@@ -72,6 +72,16 @@
                 ],
             });
         </script>
+
+        <script>
+            function downloadTemplate() {
+                var templateUrl = '{{ asset('TemplateExcel/Template_Data_Branch.xlsx') }}';
+                var link = document.createElement('a');
+                link.href = templateUrl;
+                link.download = 'Template_Data_Branch.xlsx';
+                link.click();
+            }
+        </script>
     </x-slot>
 
     <div class="py-12">
@@ -84,6 +94,12 @@
                         </div>
 
                         <div class="button-container flex gap-4">
+                            <button onclick="downloadTemplate()"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                Download Template
+                            </button>
+
                             <a href="{{ route('admin.user-management.branch.create') }}"
                                 class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
@@ -123,13 +139,14 @@
         }
 
         .dataTables_wrapper {
-            margin-top: -80px;
+            margin-top: -20px;
         }
+
 
         .dataTables_wrapper .dataTables_filter {
             float: left;
             text-align: left;
-            margin-bottom: 30px;
+            margin-top: -60px;
         }
 
         .dataTables_wrapper .dataTables_length {

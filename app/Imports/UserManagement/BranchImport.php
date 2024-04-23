@@ -68,8 +68,8 @@ class BranchImport implements ToCollection, WithHeadingRow
      * @return int
      */
     // heading
-    public function headingRow(): int
-    {
-        return 3;
-    }
+    // public function headingRow(): int
+    // {
+    //     return 3;
+    // }
 }

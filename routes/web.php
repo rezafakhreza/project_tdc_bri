@@ -12,11 +12,14 @@ use App\Http\Controllers\Front\Brisol\BrisolController as FrontBrisolController;
 use App\Http\Controllers\Admin\Brisol\IncidentsController as BrisolIncidentsController;
 use App\Http\Controllers\Front\Deployment\DeploymentController as FrontDeploymentController;
 use App\Http\Controllers\Admin\UserManagement\IncidentsController as UsmanIncidentsController;
+
+
 use App\Http\Controllers\Admin\UserManagement\BranchController as UsmanBranchController;
 use App\Http\Controllers\Admin\Brisol\MonthlyTargetController as BrisolMonthlyTargetController;
 use App\Http\Controllers\Admin\UserManagement\MonthlyTargetController as UsmanMonthlyTargetController;
 use App\Http\Controllers\Front\UserManagement\UserManagementController as FrontUserManagementController;
 use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController as FrontBackgroundJobController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

@@ -86,4 +86,5 @@ class IncidentsImport implements ToModel, WithHeadingRow
 
         return Carbon::createFromFormat('d-M-y', $dateInput)->format('Y-m-d');
     }
+
 }
