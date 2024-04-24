@@ -96,5 +96,6 @@ Route::middleware([
 
         Route::resource('users', UserController::class)->middleware('permission:manage users');
         Route::post('/deployments/deployment/jabar', [DeploymentController::class, 'jabar'])->name('deployments.deployment.jabar');
+        Route::delete('/user-management/incidents/destroyAll', [UsmanIncidentsController::class, 'destroyAll'])->name('user-management.incidents.destroyAll');
     });
 });

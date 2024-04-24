@@ -67,14 +67,14 @@ class IncidentsController extends Controller
         $namaFile = $file->getClientOriginalName();
 
         // Memeriksa apakah file dengan nama yang sama sudah ada
-        if (file_exists(public_path('/DataImport/' . $namaFile))) {
-            // Menampilkan pesan konfirmasi untuk menimpa file
+        if (file_exists(public_path('/DataImport/'.$namaFile))) {
+            // Menampilkan pesan konfirmasi untuk menimpa file (ini masih gangaruh)
             if ($request->has('overwrite') && $request->overwrite == 'true') {
                 // Jika konfirmasi dilakukan, hapus file lama
-                unlink(public_path('/DataImport/' . $namaFile));
-
+                unlink(public_path('/DataImport/'.$namaFile));
                 // Hapus semua insiden
                 Incident::truncate();
+
             } else {
                 // Jika tidak ingin menimpa, kembalikan dengan pesan error
                 return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
@@ -128,22 +128,36 @@ class IncidentsController extends Controller
      */
 
 
-public function destroy($id)
-{
-    // Temukan data incident yang akan dihapus
-    $incident = Incident::findOrFail($id);
 
-    // Hapus terlebih dahulu file yang terkait jika ada
-    if (!empty($incident->file_path)) {
-        Storage::delete($incident->file_path);
+     public function destroy(){
+
+        // Temukan semua data incident
+        $incidents = Incident::all();
+    
+        // Periksa apakah ada data incident yang ditemukan
+        if ($incidents->isEmpty()) {
+            return redirect()->route('admin.user-management.incidents.index')
+                ->with('error', 'No incidents found to delete');
+        }
+    
+        // Loop untuk menghapus file yang terkait jika ada (ini masih gangaruh)
+        foreach ($incidents as $incident) {
+            if (!empty($incident->file_path)) {
+                // Hapus file dari storage
+                Storage::delete('DataImport/'.$incident->file_path);
+            }
+        }
+
+        // Hapus semua data incident dari database
+        Incident::truncate();
+    
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.user-management.incidents.index')
+            ->with('success', 'All incidents deleted successfully');
     }
+    
+    
 
-    // Hapus data incident dari database
-    $incident->delete();
-
-    return redirect()->route('admin.user-management.incidents.index')
-        ->with('success', 'Incident file deleted successfully');
-}
 
 
 }
