@@ -130,7 +130,7 @@ class IncidentsController extends Controller
 
 
      public function destroy(){
-
+        
         // Temukan semua data incident
         $incidents = Incident::all();
     

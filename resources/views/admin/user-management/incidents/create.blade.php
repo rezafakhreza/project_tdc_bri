@@ -54,11 +54,7 @@
                         <button id="importButton" type="submit"
                             class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
                     </div>
-                </form>
 
-                <form action="{{ route('admin.user-management.incidents.store') }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
                     <div class="mb-3">
                         <input class="form-check-input" type="checkbox" value="true" id="overwrite" name="overwrite">
                         <label class="form-check-label" for="overwrite">

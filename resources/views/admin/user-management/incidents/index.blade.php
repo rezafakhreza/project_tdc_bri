@@ -3,21 +3,29 @@
     <x-slot name="header">
         <div x-data="{ open: false }" class="relative inline-block text-left font-poppins">
             <div>
-                <button @click="open = !open" type="button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <button @click="open = !open" type="button"
+                    class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400"
+                    id="menu-button" aria-expanded="true" aria-haspopup="true">
                     {{-- show menu apa sekarang --}}
                     User Management
-                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd" />
                     </svg>
                 </button>
             </div>
 
-            <div x-show="open" @click.away="open = false" class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+            <div x-show="open" @click.away="open = false"
+                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                    <a href="{{ route('admin.user-management.monthly-target.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="{{ route('admin.user-management.monthly-target.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Monthly Target
                     </a>
-                    <a href="{{ route('admin.user-management.branch.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="{{ route('admin.user-management.branch.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Branch
                     </a>
                 </div>
@@ -135,12 +143,9 @@
 
                 ],
             });
-        </script>
 
-        <script>
             function downloadTemplate() {
-                var templateUrl = '{{ asset('
-                TemplateExcel / Template_Excel_UserManagement.xlsx ') }}';
+                var templateUrl = '{{ asset('TemplateExcel/Template_Excel_UserManagement.xlsx ') }}';
                 var link = document.createElement('a');
                 link.href = templateUrl;
                 link.download = 'Template_Excel_UserManagement.xlsx';
@@ -160,14 +165,20 @@
 
                         <div class="button-container flex gap-4">
 
-                            <button onclick="downloadTemplate()" class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <button onclick="downloadTemplate()"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 Download Template
                             </button>
 
-                            <a href="{{ route('admin.user-management.incidents.create') }}" class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <a href="{{ route('admin.user-management.incidents.create') }}"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Import Data
                             </a>
-                            <a href="{{ route('user-management.request-by-type') }}" target="_blank" class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <a href="{{ route('user-management.request-by-type') }}" target="_blank"
+                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 View Chart
                             </a>
                         </div>
@@ -207,12 +218,14 @@
                     </div>
 
 
-                    <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-4" style="margin-top: 0.9cm">
 
-                        <form action="{{ route('admin.user-management.incidents.destroyAll') }}" method="POST" id="deleteAllForm">
+                        <form action="{{ route('admin.user-management.incidents.destroyAll') }}" method="POST"
+                            id="deleteAllForm">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
+                            <button type="button"
+                                class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
                                 Hapus Semua Data
                             </button>
                         </form>
@@ -254,12 +267,8 @@
 
             .dataTables_wrapper {
                 margin-top: -20px;
-            }
 
-            .dataTables_wrapper .dataTables_info {
-                display: none;
             }
-
 
             .dataTables_wrapper .dataTables_filter {
                 float: left;

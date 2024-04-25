@@ -50,7 +50,6 @@ Route::get('/brisol/reported-source', [FrontBrisolController::class, 'showReport
 Route::get('/brisol/monthly-target', [FrontBrisolController::class, 'showMonthlyDataTargetActualChart'])->name('brisol.monthly-target');
 Route::get('/brisol/service-ci-top-issue', [FrontBrisolController::class, 'showServiceCITopIssueChart'])->name('brisol.service-ci-top-issue');
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -97,5 +96,6 @@ Route::middleware([
         Route::resource('users', UserController::class)->middleware('permission:manage users');
         Route::post('/deployments/deployment/jabar', [DeploymentController::class, 'jabar'])->name('deployments.deployment.jabar');
         Route::delete('/user-management/incidents/destroyAll', [UsmanIncidentsController::class, 'destroyAll'])->name('user-management.incidents.destroyAll');
+        Route::delete('/user-management/branch/destroyAll', [UsmanIncidentsController::class, 'destroyAll'])->name('user-management.branch.destroyAll');
     });
 });

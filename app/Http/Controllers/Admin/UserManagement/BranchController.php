@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserManagement\Branch;
 use Yajra\DataTables\Facades\DataTables;
 use App\Imports\UserManagement\BranchImport;
+use Illuminate\Support\Facades\Storage;
 // use DB;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -25,9 +26,9 @@ class BranchController extends Controller
                 ->select('usman_branch.branch_code', 'usman_branch.branch_name', 'usman_branch.kanwil_code', 'usman_branch.kanwil_name')
                 ->get();
 
-                return DataTables::of($query)
+            return DataTables::of($query)
                 ->make();
-        } 
+        }
         return view('admin.user-management.branch.index');
     }
 
@@ -72,7 +73,7 @@ class BranchController extends Controller
         // Pindahkan file baru ke direktori tujuan
         $file->move('DataImport', $namaFile);
 
-        
+
 
         // Import data dari file baru
         Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
@@ -111,6 +112,28 @@ class BranchController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Temukan semua data incident
+        $branch = Branch::all();
+
+        // Periksa apakah ada data incident yang ditemukan
+        if ($branch->isEmpty()) {
+            return redirect()->route('admin.user-management.incidents.index')
+                ->with('error', 'No incidents found to delete');
+        }
+
+        // Loop untuk menghapus file yang terkait jika ada (ini masih gangaruh)
+        foreach ($branch as $branchs) {
+            if (!empty($branchs->file_path)) {
+                // Hapus file dari storage
+                Storage::delete('DataImport/' . $branchs->file_path);
+            }
+        }
+
+        // Hapus semua data incident dari database
+        Branch::truncate();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.user-management.incidents.index')
+            ->with('success', 'All incidents deleted successfully');
     }
 }

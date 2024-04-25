@@ -82,6 +82,7 @@
                 link.click();
             }
         </script>
+
     </x-slot>
 
     <div class="py-12">
@@ -127,6 +128,43 @@
                             </thead>
                         </table>
                     </div>
+
+                    <div class="flex items-center space-x-4" style="margin-top: 1cm">
+
+                        <form action="{{ route('admin.user-management.branch.destroyAll') }}" method="POST"
+                            id="deleteAllForm">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button"
+                                class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
+                                Hapus Semua Data
+                            </button>
+                        </form>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('body').on('click', '.btn-delete-all', function(e) {
+                                    e.preventDefault();
+
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, delete it!'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Submit the form if confirmed
+                                            $('#deleteAllForm').submit();
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,8 +178,8 @@
 
         .dataTables_wrapper {
             margin-top: -20px;
-        }
 
+        }
 
         .dataTables_wrapper .dataTables_filter {
             float: left;
