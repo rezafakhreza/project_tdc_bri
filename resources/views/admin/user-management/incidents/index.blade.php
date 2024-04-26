@@ -49,6 +49,7 @@
 
                 return [day, month, year].join('/');
             }
+            var isAuthorized = @json(auth()->user()->hasAnyRole(['Super Admin', 'Admin Usman']));
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
                 serverSide: false,
@@ -231,6 +232,8 @@
                         </form>
 
                         <script>
+                            var isAuthorized = @json(auth()->user()->hasAnyRole(['Super Admin', 'Admin Usman']));
+                            
                             $(document).ready(function() {
                                 $('body').on('click', '.btn-delete-all', function(e) {
                                     e.preventDefault();

@@ -35,6 +35,7 @@
 
     <x-slot name="script">
         <script>
+            var isAuthorized = @json(auth()->user()->hasAnyRole(['Super Admin', 'Admin Usman']));
             // AJAX DataTable
             var datatable = $('#dataTable').DataTable({
                 serverSide: false,
@@ -79,12 +80,36 @@
                 ],
             });
 
-            // sweet alert delete
+            $('body').on('click', '.btn-edit, .btn-delete', function(e) {
+                if (!isAuthorized) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Unauthorized',
+                        text: "You don't have permission to perform this action.",
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+            });
+
+            // Event handler untuk tombol delete
             $('body').on('click', '.btn-delete', function(e) {
                 e.preventDefault();
 
-                var form = $(this).parents('form');
+                // Cek apakah pengguna memiliki autorisasi
+                if (!isAuthorized) {
+                    Swal.fire({
+                        title: 'Unauthorized',
+                        text: "You don't have permission to perform this action.",
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
 
+                // Jika pengguna berwenang, lanjutkan dengan konfirmasi penghapusan
+                var form = $(this).parents('form');
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -100,6 +125,7 @@
                 });
             });
         </script>
+    </x-slot>
 
         <script>
             function downloadTemplate() {
@@ -111,7 +137,7 @@
             }
         </script>
 
-    </x-slot>
+    
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -162,42 +188,7 @@
                         </table>
                     </div>
 
-                    <div class="flex items-center space-x-4" style="margin-top: 1cm">
-
-                        <form action="{{ route('admin.user-management.branch.destroyAll') }}" method="POST"
-                            id="deleteAllForm">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button"
-                                class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
-                                Hapus Semua Data
-                            </button>
-                        </form>
-
-                        <script>
-                            $(document).ready(function() {
-                                $('body').on('click', '.btn-delete-all', function(e) {
-                                    e.preventDefault();
-
-                                    Swal.fire({
-                                        title: 'Are you sure?',
-                                        text: "You won't be able to revert this!",
-                                        icon: 'warning',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'Yes, delete it!'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            // Submit the form if confirmed
-                                            $('#deleteAllForm').submit();
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
-
-                    </div>
+                    
                 </div>
             </div>
         </div>

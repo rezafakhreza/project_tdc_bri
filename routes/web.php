@@ -98,6 +98,5 @@ Route::middleware([
         Route::post('/deployments/deployment/jabar', [DeploymentController::class, 'jabar'])->name('deployments.deployment.jabar');
         Route::delete('/brisol/incidents/destroyAll', [BrisolIncidentsController::class, 'destroyAll'])->name('brisol.incidents.destroyAll');
         Route::delete('/user-management/incidents/destroyAll', [UsmanIncidentsController::class, 'destroyAll'])->name('user-management.incidents.destroyAll');
-        Route::delete('/user-management/branch/destroyAll', [UsmanBranchController::class, 'destroyAll'])->name('user-management.branch.destroyAll');
     });
 });
