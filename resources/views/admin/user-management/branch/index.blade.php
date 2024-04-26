@@ -68,8 +68,36 @@
                         name: 'kanwil_name',
                         searchable: true,
                     },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        width: '15%'
+                    }
 
                 ],
+            });
+
+            // sweet alert delete
+            $('body').on('click', '.btn-delete', function(e) {
+                e.preventDefault();
+
+                var form = $(this).parents('form');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
         </script>
 
@@ -122,8 +150,13 @@
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Kode Kantor Wilayah</th>
                                     <th
-                                        style="max-width: 1%"class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Kantor Wilayah</th>
+
+                                    <th style="max-width: 1%"
+                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Action
+                                    </th>
                                 </tr>
                             </thead>
                         </table>

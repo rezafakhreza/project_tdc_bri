@@ -287,73 +287,111 @@
 
                         </table>
                     </div>
+
+                    <div class="flex items-center space-x-4" style="margin-top: 0.9cm">
+
+                        <form action="{{ route('admin.brisol.incidents.destroyAll') }}" method="POST"
+                            id="deleteAllForm">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button"
+                                class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
+                                Hapus Semua Data
+                            </button>
+                        </form>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('body').on('click', '.btn-delete-all', function(e) {
+                                    e.preventDefault();
+
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, delete it!'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Submit the form if confirmed
+                                            $('#deleteAllForm').submit();
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Modal Structure -->
-    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-600 bg-opacity-50">
-        <div class="w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
-            <div id="modal-content" class="text-sm overflow-y-auto max-h-[60vh]">
-                <!-- Dynamic content goes here -->
+        <!-- Modal Structure -->
+        <div id="modal"
+            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-600 bg-opacity-50">
+            <div class="w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
+                <div id="modal-content" class="text-sm overflow-y-auto max-h-[60vh]">
+                    <!-- Dynamic content goes here -->
+                </div>
+                <button id="modal-close"
+                    class="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                    Close
+                </button>
             </div>
-            <button id="modal-close" class="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                Close
-            </button>
         </div>
-    </div>
 
-    <style>
-        .table-responsive {
-            display: flex;
-            align-items: center;
-        }
+        <style>
+            .table-responsive {
+                display: flex;
+                align-items: center;
+            }
 
-        .dataTables_wrapper {
-            margin-top: -80px;
-        }
+            .dataTables_wrapper {
+                margin-top: -20px;
 
-        .dataTables_wrapper .dataTables_filter {
-            float: left;
-            text-align: left;
-            margin-bottom: 30px;
-        }
+            }
 
-        .dataTables_wrapper .dataTables_length {
-            display: none;
-        }
+            .dataTables_wrapper .dataTables_filter {
+                float: left;
+                text-align: left;
+                margin-top: -60px;
+            }
 
-        .rounded-table {
-            border-collapse: separate;
-            border-radius: 0.5rem;
-            /* Atur radius lengkungan sesuai keinginan */
-            overflow: hidden;
-            /* Memastikan sudut melengkung tidak terpotong */
-        }
+            .dataTables_wrapper .dataTables_length {
+                display: none;
+            }
 
-        .rounded-table th:first-child {
-            border-top-left-radius: 0.5rem;
-            /* Atur radius lengkungan pada sudut kiri atas */
-        }
+            .rounded-table {
+                border-collapse: separate;
+                border-radius: 0.5rem;
+                /* Atur radius lengkungan sesuai keinginan */
+                overflow: hidden;
+                /* Memastikan sudut melengkung tidak terpotong */
+            }
 
-        .rounded-table th:last-child {
-            border-top-right-radius: 0.5rem;
-            /* Atur radius lengkungan pada sudut kanan atas */
-        }
+            .rounded-table th:first-child {
+                border-top-left-radius: 0.5rem;
+                /* Atur radius lengkungan pada sudut kiri atas */
+            }
 
-        .rounded-table tr:last-child td:first-child {
-            border-bottom-left-radius: 0.5rem;
-            /* Atur radius lengkungan pada sudut kiri bawah */
-        }
+            .rounded-table th:last-child {
+                border-top-right-radius: 0.5rem;
+                /* Atur radius lengkungan pada sudut kanan atas */
+            }
 
-        .rounded-table tr:last-child td:last-child {
-            border-bottom-right-radius: 0.5rem;
-            /* Atur radius lengkungan pada sudut kanan bawah */
-        }
+            .rounded-table tr:last-child td:first-child {
+                border-bottom-left-radius: 0.5rem;
+                /* Atur radius lengkungan pada sudut kiri bawah */
+            }
 
-        .button-container a {
-            position: relative;
-            z-index: 1;
-        }
-    </style>
+            .rounded-table tr:last-child td:last-child {
+                border-bottom-right-radius: 0.5rem;
+                /* Atur radius lengkungan pada sudut kanan bawah */
+            }
+
+            .button-container a {
+                position: relative;
+                z-index: 1;
+            }
+        </style>
 </x-app-layout>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Brisol\IncidentsImport;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class IncidentsController extends Controller
 {
@@ -101,6 +102,28 @@ class IncidentsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Temukan semua data incident
+        $incidents = Incident::all();
+
+        // Periksa apakah ada data incident yang ditemukan
+        if ($incidents->isEmpty()) {
+            return redirect()->route('admin.user-management.incidents.index')
+                ->with('error', 'No incidents found to delete');
+        }
+
+        // Loop untuk menghapus file yang terkait jika ada (ini masih gangaruh)
+        foreach ($incidents as $incident) {
+            if (!empty($incident->file_path)) {
+                // Hapus file dari storage
+                Storage::delete('DataImport/' . $incident->file_path);
+            }
+        }
+
+        // Hapus semua data incident dari database
+        Incident::truncate();
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.brisol.incidents.index')
+            ->with('success', 'All incidents deleted successfully');
     }
 }
