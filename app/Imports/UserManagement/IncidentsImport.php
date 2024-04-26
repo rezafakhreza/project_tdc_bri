@@ -26,14 +26,18 @@ class IncidentsImport implements ToModel, WithHeadingRow
 
             $branchCode = str_pad($branchCode, 4, '0', STR_PAD_LEFT);
 
+
             if (!Branch::where('branch_code', $branchCode)->exists()) {
                 // Jika tidak ada, mengabaikan baris ini
                 return null;
             }
 
+            $pn = str_pad($row['pn'], 8, '0', STR_PAD_LEFT);
+
             $execStatus = $row['tanggal_dikerjakan'] ? 'Done' : 'Pending';
 
             $date = $this->parseIndonesianDate($row['tanggal_disetujui']);
+
             $branch = Branch::where('branch_code', $branchCode)->first(); // Menggunakan first() untuk mendapatkan satu objek
             $title = $branch->branch_name; // Mengambil nilai 'name' dari objek $process
             $randomDigits = mt_rand(0, 999999);
@@ -45,7 +49,7 @@ class IncidentsImport implements ToModel, WithHeadingRow
             return new Incident([
                 'id' => $id,
                 'reported_date' => $this->parseIndonesianDate($row['tanggal_disetujui']),
-                'pn' => $row['pn'],
+                'pn' => $pn,
                 'nama' => $row['nama'],
                 'jabatan' => $row['jabatan'],
                 'bagian' => $row['bagian'],
