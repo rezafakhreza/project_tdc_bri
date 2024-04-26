@@ -178,34 +178,34 @@
                                 <tr>
 
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Module</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Job</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Data Amount to EIM</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Data Amount to S4GL</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Status</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Duration To EIM</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Duration To S4GL</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Notes</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Monitoring Date</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white  uppercase ">
                                         Last Updated</th>
                                     <th style="max-width: 1%"
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase ">

@@ -125,23 +125,36 @@ class BranchController extends Controller
  */
 public function update(Request $request, string $id)
 {
-
+    // Validasi input
+    $request->validate([
+        'branch_name' => 'required|string|max:255',
+        'level_uker' => 'required|string|max:255',
+        'sbo' => 'required|string|max:255',
+    ]);
 
     // Temukan cabang berdasarkan ID
-    $file = $request->file('file');
-    $namaFile = $file->getClientOriginalName();
-    $branch = Excel::toArray(new BranchImport(), public_path('/DataImport/'. $namaFile));
+    $branch = Branch::findOrFail($id);
 
-    // Lakukan proses update pada setiap data yang ditemukan
-    foreach ($branch as $row) {
-        Branch::where('branch_code', $row['branch_code']) // Sesuaikan dengan kriteria update yang sesuai
-            ->update([
-                'branch_name' => $row['branch_name'],
-                'kanwil_name' => $row['kanwil_name'],
-                // Tambahkan kolom lain yang ingin diupdate
-            ]);
+    // Periksa apakah nama cabang sudah ada
+    if ($branch->branch_code != $request->branch_name) {
+        if (Branch::where('branch_code', $request->branch_name)->exists()) {
+            return redirect()->back()->with('error', 'Branch name already exists.');
+        }
     }
-    
+
+    // Periksa apakah nama kanwil sudah ada
+    if ($branch->uker_induk_wilayah_code != $request->level_uker) {
+        if (Branch::where('branch_code', $request->level_uker)->exists()) {
+            return redirect()->back()->with('error', 'Level Uker name already exists.');
+        }
+    }
+
+    // Update data cabang
+    $branch->update([
+        'branch_name' => $request->branch_name,
+        'level_uker' => $request->level_uker,
+        'sbo' => $request->sbo,
+    ]);
 
     return redirect()->route('admin.user-management.branch.index')->with('success', 'Branch updated successfully.');
 }
@@ -154,6 +167,11 @@ public function update(Request $request, string $id)
     {
 
         $branch = Branch::findOrFail($id);
+
+        if ($branch->usman()->count()){
+            return redirect()->back()->with('error', 'There is Incident data. Branch cannot be deleted.');
+        }
+
         $branch->delete();
 
         return redirect()->route('admin.user-management.branch.index')

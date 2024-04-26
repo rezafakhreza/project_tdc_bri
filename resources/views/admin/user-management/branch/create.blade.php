@@ -17,8 +17,7 @@
                 <span class="text-gray-700">Uploading...</span>
             </div>
         </div>
-        <div
-            style="background-color: rgba(0, 0, 0, 0.5);  position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+        <div style="background-color: rgba(0, 0, 0, 0.5);  position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
         </div>
     </div>
 
@@ -28,40 +27,33 @@
                 <h1 class="mb-10 text-2xl font-medium">Add Data Branch</h1>
 
                 @if ($errors->any())
-                    <div class="mb-5" role="alert">
-                        <div class="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
-                            Ada kesalahan!
-                        </div>
-                        <div class="px-4 py-3 text-red-700 bg-red-100 border border-t-0 border-red-400 rounded-b">
-                            <p>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            </p>
-                        </div>
+                <div class="mb-5" role="alert">
+                    <div class="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
+                        Ada kesalahan!
                     </div>
+                    <div class="px-4 py-3 text-red-700 bg-red-100 border border-t-0 border-red-400 rounded-b">
+                        <p>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        </p>
+                    </div>
+                </div>
                 @endif
 
                 <!-- Checkbox untuk opsi "Overwrite" di luar alert -->
 
 
                 <!-- Form untuk tombol "Import" di dalam alert -->
-                <form id="uploadForm" action="{{ route('admin.user-management.branch.store') }}" method="POST"
-                    enctype="multipart/form-data">
+                <form id="uploadForm" action="{{ route('admin.user-management.branch.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <input type="file" name="file" class=" rounded-lg" required>
-                        <button type="submit"
-                            class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
+                        <button type="submit" class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
                     </div>
 
-                </form>
-
-                <form action="{{ route('admin.user-management.branch.store') }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
                     <div class="mb-3">
                         <input class="form-check-input" type="checkbox" value="true" id="overwrite" name="overwrite">
                         <label class="form-check-label" for="overwrite">
@@ -69,6 +61,8 @@
                         </label>
                     </div>
                 </form>
+
+        
             </div>
         </div>
     </div>

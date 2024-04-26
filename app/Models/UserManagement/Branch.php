@@ -13,5 +13,10 @@ class Branch extends Model
     protected $primaryKey = 'branch_code';
     public $incrementing = false;
     
-    protected $fillable = ['branch_code', 'branch_name', 'kanwil_code', 'kanwil_name'];
+    protected $fillable = ['branch_code', 'branch_name', 'uker_induk_wilayah_code', 'level_uker', 'uker_induk_kc', 'sbo'];
+
+    public function usman()
+    {
+        return $this->hasMany(Incident::class, 'branch_code');
+    }
 }

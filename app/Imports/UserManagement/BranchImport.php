@@ -35,8 +35,10 @@ class BranchImport implements ToCollection, WithHeadingRow
         return [
             'branch_code' => $row['kode_uker'],
             'branch_name' => $row['nama_uker'],
-            'kanwil_code' => $row['uker_induk_kanwil'],
-            'kanwil_name' => $row['level_uker'],
+            'uker_induk_wilayah_code' => $row['uker_induk_kanwil'],
+            'level_uker' => $row['level_uker'],
+            'uker_induk_kc' => $row['uker_induk_kc'],
+            'sbo' => $row['sbo']
         ];
     }
 

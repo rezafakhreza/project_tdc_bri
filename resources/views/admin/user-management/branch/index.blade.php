@@ -60,13 +60,23 @@
                         searchable: true,
                     },
                     {
-                        data: 'kanwil_code',
-                        name: 'kanwil_code',
+                        data: 'uker_induk_wilayah_code',
+                        name: 'uker_induk_wilayah_code',
                         searchable: true,
                     },
                     {
-                        data: 'kanwil_name',
-                        name: 'kanwil_name',
+                        data: 'level_uker',
+                        name: 'level_uker',
+                        searchable: true,
+                    },
+                    {
+                        data: 'uker_induk_kc',
+                        name: 'uker_induk_kc',
+                        searchable: true,
+                    },
+                    {
+                        data: 'sbo',
+                        name: 'sbo',
                         searchable: true,
                     },
                     {
@@ -167,17 +177,25 @@
                             <thead>
                                 <tr>
                                     <th style="max-width: 1%"
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Kode Unit Kerja</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Unit Kerja</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Kode Kantor Wilayah</th>
                                     <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
-                                        Kantor Wilayah</th>
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        Level Unit Kerja</th>
+
+                                        <th
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white  uppercase tracking-wider">
+                                        Uker Induk KC</th>
+
+                                        <th
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        SBO</th>
 
                                     <th style="max-width: 1%"
                                         class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">

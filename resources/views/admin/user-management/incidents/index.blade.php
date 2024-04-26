@@ -59,9 +59,6 @@
                     url: '{{ route('admin.user-management.incidents.index') }}',
                     type: 'GET',
                 },
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
-                },
 
                 columns: [{
                         data: 'reported_date',
@@ -101,8 +98,8 @@
                         searchable: true,
                     },
                     {
-                        data: 'kanwil_name',
-                        name: 'kanwil_name',
+                        data: 'level_uker',
+                        name: 'level_uker',
                         searchable: true,
                     },
                     {
@@ -204,7 +201,7 @@
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Unit Kerja</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Jenis Uker</th>
+                                        Level Uker</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Request Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
@@ -282,6 +279,7 @@
             .dataTables_wrapper .dataTables_length {
                 display: none;
             }
+
 
             .rounded-table {
                 border-collapse: separate;
