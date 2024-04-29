@@ -67,11 +67,11 @@ class IncidentsController extends Controller
         $namaFile = $file->getClientOriginalName();
 
         // Memeriksa apakah file dengan nama yang sama sudah ada
-        if (file_exists(public_path('/DataImport/'.$namaFile))) {
+        if (file_exists(public_path('/DataImport/' . $namaFile))) {
             // Menampilkan pesan konfirmasi untuk menimpa file (ini masih gangaruh)
             if ($request->has('overwrite') && $request->overwrite == 'true') {
                 // Jika konfirmasi dilakukan, hapus file lama
-                unlink(public_path('/DataImport/'.$namaFile));
+                unlink(public_path('/DataImport/' . $namaFile));
                 // Hapus semua insiden
                 Incident::truncate();
 
@@ -84,12 +84,54 @@ class IncidentsController extends Controller
         // Pindahkan file baru ke direktori tujuan
         $file->move('DataImport', $namaFile);
 
-        $branchCheck = DB::table('usman_branch')->count();
-        if ($branchCheck == 0) {
-            // Jika tidak ada data branch, hapus file yang sudah diunggah
-            unlink(public_path('/DataImport/' . $namaFile));
-            return redirect()->back()->withErrors(['file' => 'Masukkan data Branch terlebih dahulu.']);
+        // Membaca file Excel
+        $spreadsheet = IOFactory::load(public_path('/DataImport/' . $namaFile));
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        // Mengambil jumlah baris yang terisi dalam kolom 'G'
+        $highestRow = $worksheet->getHighestRow();
+        $kodeUkers = [];
+
+        // Mengambil nilai kode UKER dari setiap baris dalam kolom 'G'
+        for ($row = 2; $row <= $highestRow; ++$row) {
+            $kodeUkers[] = $worksheet->getCell('I' . $row)->getValue();
         }
+
+        // Mengambil semua kode UKER yang ada di database
+        $branchCodes = DB::table('usman_branch')->pluck('branch_code')->toArray();
+
+        // Inisialisasi array untuk menyimpan kode UKER yang tidak ada di database
+        $missingBranchCodes = [];
+
+        // Mengecek setiap kode UKER yang ada di file
+        foreach ($kodeUkers as $kodeUker) {
+            // Jika kode UKER tidak ada di database, tambahkan ke array missingBranchCodes
+            if (!in_array($kodeUker, $branchCodes)) {
+                $missingBranchCodes[] = $kodeUker;
+            }
+        }
+
+        if (!empty($missingBranchCodes)) {
+            unlink(public_path('/DataImport/' . $namaFile));
+            $errorMessage = 'Kode UKER berikut tidak tersedia dalam data Branch: ' . implode(', ', $missingBranchCodes);
+            return redirect()->back()->withErrors(['file' => $errorMessage]);
+        }
+
+        // // Mengecek apakah semua kode UKER yang ada di file ada di database
+        // foreach ($kodeUkers as $kodeUker) {
+        //     if (!in_array($kodeUker, $branchCodes)) {
+        //         // Jika kode UKER tidak ada di database, hapus file yang sudah diunggah
+        //         unlink(public_path('/DataImport/' . $namaFile));
+        //         return redirect()->back()->withErrors(['file' => 'Kode UKER "' . $kodeUker . '" tidak tersedia dalam data Branch.']);
+        //     }
+        // }
+
+        // $branchCheck = DB::table('usman_branch')->count();
+        // if ($branchCheck == 0) {
+        //     // Jika tidak ada data branch, hapus file yang sudah diunggah
+        //     unlink(public_path('/DataImport/' . $namaFile));
+        //     return redirect()->back()->withErrors(['file' => 'Masukkan data Branch terlebih dahulu.']);
+        // }
 
         // Import data dari file baru
         Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
@@ -129,34 +171,35 @@ class IncidentsController extends Controller
 
 
 
-     public function destroy(){
-        
+    public function destroy()
+    {
+
         // Temukan semua data incident
         $incidents = Incident::all();
-    
+
         // Periksa apakah ada data incident yang ditemukan
         if ($incidents->isEmpty()) {
             return redirect()->route('admin.user-management.incidents.index')
                 ->with('error', 'No incidents found to delete');
         }
-    
+
         // Loop untuk menghapus file yang terkait jika ada (ini masih gangaruh)
         foreach ($incidents as $incident) {
             if (!empty($incident->file_path)) {
                 // Hapus file dari storage
-                Storage::delete('DataImport/'.$incident->file_path);
+                Storage::delete('DataImport/' . $incident->file_path);
             }
         }
 
         // Hapus semua data incident dari database
         Incident::truncate();
-    
+
         // Redirect dengan pesan sukses
         return redirect()->route('admin.user-management.incidents.index')
             ->with('success', 'All incidents deleted successfully');
     }
-    
-    
+
+
 
 
 
