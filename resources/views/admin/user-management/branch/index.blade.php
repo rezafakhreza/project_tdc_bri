@@ -137,17 +137,17 @@
         </script>
     </x-slot>
 
-        <script>
-            function downloadTemplate() {
-                var templateUrl = '{{ asset('TemplateExcel/Template_Data_Branch.xlsx') }}';
-                var link = document.createElement('a');
-                link.href = templateUrl;
-                link.download = 'Template_Data_Branch.xlsx';
-                link.click();
-            }
-        </script>
+    <script>
+        function downloadTemplate() {
+            var templateUrl = '{{ asset('TemplateExcel/Template_Data_Branch.xlsx') }}';
+            var link = document.createElement('a');
+            link.href = templateUrl;
+            link.download = 'Template_Data_Branch.xlsx';
+            link.click();
+        }
+    </script>
 
-    
+
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -160,13 +160,13 @@
 
                         <div class="button-container flex gap-4">
                             <button onclick="downloadTemplate()"
-                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
+                                class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 Download Template
                             </button>
 
                             <a href="{{ route('admin.user-management.branch.create') }}"
-                                class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Import Data
                             </a>
@@ -189,11 +189,11 @@
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Level Unit Kerja</th>
 
-                                        <th
+                                    <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white  uppercase tracking-wider">
                                         Uker Induk KC</th>
 
-                                        <th
+                                    <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         SBO</th>
 
@@ -206,7 +206,7 @@
                         </table>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
@@ -264,6 +264,24 @@
         .button-container a {
             position: relative;
             z-index: 1;
+        }
+
+        .pressed-button {
+            transition: transform 0.1s, box-shadow 0.2s;
+            background-color: #ffffff;
+            /* Warna latar belakang asli */
+        }
+
+        .pressed-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Warna latar belakang lebih gelap saat ditekan */
+        }
+
+        .pressed-button:hover {
+            background-color: #f3f4f6;
+            /* Warna latar belakang saat dihover */
         }
     </style>
 </x-app-layout>

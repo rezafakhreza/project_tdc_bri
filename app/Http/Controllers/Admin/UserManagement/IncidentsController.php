@@ -116,6 +116,10 @@ class IncidentsController extends Controller
             $errorMessage = 'Kode UKER berikut tidak tersedia dalam data Branch: ' . implode(', ', $missingBranchCodes);
             return redirect()->back()->withErrors(['file' => $errorMessage]);
         }
+        
+
+        // $branchCheck = DB::table('usman_branch')->count();
+        
 
         // // Mengecek apakah semua kode UKER yang ada di file ada di database
         // foreach ($kodeUkers as $kodeUker) {
@@ -126,12 +130,7 @@ class IncidentsController extends Controller
         //     }
         // }
 
-        // $branchCheck = DB::table('usman_branch')->count();
-        // if ($branchCheck == 0) {
-        //     // Jika tidak ada data branch, hapus file yang sudah diunggah
-        //     unlink(public_path('/DataImport/' . $namaFile));
-        //     return redirect()->back()->withErrors(['file' => 'Masukkan data Branch terlebih dahulu.']);
-        // }
+        
 
         // Import data dari file baru
         Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));

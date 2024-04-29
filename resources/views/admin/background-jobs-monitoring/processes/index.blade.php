@@ -133,7 +133,7 @@
                         <div class="button-container flex gap-4">
                             @hasanyrole('Super Admin|Admin Background Jobs')
                                 <a href="{{ route('admin.background-jobs-monitoring.processes.create') }}"
-                                    class="px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                    class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                     style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                     + Add Jobs Module
                                 </a>
@@ -217,6 +217,24 @@
         .button-container a {
             position: relative;
             z-index: 1;
+        }
+
+        .pressed-button {
+            transition: transform 0.1s, box-shadow 0.2s;
+            background-color: #ffffff;
+            /* Warna latar belakang asli */
+        }
+
+        .pressed-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Warna latar belakang lebih gelap saat ditekan */
+        }
+
+        .pressed-button:hover {
+            background-color: #f3f4f6;
+            /* Warna latar belakang saat dihover */
         }
     </style>
 </x-app-layout>
