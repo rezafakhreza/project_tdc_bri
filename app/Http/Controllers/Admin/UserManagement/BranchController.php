@@ -80,23 +80,25 @@ class BranchController extends Controller
                     // Jika konfirmasi dilakukan, hapus file lama
                     unlink(public_path('/DataImport/' . $namaFile));
 
-                    //branch::truncate(); -> masih error gamau hapus database karena jadi FK
+                    // -> masih error gamau hapus database karena jadi FK
+                    Branch::truncate();
+
                 } else {
                     // Jika tidak ingin menimpa, kembalikan dengan pesan error
                     return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
                 }
             }
 
+            
+
             // Pindahkan file baru ke direktori tujuan
             $file->move('DataImport', $namaFile);
-
-
 
             // Import data dari file baru
             Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
             return redirect()->route('admin.user-management.branch.index')
-            ->with('success', 'Branch imported successfully');
-
+                ->with('success', 'Branch imported successfully');
+                
         } elseif ($request->input_method == 'manual') {
             $request->validate([
                 'branch_code' => 'required|max:4',

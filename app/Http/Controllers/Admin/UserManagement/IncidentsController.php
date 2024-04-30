@@ -33,12 +33,9 @@ class IncidentsController extends Controller
                 ->addColumn('level_uker', function ($row) {
                     return $row->level_uker;
                 })
-                // ->addColumn('req_type', function ($row) {
-                //     return $row->req_type;
-                // })
                 ->rawColumns(['branch_name', 'level_uker'])
                 ->make(true);
-        } //tinggal masukkin else biar bisa detek soalnya ini masih yg kondisi berhasil aja jd semua kemungkinan bisa muncul popup berhasil tp ada pesan error dari website
+        }
 
         return view('admin.user-management.incidents.index');
     }
@@ -74,7 +71,6 @@ class IncidentsController extends Controller
                 unlink(public_path('/DataImport/' . $namaFile));
                 // Hapus semua insiden
                 Incident::truncate();
-
             } else {
                 // Jika tidak ingin menimpa, kembalikan dengan pesan error
                 return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
@@ -84,53 +80,53 @@ class IncidentsController extends Controller
         // Pindahkan file baru ke direktori tujuan
         $file->move('DataImport', $namaFile);
 
-        // Membaca file Excel
-        $spreadsheet = IOFactory::load(public_path('/DataImport/' . $namaFile));
-        $worksheet = $spreadsheet->getActiveSheet();
 
-        // Mengambil jumlah baris yang terisi dalam kolom 'G'
-        $highestRow = $worksheet->getHighestRow();
-        $kodeUkers = [];
+        $branchCount = DB::table('usman_branch')->count(); // Menghitung jumlah data branch
 
-        // Mengambil nilai kode UKER dari setiap baris dalam kolom 'G'
-        for ($row = 2; $row <= $highestRow; ++$row) {
-            $kodeUkers[] = $worksheet->getCell('I' . $row)->getValue();
-        }
+        // Mengecek apakah ada data branch
+        if ($branchCount > 0) {
+            // Mengecek apakah semua kode UKER yang ada di file ada di database
+            // Membaca file Excel
+            $spreadsheet = IOFactory::load(public_path('/DataImport/' . $namaFile));
+            $worksheet = $spreadsheet->getActiveSheet();
 
-        // Mengambil semua kode UKER yang ada di database
-        $branchCodes = DB::table('usman_branch')->pluck('branch_code')->toArray();
+            // Mengambil jumlah baris yang terisi dalam kolom 'G'
+            $highestRow = $worksheet->getHighestRow();
+            $kodeUkers = [];
 
-        // Inisialisasi array untuk menyimpan kode UKER yang tidak ada di database
-        $missingBranchCodes = [];
-
-        // Mengecek setiap kode UKER yang ada di file
-        foreach ($kodeUkers as $kodeUker) {
-            // Jika kode UKER tidak ada di database, tambahkan ke array missingBranchCodes
-            if (!in_array($kodeUker, $branchCodes)) {
-                $missingBranchCodes[] = $kodeUker;
+            // Mengambil nilai kode UKER dari setiap baris dalam kolom 'G'
+            for ($row = 2; $row <= $highestRow; ++$row) {
+                $kodeUkers[] = $worksheet->getCell('I' . $row)->getValue();
             }
+
+            // Mengambil semua kode UKER yang ada di database
+            $branchCodes = DB::table('usman_branch')->pluck('branch_code')->toArray();
+
+            // Inisialisasi array untuk menyimpan kode UKER yang tidak ada di database
+            $missingBranchCodes = [];
+
+
+            // Mengecek setiap kode UKER yang ada di file
+            foreach ($kodeUkers as $kodeUker) {
+                // Menghapus angka nol di awal kode UKER
+                $trimmedKodeUker = ltrim($kodeUker, '0');
+                $trimmedKodeUker = str_pad($trimmedKodeUker, 4, '0', STR_PAD_LEFT);
+                
+                // Jika kode UKER tidak ada di database, tambahkan ke array missingBranchCodes
+                if (!in_array($trimmedKodeUker, $branchCodes)) {
+                    $missingBranchCodes[] = $trimmedKodeUker;
+                }
+            }
+
+            if (!empty($missingBranchCodes)) {
+                unlink(public_path('/DataImport/' . $namaFile));
+                $errorMessage = 'Kode UKER berikut tidak tersedia dalam data Branch: ' . implode(', ', $missingBranchCodes);
+                return redirect()->back()->withErrors(['file' => $errorMessage]);
+            }
+        } else {
+            // Jika tidak ada data branch, kembalikan dengan pesan error
+            return redirect()->back()->withErrors(['file' => 'Tidak ada data Branch tersedia. Masukkan data Branch terlebih dahulu']);
         }
-
-        if (!empty($missingBranchCodes)) {
-            unlink(public_path('/DataImport/' . $namaFile));
-            $errorMessage = 'Kode UKER berikut tidak tersedia dalam data Branch: ' . implode(', ', $missingBranchCodes);
-            return redirect()->back()->withErrors(['file' => $errorMessage]);
-        }
-        
-
-        // $branchCheck = DB::table('usman_branch')->count();
-        
-
-        // // Mengecek apakah semua kode UKER yang ada di file ada di database
-        // foreach ($kodeUkers as $kodeUker) {
-        //     if (!in_array($kodeUker, $branchCodes)) {
-        //         // Jika kode UKER tidak ada di database, hapus file yang sudah diunggah
-        //         unlink(public_path('/DataImport/' . $namaFile));
-        //         return redirect()->back()->withErrors(['file' => 'Kode UKER "' . $kodeUker . '" tidak tersedia dalam data Branch.']);
-        //     }
-        // }
-
-        
 
         // Import data dari file baru
         Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
@@ -197,9 +193,4 @@ class IncidentsController extends Controller
         return redirect()->route('admin.user-management.incidents.index')
             ->with('success', 'All incidents deleted successfully');
     }
-
-
-
-
-
 }
