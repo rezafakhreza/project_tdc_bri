@@ -33,6 +33,9 @@
         </div>
     </x-slot>
 
+
+    
+
     <x-slot name="script">
         <script>
             var isAuthorized = @json(auth()->user()->hasAnyRole(['Super Admin', 'Admin Usman']));
@@ -168,7 +171,7 @@
                             <a href="{{ route('admin.user-management.branch.create') }}"
                                 class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                + Import Data
+                                + Add Branch
                             </a>
                         </div>
                     </div>
@@ -284,4 +287,7 @@
             /* Warna latar belakang saat dihover */
         }
     </style>
+
+
+    
 </x-app-layout>

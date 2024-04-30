@@ -23,12 +23,12 @@ class BranchController extends Controller
     {
         if (request()->ajax()) {
             $query = Branch::query();
-                // ->select('usman_branch.branch_code', 'usman_branch.branch_name', 'usman_branch.kanwil_code', 'usman_branch.kanwil_name')
-                
+            // ->select('usman_branch.branch_code', 'usman_branch.branch_name', 'usman_branch.kanwil_code', 'usman_branch.kanwil_name')
+
 
             return DataTables::of($query)
-            ->addColumn('action', function($branch){
-                return '
+                ->addColumn('action', function ($branch) {
+                    return '
                         <div class="flex gap-2">
                         <a class="block w-full px-2 py-1 mb-1 text-xs text-center text-white transition duration-500 bg-gray-700 border border-gray-700 rounded-md select-none btn-edit ease hover:bg-gray-800 focus:outline-none focus:shadow-outline"
                             href="' . route('admin.user-management.branch.edit', $branch->branch_code) . '">
@@ -41,8 +41,8 @@ class BranchController extends Controller
                             ' . method_field('delete') . csrf_field() . '
                         </form>
                         </div>';
-            })
-            ->rawColumns(['action'])
+                })
+                ->rawColumns(['action'])
                 ->make();
         }
         return view('admin.user-management.branch.index');
@@ -61,40 +61,77 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ], [
-            'file.required' => 'File is required',
-            'file.mimes' => 'File must be an Excel document',
-        ]);
 
-        $file = $request->file('file');
-        $namaFile = $file->getClientOriginalName();
+        if ($request->input_method == 'excel') {
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls,csv',
+            ], [
+                'file.required' => 'File is required',
+                'file.mimes' => 'File must be an Excel document',
+            ]);
 
-        // Memeriksa apakah file dengan nama yang sama sudah ada
-        if (file_exists(public_path('/DataImport/' . $namaFile))) {
-            // Menampilkan pesan konfirmasi untuk menimpa file
-            if ($request->has('overwrite') && $request->overwrite == 'true') {
-                // Jika konfirmasi dilakukan, hapus file lama
-                unlink(public_path('/DataImport/' . $namaFile));
+            $file = $request->file('file');
+            $namaFile = $file->getClientOriginalName();
 
-                // Hapus semua insiden
-                Branch::truncate();
-            } else {
-                // Jika tidak ingin menimpa, kembalikan dengan pesan error
-                return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+            // Memeriksa apakah file dengan nama yang sama sudah ada
+            if (file_exists(public_path('/DataImport/' . $namaFile))) {
+                // Menampilkan pesan konfirmasi untuk menimpa file
+                if ($request->has('overwrite') && $request->overwrite == 'true') {
+                    // Jika konfirmasi dilakukan, hapus file lama
+                    unlink(public_path('/DataImport/' . $namaFile));
+
+                    //branch::truncate(); -> masih error gamau hapus database karena jadi FK
+                } else {
+                    // Jika tidak ingin menimpa, kembalikan dengan pesan error
+                    return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+                }
             }
-        }
 
-        // Pindahkan file baru ke direktori tujuan
-        $file->move('DataImport', $namaFile);
-
+            // Pindahkan file baru ke direktori tujuan
+            $file->move('DataImport', $namaFile);
 
 
-        // Import data dari file baru
-        Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
-        return redirect()->route('admin.user-management.branch.index')
+
+            // Import data dari file baru
+            Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
+            return redirect()->route('admin.user-management.branch.index')
             ->with('success', 'Branch imported successfully');
+
+        } elseif ($request->input_method == 'manual') {
+            $request->validate([
+                'branch_code' => 'required|max:4',
+                'branch_name' => 'required|max:200',
+                'uker_induk_wilayah_code' => 'required|max:4',
+                'level_uker' => 'required|in:AIW,BRI UNIT,Campus,Kanpus,KC,KCP,KK,Regional Office',
+                'uker_induk_kc' => 'required|max:4',
+                'sbo' => 'required|in:SBO,NON SBO',
+            ]);
+
+            if (Branch::where('branch_code', $request->branch_code)->first()) {
+                return redirect()->back()->with('error', 'Kode Uker ' . $request->branch_code . ' already exists.');
+            }
+
+            if (Branch::where('uker_induk_wilayah_code', $request->uker_induk_wilayah_code)->first()) {
+                return redirect()->back()->with('error', 'Kode Uker Induk Wilayah ' . $request->uker_induk_wilayah_code . ' already exists.');
+            }
+
+            if (Branch::where('uker_induk_kc', $request->uker_induk_kc)->first()) {
+                return redirect()->back()->with('error', 'Kode Uker Induk KC ' . $request->uker_induk_kc . ' already exists.');
+            }
+
+            $data = [
+                'branch_code' => $request->input('branch_code'),
+                'branch_name' => $request->input('branch_name'),
+                'uker_induk_wilayah_code' => $request->input('uker_induk_wilayah_code'),
+                'level_uker' => $request->input('level_uker'),
+                'uker_induk_kc' => $request->input('uker_induk_kc'),
+                'sbo' => $request->input('sbo'),
+            ];
+
+            Branch::create($data);
+            return redirect()->route('admin.user-management.branch.index')
+                ->with('success', 'Branch created successfully');
+        }
     }
 
 
@@ -121,43 +158,43 @@ class BranchController extends Controller
      * Update the specified resource in storage.
      */
     /**
- * Update the specified resource in storage.
- */
-public function update(Request $request, string $id)
-{
-    // Validasi input
-    $request->validate([
-        'branch_name' => 'required|string|max:255',
-        'level_uker' => 'required|string|max:255',
-        'sbo' => 'required|string|max:255',
-    ]);
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        // Validasi input
+        $request->validate([
+            'branch_name' => 'required|string|max:255',
+            'level_uker' => 'required|string|max:255',
+            'sbo' => 'required|string|max:255',
+        ]);
 
-    // Temukan cabang berdasarkan ID
-    $branch = Branch::findOrFail($id);
+        // Temukan cabang berdasarkan ID
+        $branch = Branch::findOrFail($id);
 
-    // Periksa apakah nama cabang sudah ada
-    if ($branch->branch_code != $request->branch_name) {
-        if (Branch::where('branch_code', $request->branch_name)->exists()) {
-            return redirect()->back()->with('error', 'Branch name already exists.');
+        // Periksa apakah nama cabang sudah ada
+        if ($branch->branch_code != $request->branch_name) {
+            if (Branch::where('branch_code', $request->branch_name)->exists()) {
+                return redirect()->back()->with('error', 'Branch name already exists.');
+            }
         }
-    }
 
-    // Periksa apakah nama kanwil sudah ada
-    if ($branch->uker_induk_wilayah_code != $request->level_uker) {
-        if (Branch::where('branch_code', $request->level_uker)->exists()) {
-            return redirect()->back()->with('error', 'Level Uker name already exists.');
+        // Periksa apakah nama kanwil sudah ada
+        if ($branch->uker_induk_wilayah_code != $request->level_uker) {
+            if (Branch::where('branch_code', $request->level_uker)->exists()) {
+                return redirect()->back()->with('error', 'Level Uker name already exists.');
+            }
         }
+
+        // Update data cabang
+        $branch->update([
+            'branch_name' => $request->branch_name,
+            'level_uker' => $request->level_uker,
+            'sbo' => $request->sbo,
+        ]);
+
+        return redirect()->route('admin.user-management.branch.index')->with('success', 'Branch updated successfully.');
     }
-
-    // Update data cabang
-    $branch->update([
-        'branch_name' => $request->branch_name,
-        'level_uker' => $request->level_uker,
-        'sbo' => $request->sbo,
-    ]);
-
-    return redirect()->route('admin.user-management.branch.index')->with('success', 'Branch updated successfully.');
-}
 
 
     /**
@@ -168,7 +205,7 @@ public function update(Request $request, string $id)
 
         $branch = Branch::findOrFail($id);
 
-        if ($branch->usman()->count()){
+        if ($branch->usman()->count()) {
             return redirect()->back()->with('error', 'There is Incident data. Branch cannot be deleted.');
         }
 
