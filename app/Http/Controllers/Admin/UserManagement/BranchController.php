@@ -81,7 +81,7 @@ class BranchController extends Controller
                     unlink(public_path('/DataImport/' . $namaFile));
 
                     // -> masih error gamau hapus database karena jadi FK
-                    Branch::truncate();
+                    // Branch::truncate();
 
                 } else {
                     // Jika tidak ingin menimpa, kembalikan dengan pesan error
