@@ -32,8 +32,8 @@
                                     <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title*</label>
                                     <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title') }}" required>
                                     <div class="mt-2 text-sm text-gray-500">
-                Maksimal 200 karakter.
-              </div>
+                                        Maksimal 200 karakter.
+                                    </div>
                                 </div>
 
                                 <!-- Deploy Date -->
@@ -51,6 +51,9 @@
                                         <option value="{{ $module->id }}">{{ $module->name }}</option>
                                         @endforeach
                                     </select>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        Bisa memilih lebih dari 1 Module.
+                                    </div>
                                 </div>
 
                                 <!-- Server Type ID Dropdown -->
@@ -63,6 +66,9 @@
                                         <option value="{{ $serverType->id }}">{{ $serverType->name }}</option>
                                         @endforeach
                                     </select>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        Bisa memilih lebih dari 1 Server Type.
+                                    </div>
                                 </div>
 
 

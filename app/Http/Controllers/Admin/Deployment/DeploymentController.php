@@ -74,7 +74,7 @@ class DeploymentController extends Controller
         // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
-        $id = str_replace(' ','',$title) . '_' . str_replace('-', '', $deploy_date);
+        $id = substr(str_replace(' ', '', $title), 9, 5) . str_replace('-', '', $deploy_date);
 
         $request->merge(['id' => $id]);
 
