@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('deployments', function (Blueprint $table) {
-            $table->string('id',50)->primary();
+            $table->string('id',255)->primary();
             $table->string('title', 200);
             $table->date('deploy_date');
             $table->enum('document_status', ['Done', 'Not Done', 'In Progress']);

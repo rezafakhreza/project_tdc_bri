@@ -57,7 +57,7 @@
                      class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                      id="process_name" type="text" placeholder="Nama Proses" required>
               <div class="mt-2 text-sm text-gray-500">
-                Nama Modul Background. Contoh: Process 1, Process 2, dsb. Wajib diisi. Maksimal 255 karakter.
+                Nama Modul Background. Contoh: INBOUND - A001 (Indonesia), OUTBOUND - Master Data, dsb. Wajib diisi. Maksimal 255 karakter.
               </div>
             </div>
           </div>

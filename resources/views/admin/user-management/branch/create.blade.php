@@ -78,7 +78,7 @@
                     <div>
                         <!-- Title -->
                         <div class="mb-4">
-                            <label for="branch_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Unit Kerja:</label>
+                            <label for="branch_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Unit Kerja*</label>
                             <input type="text" id="branch_code" name="branch_code" value="{{ old('branch_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                             <div class="mt-2 text-sm text-gray-500">
                                 Kode tidak boleh lebih dari 4 digit.
@@ -86,12 +86,12 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="branch_name" class="block mb-2 text-sm font-bold text-gray-600">Nama Unit Kerja:</label>
+                            <label for="branch_name" class="block mb-2 text-sm font-bold text-gray-600">Nama Unit Kerja*</label>
                             <input type="text" id="branch_name" name="branch_name" value="{{ old('branch_name') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                         </div>
 
                         <div class="mb-4">
-                            <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah:</label>
+                            <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah*</label>
                             <input type="text" id="uker_induk_wilayah_code" name="uker_induk_wilayah_code" value="{{ old('uker_induk_wilayah_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                             <div class="mt-2 text-sm text-gray-500">
                                 Kode tidak boleh lebih dari 4 digit.
@@ -102,7 +102,7 @@
 
                         <!-- Document Status -->
                         <div class="mb-4">
-                            <label for="level_uker" class="block mb-2 text-sm font-bold text-gray-600">Level Unit Kerja:</label>
+                            <label for="level_uker" class="block mb-2 text-sm font-bold text-gray-600">Level Unit Kerja*</label>
                             <select id="level_uker" name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                 <option value="" disabled selected>-- Pilih Level Uker --</option>
                                 <option value="AIW" {{ old('level_uker') == 'AIW' ? 'selected' : '' }}>AIW</option>
@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="uker_induk_kc" class="block mb-2 text-sm font-bold text-gray-600">Uker Induk KC:</label>
+                            <label for="uker_induk_kc" class="block mb-2 text-sm font-bold text-gray-600">Uker Induk KC*</label>
                             <input type="text" id="uker_induk_kc" name="uker_induk_kc" value="{{ old('uker_induk_kc') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                             <div class="mt-2 text-sm text-gray-500">
                                 Kode tidak boleh lebih dari 4 digit.
@@ -126,7 +126,7 @@
 
                         <!-- CM Status -->
                         <div class="mb-4">
-                            <label for="sbo" class="block mb-2 text-sm font-bold text-gray-600">SBO:</label>
+                            <label for="sbo" class="block mb-2 text-sm font-bold text-gray-600">SBO*</label>
                             <select id="sbo" name="sbo" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                 <option value="" disabled selected>-- Select SBO --</option>
                                 <option value="SBO" {{ old('sbo') == 'SBO' ? 'selected' : '' }}>SBO</option>
