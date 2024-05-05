@@ -1,7 +1,7 @@
 @extends('layouts.homepage')
 
 @section('title')
-    <title>User Management Request</title>
+    <title>Top 5 Kanwil</title>
 @endsection
 
 @section('content')
@@ -85,10 +85,10 @@
 
             try {
                 const response = await fetch(url);
-                const kanwils = await response.json();
+                const levelUkers = await response.json();
 
-                const kanwilNames = kanwils.map(kanwil => kanwil.kanwil_name);
-                const requestCounts = kanwils.map(kanwil => kanwil.total_requests);
+                const kanwilNames = levelUkers.map(uker => uker.level_uker);
+                const requestCounts = levelUkers.map(uker => uker.total_requests);
 
                 // Perbarui Pie Chart
                 const ctx = document.getElementById('branchPieChart').getContext('2d');

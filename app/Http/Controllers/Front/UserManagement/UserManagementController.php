@@ -141,8 +141,8 @@ class UserManagementController extends Controller
 
         $query = DB::table('usman_incident')
             ->join('usman_branch', 'usman_incident.branch_code', '=', 'usman_branch.branch_code')
-            ->select('usman_branch.kanwil_name', DB::raw('count(usman_incident.id) as total_requests'))
-            ->groupBy('usman_branch.kanwil_name')
+            ->select('usman_branch.level_uker', DB::raw('count(usman_incident.id) as total_requests'))
+            ->groupBy('usman_branch.level_uker')
             ->orderByDesc('total_requests')
             ->limit(5);
 
