@@ -89,8 +89,7 @@ class BranchController extends Controller
                 }
             }
 
-            
-
+        
             // Pindahkan file baru ke direktori tujuan
             $file->move('DataImport', $namaFile);
 
@@ -121,12 +120,16 @@ class BranchController extends Controller
                 return redirect()->back()->with('error', 'Kode Uker Induk KC ' . $request->uker_induk_kc . ' already exists.');
             }
 
+            $branch_code = str_pad($request['branch_code'], 4, '0', STR_PAD_LEFT);
+            $uker_induk_wilayah_code = str_pad($request['uker_induk_wilayah_code'], 4, '0', STR_PAD_LEFT);
+            $uker_induk_kc = str_pad($request['uker_induk_kc'], 4, '0', STR_PAD_LEFT);
+
             $data = [
-                'branch_code' => $request->input('branch_code'),
+                'branch_code' => $branch_code,
                 'branch_name' => $request->input('branch_name'),
-                'uker_induk_wilayah_code' => $request->input('uker_induk_wilayah_code'),
+                'uker_induk_wilayah_code' => $uker_induk_wilayah_code,
                 'level_uker' => $request->input('level_uker'),
-                'uker_induk_kc' => $request->input('uker_induk_kc'),
+                'uker_induk_kc' => $uker_induk_kc,
                 'sbo' => $request->input('sbo'),
             ];
 

@@ -1,7 +1,7 @@
 @extends('layouts.homepage')
 
 @section('title')
-    <title>User Management Request</title>
+    <title>Target Realization</title>
 @endsection
 
 @section('content')

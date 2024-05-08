@@ -33,6 +33,9 @@ class IncidentsController extends Controller
                 ->addColumn('level_uker', function ($row) {
                     return $row->level_uker;
                 })
+                ->addColumn('req_type', function ($row) {
+                    return $row->req_type;
+                })
                 ->rawColumns(['branch_name', 'level_uker'])
                 ->make(true);
         }
@@ -111,7 +114,7 @@ class IncidentsController extends Controller
                 // Menghapus angka nol di awal kode UKER
                 $trimmedKodeUker = ltrim($kodeUker, '0');
                 $trimmedKodeUker = str_pad($trimmedKodeUker, 4, '0', STR_PAD_LEFT);
-                
+
                 // Jika kode UKER tidak ada di database, tambahkan ke array missingBranchCodes
                 if (!in_array($trimmedKodeUker, $branchCodes)) {
                     $missingBranchCodes[] = $trimmedKodeUker;
