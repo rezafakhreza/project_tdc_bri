@@ -187,100 +187,51 @@ class BackgroundJobController extends Controller
         $chosenMonth = $request->input('month', date('m'));
         $chosenYear = $request->input('year', date('Y'));
 
-        // Mengambil data untuk bulan yang dipilih dan bulan-bulan sebelumnya dalam tahun yang sama
-        $startMonth = 1; // Januari
-        $startYear = $chosenYear;
-        $endMonth = $chosenMonth;
-        $endYear = $chosenYear;
-
         $processes = Process::where(function ($query) {
             $query->where('name', 'like', '%INBOUND%')
                 ->orWhere('name', 'like', '%OUTBOUND%');
         })->get();
 
         $allChartData = [];
-        $processDataAmounts = [];
 
-        while ($startYear < $endYear || ($startYear == $endYear && $startMonth <= $endMonth)) {
-            foreach ($processes as $process) {
-                // Lakukan pengolahan data seperti biasa
-                if ($mode == 'month') {
-                    $results = $process->backgroundJobs()
-                        ->whereYear('execution_date', $chosenYear)
-                        ->groupBy(DB::raw('MONTH(execution_date)'))
-                        ->orderBy(DB::raw('MONTH(execution_date)'), 'asc')
-                        ->get([
-                            DB::raw('MONTH(execution_date) as month_num'),
-                            DB::raw('SUM(duration_to_S4GL) as total_s4gl'),
-                            DB::raw('SUM(duration_to_EIM) as total_eim')
-                        ]);
+        foreach ($processes as $process) {
+            if ($mode == 'month') {
+                $results = $process->backgroundJobs()
+                    ->whereYear('execution_date', $chosenYear)
+                    ->select(DB::raw('MONTH(execution_date) as month_num'),
+                        DB::raw('SUM(duration_to_EIM) as total_duration_eim'),
+                        DB::raw('SUM(duration_to_S4GL) as total_duration_s4gl'))
+                    ->groupBy(DB::raw('MONTH(execution_date)'))
+                    ->orderBy(DB::raw('MONTH(execution_date)'), 'asc')
+                    ->get();
 
-                    $s4glAmounts = array_fill(0, 12, 0);
-                    $eimAmounts = array_fill(0, 12, 0);
-                    $labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                } else {
-                    $results = $process->backgroundJobs()
-                        ->whereMonth('execution_date', $chosenMonth)
-                        ->whereYear('execution_date', $chosenYear)
-                        ->groupBy(DB::raw('DAY(execution_date)'))
-                        ->orderBy(DB::raw('DAY(execution_date)'), 'asc')
-                        ->get([
-                            DB::raw('DAY(execution_date) as day_num'),
-                            DB::raw('SUM(data_amount_to_S4GL) as total_s4gl'),
-                            DB::raw('SUM(data_amount_to_EIM) as total_eim')
-                        ]);
-
-                    $lastDay = date('t', mktime(0, 0, 0, $chosenMonth, 1, $chosenYear));
-
-                    $s4glAmounts = array_fill(0, $lastDay, 0);
-                    $eimAmounts = array_fill(0, $lastDay, 0);
-
-                    $labels = range(1, $lastDay);
-                }
-
-                foreach ($results as $result) {
-                    $index = ($mode == 'month' ? $result->month_num : $result->day_num) - 1;
-                    $s4glAmounts[$index] = $result->total_s4gl;
-                    $eimAmounts[$index] = $result->total_eim;
-                }
-
-                if (in_array($process->name, [
-                    'INBOUND - A004 (Newyork)',
-                    'INBOUND - A005 (Cayman Island)',
-                    'INBOUND - A002 (Singapore)',
-                    'INBOUND - A006 (Taiwan)'
-                ])) {
-                    $processDataAmounts[$process->name] = $s4glAmounts;
-                }
-
-                $allChartData[$process->name] = ['labels' => $labels, 's4glAmounts' => $s4glAmounts, 'eimAmounts' => $eimAmounts];
-            }
-            foreach ($allChartData as $processName => &$chartData) {
-                if ($processName === 'INBOUND - A004 (Newyork)') {
-                    $chartData['s4glAmounts'] = array_map(function ($amount, $index) use ($processDataAmounts) {
-                        return $amount + $processDataAmounts['INBOUND - A005 (Cayman Island)'][$index];
-                    }, $chartData['s4glAmounts'], array_keys($chartData['s4glAmounts']));
-                } elseif ($processName === 'INBOUND - A005 (Cayman Island)') {
-                    $chartData['s4glAmounts'] = array_map(function ($amount, $index) use ($processDataAmounts) {
-                        return $amount + $processDataAmounts['INBOUND - A004 (Newyork)'][$index];
-                    }, $chartData['s4glAmounts'], array_keys($chartData['s4glAmounts']));
-                } elseif ($processName === 'INBOUND - A002 (Singapore)') {
-                    $chartData['s4glAmounts'] = array_map(function ($amount, $index) use ($processDataAmounts) {
-                        return $amount + $processDataAmounts['INBOUND - A006 (Taiwan)'][$index];
-                    }, $chartData['s4glAmounts'], array_keys($chartData['s4glAmounts']));
-                } elseif ($processName === 'INBOUND - A006 (Taiwan)') {
-                    $chartData['s4glAmounts'] = array_map(function ($amount, $index) use ($processDataAmounts) {
-                        return $amount + $processDataAmounts['INBOUND - A002 (Singapore)'][$index];
-                    }, $chartData['s4glAmounts'], array_keys($chartData['s4glAmounts']));
-                }
-            }
-
-            if ($startMonth == 12) {
-                $startMonth = 1;
-                $startYear++;
+                $durationsEIM = array_fill(0, 12, 0);
+                $durationsS4GL = array_fill(0, 12, 0);
+                $labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             } else {
-                $startMonth++;
+                $results = $process->backgroundJobs()
+                    ->select(DB::raw('DAY(execution_date) as day_num'),
+                        DB::raw('SUM(duration_to_EIM) as total_duration_eim'),
+                        DB::raw('SUM(duration_to_S4GL) as total_duration_s4gl'))
+                    ->whereMonth('execution_date', $chosenMonth)
+                    ->whereYear('execution_date', $chosenYear)
+                    ->groupBy(DB::raw('DAY(execution_date)'))
+                    ->orderBy(DB::raw('DAY(execution_date)'), 'asc')
+                    ->get();
+
+                $lastDay = date('t', mktime(0, 0, 0, $chosenMonth, 1, date('Y')));
+                $durationsEIM = array_fill(0, $lastDay, 0);
+                $durationsS4GL = array_fill(0, $lastDay, 0);
+                $labels = range(1, $lastDay);
             }
+
+            foreach ($results as $result) {
+                $index = ($mode == 'month' ? $result->month_num : $result->day_num) - 1;
+                $durationsEIM[$index] = $result->total_duration_eim;
+                $durationsS4GL[$index] = $result->total_duration_s4gl;
+            }
+
+            $allChartData[$process->name] = ['labels' => $labels, 'durationsEIM' => $durationsEIM, 'durationsS4GL' => $durationsS4GL];
         }
 
         return view('front.background-jobs-monitoring.background-jobs-duration', [
