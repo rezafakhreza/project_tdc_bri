@@ -34,7 +34,7 @@
     </x-slot>
 
 
-    
+
 
     <x-slot name="script">
         <script>
@@ -138,19 +138,32 @@
                 });
             });
         </script>
+
+
+        <script>
+            function downloadTemplate() {
+                var templateUrl = '{{ asset('TemplateExcel/Template_Data_Branch.xlsx') }}';
+                var link = document.createElement('a');
+                link.href = templateUrl;
+                link.download = 'Template_Data_Branch.xlsx';
+                link.click();
+            }
+        </script>
+
+        <script>
+            function showImportForm() {
+                var modal = document.getElementById('importModal');
+                modal.classList.remove('hidden');
+
+                // Menambahkan event listener untuk tombol cancel
+                document.getElementById('cancelButton').addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
+            }
+        </script>
+
+
     </x-slot>
-
-    <script>
-        function downloadTemplate() {
-            var templateUrl = '{{ asset('TemplateExcel/Template_Data_Branch.xlsx') }}';
-            var link = document.createElement('a');
-            link.href = templateUrl;
-            link.download = 'Template_Data_Branch.xlsx';
-            link.click();
-        }
-    </script>
-
-
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -173,6 +186,70 @@
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Add Branch
                             </a>
+
+                            <a class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;" onclick="showImportForm()">
+                                + Import Data
+                            </a>
+
+                            <div id="importModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+                                <div
+                                    class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                                    </div>
+
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                        aria-hidden="true">&#8203;</span>
+
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div class="sm:flex sm:items-start">
+                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                    <h3 class="text-lg leading-6 font-medium text-gray-900 py-20"
+                                                        id="modal-title">
+                                                        Import Data
+                                                    </h3>
+                                                    <div class="mt-2">
+                                                        <p class="text-sm text-gray-500">
+                                                            Please choose a file to import data.
+                                                        </p>
+                                                        <form id="uploadForm"
+                                                            action="{{ route('admin.user-management.branch.store') }}"
+                                                            method="POST" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div class="mb-3">
+                                                                <input type="hidden" name="input_method"
+                                                                    value="excel">
+                                                                <input type="file" name="file" class=" rounded-lg"
+                                                                    value="excel" required>
+                                                                <button type="submit"
+                                                                    class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    value="true" id="overwrite" name="overwrite">
+                                                                <label class="form-check-label" for="overwrite">
+                                                                    Overwrite existing file if found
+                                                                </label>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <button id="cancelButton"
+                                                class="pressed-button block mx-auto mt-4 px-10 py-2 font-bold text-red-700 rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
+                                                style="outline: 2px solid rgb(226, 10, 10); color: red; margin-right:2px">
+                                                Cancel
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="dataTables_wrapper">
@@ -289,5 +366,5 @@
     </style>
 
 
-    
+
 </x-app-layout>
