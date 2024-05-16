@@ -108,17 +108,6 @@ class BranchController extends Controller
                 'sbo' => 'required|in:SBO,NON SBO',
             ]);
 
-            if (Branch::where('branch_code', $request->branch_code)->first()) {
-                return redirect()->back()->with('error', 'Kode Uker ' . $request->branch_code . ' already exists.');
-            }
-
-            if (Branch::where('uker_induk_wilayah_code', $request->uker_induk_wilayah_code)->first()) {
-                return redirect()->back()->with('error', 'Kode Uker Induk Wilayah ' . $request->uker_induk_wilayah_code . ' already exists.');
-            }
-
-            if (Branch::where('uker_induk_kc', $request->uker_induk_kc)->first()) {
-                return redirect()->back()->with('error', 'Kode Uker Induk KC ' . $request->uker_induk_kc . ' already exists.');
-            }
 
             $branch_code = str_pad($request['branch_code'], 4, '0', STR_PAD_LEFT);
             $uker_induk_wilayah_code = str_pad($request['uker_induk_wilayah_code'], 4, '0', STR_PAD_LEFT);
@@ -133,7 +122,22 @@ class BranchController extends Controller
                 'sbo' => $request->input('sbo'),
             ];
 
+            if (Branch::where('branch_code', $branch_code)->first()) {
+                return redirect()->back()->withInput()->with('error', 'Kode Uker ' . $branch_code . ' already exists.');
+            }
+            
+            if (Branch::where('uker_induk_wilayah_code', $uker_induk_wilayah_code)->first()) {
+                return redirect()->back()->withInput()->with('error', 'Kode Uker Induk Wilayah ' . $uker_induk_wilayah_code . ' already exists.');
+            }
+            
+            if (Branch::where('uker_induk_kc', $uker_induk_kc)->first()) {
+                return redirect()->back()->withInput()->with('error', 'Kode Uker Induk KC ' . $uker_induk_kc . ' already exists.');
+            }
+
             Branch::create($data);
+
+            
+
             return redirect()->route('admin.user-management.branch.index')
                 ->with('success', 'Branch created successfully');
         }

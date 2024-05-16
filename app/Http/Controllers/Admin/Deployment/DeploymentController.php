@@ -78,7 +78,11 @@ class DeploymentController extends Controller
 
         $request->merge(['id' => $id]);
 
-        
+        if (Deployment::where('title', $request->title)->exists()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Deployment already exists. Please choose another title.');
+        }
 
         $data = Deployment::create([
             'id' => $id,
@@ -93,11 +97,6 @@ class DeploymentController extends Controller
         $data->module()->attach($request->input('module_id'));
         $data->serverType()->attach($request->input('server_type_id'));
 
-        if (Deployment::where('title', $request->title)->exists()) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Deployment already exists. Please choose another title.');
-        }
         
         return redirect()->route('admin.deployments.deployment.index')
             ->with('success', 'Success Create Deployment');

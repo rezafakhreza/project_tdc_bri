@@ -188,7 +188,7 @@
                             </a>
 
                             <a class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
-                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;" onclick="showImportForm()">
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248; cursor: pointer;" onclick="showImportForm()">
                                 + Import Data
                             </a>
 
@@ -232,7 +232,7 @@
                                                                 <input class="form-check-input" type="checkbox"
                                                                     value="true" id="overwrite" name="overwrite">
                                                                 <label class="form-check-label" for="overwrite">
-                                                                    Overwrite existing file if found
+                                                                    Replace file if found
                                                                 </label>
                                                             </div>
                                                         </form>

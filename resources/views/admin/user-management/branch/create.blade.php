@@ -40,33 +40,7 @@
     </div>
     @endif
 
-    <div class="py-6 font-poppins">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="p-6 bg-white rounded-lg">
-                <h1 class="mb-6 text-2xl font-medium">Import Data</h1>
-
-                <!-- Checkbox untuk opsi "Overwrite" di luar alert -->
-                <!-- Form untuk tombol "Import" di dalam alert -->
-                <form id="uploadForm" action="{{ route('admin.user-management.branch.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <input type="hidden" name="input_method" value="excel">
-                        <input type="file" name="file" class=" rounded-lg" value="excel" required>
-                        <button type="submit" class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
-                    </div>
-
-                    <div class="mb-3">
-                        <input class="form-check-input" type="checkbox" value="true" id="overwrite" name="overwrite">
-                        <label class="form-check-label" for="overwrite">
-                            Overwrite existing file if found
-                        </label>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="py-6 font-poppins">
+    <div class="py-12 font-poppins">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="p-6 bg-white rounded-lg">
             <h1 class="mb-6 text-2xl font-medium">Add Data</h1>

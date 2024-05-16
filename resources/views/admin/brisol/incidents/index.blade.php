@@ -213,7 +213,7 @@
                             <a href="{{ route('admin.brisol.incidents.create') }}"
                                 class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                + Add Data
+                                + Import Data
                             </a>
                             <a href="{{ route('brisol.service-ci') }}" target="_blank"
                                 class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
