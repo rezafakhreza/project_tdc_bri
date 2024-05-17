@@ -89,7 +89,6 @@ class BranchController extends Controller
                 }
             }
 
-        
             // Pindahkan file baru ke direktori tujuan
             $file->move('DataImport', $namaFile);
 
@@ -102,12 +101,12 @@ class BranchController extends Controller
             $request->validate([
                 'branch_code' => 'required|max:4',
                 'branch_name' => 'required|max:200',
-                'uker_induk_wilayah_code' => 'required|max:4',
                 'level_uker' => 'required|in:AIW,BRI UNIT,Campus,Kanpus,KC,KCP,KK,Regional Office',
+                'uker_induk_wilayah_code' => 'required|max:4',
+                'kanwil_name' => 'required|max:200',
                 'uker_induk_kc' => 'required|max:4',
                 'sbo' => 'required|in:SBO,NON SBO',
             ]);
-
 
             $branch_code = str_pad($request['branch_code'], 4, '0', STR_PAD_LEFT);
             $uker_induk_wilayah_code = str_pad($request['uker_induk_wilayah_code'], 4, '0', STR_PAD_LEFT);
@@ -116,8 +115,9 @@ class BranchController extends Controller
             $data = [
                 'branch_code' => $branch_code,
                 'branch_name' => $request->input('branch_name'),
-                'uker_induk_wilayah_code' => $uker_induk_wilayah_code,
                 'level_uker' => $request->input('level_uker'),
+                'uker_induk_wilayah_code' => $uker_induk_wilayah_code,
+                'kanwil_name' =>$request->input('kanwil_name'),
                 'uker_induk_kc' => $uker_induk_kc,
                 'sbo' => $request->input('sbo'),
             ];
@@ -135,8 +135,6 @@ class BranchController extends Controller
             }
 
             Branch::create($data);
-
-            
 
             return redirect()->route('admin.user-management.branch.index')
                 ->with('success', 'Branch created successfully');
@@ -175,6 +173,7 @@ class BranchController extends Controller
         $request->validate([
             'branch_name' => 'required|string|max:255',
             'level_uker' => 'required|string|max:255',
+            'kanwil_name' => 'required|string|max:255',
             'sbo' => 'required|string|max:255',
         ]);
 
@@ -199,6 +198,7 @@ class BranchController extends Controller
         $branch->update([
             'branch_name' => $request->branch_name,
             'level_uker' => $request->level_uker,
+            'kanwil_name' => $request->kanwil_name,
             'sbo' => $request->sbo,
         ]);
 

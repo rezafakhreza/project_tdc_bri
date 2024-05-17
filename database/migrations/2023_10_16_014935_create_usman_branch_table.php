@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('usman_branch', function (Blueprint $table) {
             $table->string('branch_code')->primary();
             $table->string('branch_name');
-            $table->string('uker_induk_wilayah_code');
             $table->enum('level_uker', ['AIW', 'BRI UNIT', 'Campus', 'Kanpus', 'KC', 'KCP', 'KK', 'Regional Office']);
+            $table->string('uker_induk_wilayah_code');
+            $table->string('kanwil_name');
             $table->string('uker_induk_kc');
             $table->enum('sbo', ['NON SBO', 'SBO']);
             $table->timestamps();

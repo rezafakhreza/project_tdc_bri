@@ -103,6 +103,11 @@
                         searchable: true,
                     },
                     {
+                        data: 'kanwil_name',
+                        name: 'kanwil_name',
+                        searchable: true,
+                    },
+                    {
                         data: 'req_status',
                         name: 'req_status',
                         render: function(data, type, row) {
@@ -202,6 +207,8 @@
                                         Unit Kerja</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Level Uker</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Kantor Wilayah</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Request Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">

@@ -23,7 +23,7 @@ class IncidentsController extends Controller
         if (request()->ajax()) {
             $query = DB::table('usman_incident')
                 ->leftJoin('usman_branch', 'usman_incident.branch_code', '=', 'usman_branch.branch_code')
-                ->select('usman_incident.id', 'usman_incident.reported_date', 'usman_incident.pn', 'usman_incident.nama', 'usman_incident.jabatan', 'usman_incident.bagian', 'usman_incident.req_type', 'usman_branch.branch_name', 'usman_branch.level_uker', 'usman_incident.req_status', 'usman_incident.exec_status', 'usman_incident.execution_date', 'usman_incident.sla_category')
+                ->select('usman_incident.reported_date', 'usman_incident.pn', 'usman_incident.nama', 'usman_incident.jabatan', 'usman_incident.bagian', 'usman_incident.req_type', 'usman_branch.branch_name', 'usman_branch.level_uker', 'usman_branch.kanwil_name', 'usman_incident.req_status', 'usman_incident.exec_status', 'usman_incident.execution_date', 'usman_incident.sla_category')
                 ->get();
 
             return DataTables::of($query)
@@ -33,6 +33,10 @@ class IncidentsController extends Controller
                 ->addColumn('level_uker', function ($row) {
                     return $row->level_uker;
                 })
+                ->addColumn('kanwil_name', function ($row) {
+                    return $row->kanwil_name;
+                })
+
                 ->addColumn('req_type', function ($row) {
                     return $row->req_type;
                 })

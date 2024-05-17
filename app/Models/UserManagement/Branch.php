@@ -13,7 +13,7 @@ class Branch extends Model
     protected $primaryKey = 'branch_code';
     public $incrementing = false;
     
-    protected $fillable = ['branch_code', 'branch_name', 'uker_induk_wilayah_code', 'level_uker', 'uker_induk_kc', 'sbo'];
+    protected $fillable = ['branch_code', 'branch_name', 'level_uker', 'uker_induk_wilayah_code', 'kanwil_name', 'uker_induk_kc', 'sbo'];
 
     public function usman()
     {

@@ -31,6 +31,9 @@
                                 <div class="mb-4">
                                     <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
                                     <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title', $deployment->title) }}" required>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        Contoh: 20240107 - NCM - FAM - Enhancement Asset Verification. Maksimal 200 karakter.
+                                    </div>
                                 </div>
 
                                 <!-- Deploy Date -->
@@ -49,10 +52,13 @@
                                         $selected = in_array($module->id, $deployment->module->pluck('id')->toArray());
                                         @endphp
                                         <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
-                                            {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
+                                        {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
                                         </option>
                                         @endforeach
                                     </select>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        Bisa memilih lebih dari 1 Module.
+                                    </div>
                                 </div>
 
                                 <!-- Server Type ID Dropdown -->
@@ -68,6 +74,9 @@
                                         </option>
                                         @endforeach
                                     </select>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        Bisa memilih lebih dari 1 Server Type.
+                                    </div>
                                 </div>
 
                             </div>

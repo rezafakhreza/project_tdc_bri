@@ -30,16 +30,16 @@
                                 <!-- Title -->
                                 <div class="mb-4">
                                     <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title*</label>
-                                    <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title') }}" required>
+                                    <input type="text" id="title" name="title" value="{{ old('title') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                     <div class="mt-2 text-sm text-gray-500">
-                                        Maksimal 200 karakter.
+                                        Contoh: 20240107 - NCM - FAM - Enhancement Asset Verification. Maksimal 200 karakter.
                                     </div>
                                 </div>
 
                                 <!-- Deploy Date -->
                                 <div class="mb-4">
                                     <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy Date*</label>
-                                    <input type="date" id="deploy_date" name="deploy_date" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('deploy_date') }}" required>
+                                    <input type="date" id="deploy_date" name="deploy_date" value="{{ old('deploy_date') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                 </div>
 
                                 <!-- Module ID Dropdown -->
@@ -48,7 +48,9 @@
                                     <select id="module_id" name="module_id[]" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" multiple="multiple" required>
                                         <!-- <option value="" disabled selected>-- Pilih Module --</option> -->
                                         @foreach($modules as $module)
-                                        <option value="{{ $module->id }}">{{ $module->name }}</option>
+                                        <option value="{{ $module->id }}" {{ (is_array(old('module_id')) && in_array($module->id, old('module_id'))) ? 'selected' : '' }}>
+                                            {{ $module->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     <div class="mt-2 text-sm text-gray-500">
@@ -60,16 +62,17 @@
                                 <div class="mb-4">
                                     <label for="server_type_id" class="block mb-2 text-sm font-bold text-gray-600">Server Type*</label>
                                     <select id="server_type_id" name="server_type_id[]" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" multiple="multiple" required>
-                                        <!-- <option value="" disabled selected>-- Pilih Server Type --</option> -->
-                                        <!-- Options will be populated based on the selected module -->
                                         @foreach ($serverTypes as $serverType)
-                                        <option value="{{ $serverType->id }}">{{ $serverType->name }}</option>
+                                        <option value="{{ $serverType->id }}" {{ (is_array(old('server_type_id')) && in_array($serverType->id, old('server_type_id'))) ? 'selected' : '' }}>
+                                            {{ $serverType->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                     <div class="mt-2 text-sm text-gray-500">
                                         Bisa memilih lebih dari 1 Server Type.
                                     </div>
                                 </div>
+
 
 
 
@@ -81,16 +84,16 @@
                                     <label for="document_status" class="block mb-2 text-sm font-bold text-gray-600">Document Status*</label>
                                     <select id="document_status" name="document_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                         <option value="" selected disabled>-- Pilih Status Dokumen --</option>
-                                        <option value="Not Done">Not Done</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Done">Done</option>
+                                        <option value="Not Done" {{ old('document_status') == 'Not Done' ? 'selected' : '' }}>Not Done</option>
+                                        <option value="In Progress" {{ old('document_status') == 'In Progress' ? 'selected' : '' }}>In Progress</option>
+                                        <option value="Done" {{ old('document_status') == 'Done' ? 'selected' : '' }}>Done</option>
                                     </select>
                                 </div>
 
                                 <!-- Document Description -->
                                 <div class="mb-4">
                                     <label for="document_description" class="block mb-2 text-sm font-bold text-gray-600">Document Description*</label>
-                                    <textarea id="document_description" name="document_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required></textarea>
+                                    <textarea id="document_description" name="document_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>{{ old('document_description') }}</textarea>
                                 </div>
 
                                 <!-- CM Status -->
@@ -98,18 +101,18 @@
                                     <label for="cm_status" class="block mb-2 text-sm font-bold text-gray-600">CM Status*</label>
                                     <select id="cm_status" name="cm_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                                         <option value="" selected disabled>-- Pilih Status CM --</option>
-                                        <option value="Draft">Draft</option>
-                                        <option value="Reviewer">Reviewer</option>
-                                        <option value="Checker">Checker</option>
-                                        <option value="Signer">Signer</option>
-                                        <option value="Done Deploy">Done Deploy</option>
+                                        <option value="Draft" {{ old('cm_status') == 'Draft' ? 'selected' : '' }}>Draft</option>
+                                        <option value="Reviewer" {{ old('cm_status') == 'Reviewer' ? 'selected' : '' }}>Reviewer</option>
+                                        <option value="Checker" {{ old('cm_status') == 'Checker' ? 'selected' : '' }}>Checker</option>
+                                        <option value="Signer" {{ old('cm_status') == 'Signer' ? 'selected' : '' }}>Signer</option>
+                                        <option value="Done Deploy" {{ old('cm_status') == 'Done Deploy' ? 'selected' : '' }}>Done Deploy</option>
                                     </select>
                                 </div>
 
                                 <!-- CM Description -->
                                 <div class="mb-4">
                                     <label for="cm_description" class="block mb-2 text-sm font-bold text-gray-600">CM Description*</label>
-                                    <textarea id="cm_description" name="cm_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required></textarea>
+                                    <textarea id="cm_description" name="cm_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>{{ old('cm_description') }}</textarea>
                                 </div>
 
 

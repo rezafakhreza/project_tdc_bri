@@ -41,85 +41,95 @@
     @endif
 
     <div class="py-12 font-poppins">
-    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="p-6 bg-white rounded-lg">
-            <h1 class="mb-6 text-2xl font-medium">Add Data</h1>
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="p-6 bg-white rounded-lg">
+                <h1 class="mb-6 text-2xl font-medium">Add Data</h1>
 
-            <form class="w-full" action="{{ route('admin.user-management.branch.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
+                <form class="w-full" action="{{ route('admin.user-management.branch.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
 
-                <div class="grid grid-cols-2 gap-16">
-                    <div>
-                        <!-- Title -->
-                        <div class="mb-4">
-                            <label for="branch_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Unit Kerja*</label>
-                            <input type="text" id="branch_code" name="branch_code" value="{{ old('branch_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                            <div class="mt-2 text-sm text-gray-500">
-                                Kode tidak boleh lebih dari 4 digit.
+                    <div class="grid grid-cols-2 gap-16">
+                        <div>
+                            <!-- Title -->
+                            <div class="mb-4">
+                                <label for="branch_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Unit Kerja*</label>
+                                <input type="number" id="branch_code" name="branch_code" value="{{ old('branch_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    Kode tidak boleh lebih dari 4 digit.
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="mb-4">
-                            <label for="branch_name" class="block mb-2 text-sm font-bold text-gray-600">Nama Unit Kerja*</label>
-                            <input type="text" id="branch_name" name="branch_name" value="{{ old('branch_name') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                        </div>
+                            <div class="mb-4">
+                                <label for="branch_name" class="block mb-2 text-sm font-bold text-gray-600">Nama Unit Kerja*</label>
+                                <input type="text" id="branch_name" name="branch_name" value="{{ old('branch_name') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah*</label>
-                            <input type="text" id="uker_induk_wilayah_code" name="uker_induk_wilayah_code" value="{{ old('uker_induk_wilayah_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                            <div class="mt-2 text-sm text-gray-500">
-                                Kode tidak boleh lebih dari 4 digit.
+                            <!-- Document Status -->
+                            <div class="mb-4">
+                                <label for="level_uker" class="block mb-2 text-sm font-bold text-gray-600">Level Unit Kerja*</label>
+                                <select id="level_uker" name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                    <option value="" disabled selected>-- Pilih Level Uker --</option>
+                                    <option value="AIW" {{ old('level_uker') == 'AIW' ? 'selected' : '' }}>AIW</option>
+                                    <option value="BRI UNIT" {{ old('level_uker') == 'BRI UNIT' ? 'selected' : '' }}>BRI UNIT</option>
+                                    <option value="Campus" {{ old('level_uker') == 'Campus' ? 'selected' : '' }}>Campus</option>
+                                    <option value="Kanpus" {{ old('level_uker') == 'Kanpus' ? 'selected' : '' }}>Kanpus</option>
+                                    <option value="KC" {{ old('level_uker') == 'KC' ? 'selected' : '' }}>KC</option>
+                                    <option value="KCP" {{ old('level_uker') == 'KCP' ? 'selected' : '' }}>KCP</option>
+                                    <option value="KK" {{ old('level_uker') == 'KK' ? 'selected' : '' }}>KK</option>
+                                    <option value="Regional Office" {{ old('status') == 'Regional Office' ? 'selected' : '' }}>Regional Office</option>
+                                </select>
+                            </div>
+
+
+
+                        </div>
+                        <div>
+
+                            <div class="mb-4">
+                                <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah*</label>
+                                <input type="number" id="uker_induk_wilayah_code" name="uker_induk_wilayah_code" value="{{ old('uker_induk_wilayah_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    Kode tidak boleh lebih dari 4 digit.
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="kanwil_name" class="block mb-2 text-sm font-bold text-gray-600">Nama Kantor Wilayah*</label>
+                                <input type="text" id="kanwil_name" name="kanwil_name" value="{{ old('kanwil_name') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="uker_induk_kc" class="block mb-2 text-sm font-bold text-gray-600">Uker Induk KC*</label>
+                                <input type="number" id="uker_induk_kc" name="uker_induk_kc" value="{{ old('uker_induk_kc') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    Kode tidak boleh lebih dari 4 digit.
+                                </div>
+                            </div>
+
+                            <!-- CM Status -->
+                            <div class="mb-4">
+                                <label for="sbo" class="block mb-2 text-sm font-bold text-gray-600">SBO*</label>
+                                <select id="sbo" name="sbo" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                    <option value="" disabled selected>-- Select SBO --</option>
+                                    <option value="SBO" {{ old('sbo') == 'SBO' ? 'selected' : '' }}>SBO</option>
+                                    <option value="NON SBO" {{ old('sbo') == 'NON SBO' ? 'selected' : '' }}>NON SBO</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div>
-
-                        <!-- Document Status -->
-                        <div class="mb-4">
-                            <label for="level_uker" class="block mb-2 text-sm font-bold text-gray-600">Level Unit Kerja*</label>
-                            <select id="level_uker" name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                <option value="" disabled selected>-- Pilih Level Uker --</option>
-                                <option value="AIW" {{ old('level_uker') == 'AIW' ? 'selected' : '' }}>AIW</option>
-                                <option value="BRI UNIT" {{ old('level_uker') == 'BRI UNIT' ? 'selected' : '' }}>BRI UNIT</option>
-                                <option value="Campus" {{ old('level_uker') == 'Campus' ? 'selected' : '' }}>Campus</option>
-                                <option value="Kanpus" {{ old('level_uker') == 'Kanpus' ? 'selected' : '' }}>Kanpus</option>
-                                <option value="KC" {{ old('level_uker') == 'KC' ? 'selected' : '' }}>KC</option>
-                                <option value="KCP" {{ old('level_uker') == 'KCP' ? 'selected' : '' }}>KCP</option>
-                                <option value="KK" {{ old('level_uker') == 'KK' ? 'selected' : '' }}>KK</option>
-                                <option value="Regional Office" {{ old('status') == 'Regional Office' ? 'selected' : '' }}>Regional Office</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="uker_induk_kc" class="block mb-2 text-sm font-bold text-gray-600">Uker Induk KC*</label>
-                            <input type="text" id="uker_induk_kc" name="uker_induk_kc" value="{{ old('uker_induk_kc') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                            <div class="mt-2 text-sm text-gray-500">
-                                Kode tidak boleh lebih dari 4 digit.
-                            </div>
-                        </div>
-
-                        <!-- CM Status -->
-                        <div class="mb-4">
-                            <label for="sbo" class="block mb-2 text-sm font-bold text-gray-600">SBO*</label>
-                            <select id="sbo" name="sbo" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                <option value="" disabled selected>-- Select SBO --</option>
-                                <option value="SBO" {{ old('sbo') == 'SBO' ? 'selected' : '' }}>SBO</option>
-                                <option value="NON SBO" {{ old('sbo') == 'NON SBO' ? 'selected' : '' }}>NON SBO</option>
-                            </select>
+                    
+                    <div class="flex flex-wrap mb-6 -mx-3">
+                        <div class="w-full px-3 text-right">
+                            <input type="hidden" name="input_method" value="manual">
+                            <button type="submit" name="input_method" value="manual" class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">
+                                Add Branch
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="flex flex-wrap mb-6 -mx-3">
-                    <div class="w-full px-3 text-right">
-                        <input type="hidden" name="input_method" value="manual">
-                        <button type="submit" name="input_method" value="manual" class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">
-                            Add Branch
-                        </button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
     </div>
 
     <script>

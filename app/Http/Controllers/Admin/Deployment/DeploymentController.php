@@ -71,18 +71,15 @@ class DeploymentController extends Controller
      */
     public function store(Request $request)
     {
+        if (Deployment::where('title', $request->title)->exists()) {
+            return redirect()->back()->withInput()->with('error', 'Deployment already exists. Please choose another title.');
+        }
         // ini untuk mengubah id
         $title = $request->input('title');
         $deploy_date = $request->input('deploy_date');
         $id = substr(str_replace(' ', '', $title), 9, 5) . str_replace('-', '', $deploy_date);
 
         $request->merge(['id' => $id]);
-
-        if (Deployment::where('title', $request->title)->exists()) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Deployment already exists. Please choose another title.');
-        }
 
         $data = Deployment::create([
             'id' => $id,
@@ -123,7 +120,7 @@ class DeploymentController extends Controller
 
         if ($deployment->title != $request->title) {
             if (Deployment::where('title', $request->title)->first()) {
-                return redirect()->back()->with('error', 'Deployment already exists.');
+                return redirect()->back()->withInput()->with('error', 'Deployment already exists.');
             }
         }
 
