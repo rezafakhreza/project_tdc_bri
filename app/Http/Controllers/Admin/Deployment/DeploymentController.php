@@ -9,7 +9,6 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Deployment\DeploymentModule;
 use App\Models\Deployment\DeploymentServerType;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class DeploymentController extends Controller
@@ -20,11 +19,7 @@ class DeploymentController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            // $query = Deployment::with(['module', 'serverType']);
-
-            $query = Deployment::with(['module', 'serverType'])->get();
-
-            Log::info($query);
+            $query = Deployment::with(['module', 'serverType']);
 
             return DataTables::of($query)
                 ->addColumn('module', function ($deployment) {
