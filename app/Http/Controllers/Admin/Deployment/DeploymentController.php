@@ -9,6 +9,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Models\Deployment\DeploymentModule;
 use App\Models\Deployment\DeploymentServerType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class DeploymentController extends Controller
 {
@@ -18,8 +20,11 @@ class DeploymentController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Deployment::with(['module', 'serverType']);
-            // $query = Deployment::query();
+            // $query = Deployment::with(['module', 'serverType']);
+
+            $query = Deployment::with(['module', 'serverType'])->get();
+
+            Log::info($query);
 
             return DataTables::of($query)
                 ->addColumn('module', function ($deployment) {
@@ -29,10 +34,43 @@ class DeploymentController extends Controller
                 ->addColumn('server_type', function ($deployment) {
                     $serverTypeNames = $deployment->serverType()->pluck('name')->implode(', ');
                     return $serverTypeNames;
-                })
+                }) 
+                
                 ->addColumn('updated_at', function ($deployment) {
-                    return $deployment->updated_at->format('d F Y H:i:s'); // Format the date as needed
+                    $latestUpdate = null;
+                
+                    // Cek apakah ada module terkait pada deployment
+                    if ($deployment->module->isNotEmpty()) {
+                        foreach ($deployment->module as $module) {
+                            if ($module->pivot->updated_at > $latestUpdate) {
+                                $latestUpdate = $module->pivot->updated_at;
+                            }
+                        }
+                    }
+                    // Cek apakah ada serverType terkait pada deployment
+                    if ($deployment->serverType->isNotEmpty()) {
+                        foreach ($deployment->serverType as $serverType) {
+                            if ($serverType->pivot->updated_at > $latestUpdate) {
+                                $latestUpdate = $serverType->pivot->updated_at;
+                            }
+                        }
+                    }
+                    // Bandingkan dengan updated_at pada deployment itu sendiri
+                    if ($deployment->updated_at > $latestUpdate) {
+                        $latestUpdate = $deployment->updated_at;
+                    }
+                    // Jika ditemukan updated_at terbaru, parse menggunakan Carbon dan format
+                    if ($latestUpdate) {
+                        $latestUpdate = Carbon::parse($latestUpdate);
+                        return $latestUpdate->format('d F Y H:i:s');
+                    }
+                
+                    return '';
                 })
+                
+                          
+                
+                
                 ->addColumn('action', function ($deployment) {
                     return '
                         <div class="flex gap-2">
@@ -52,6 +90,7 @@ class DeploymentController extends Controller
                 ->make();
         }
 
+    
         return view('admin.deployment.deployments.index');
     }
 
@@ -94,7 +133,7 @@ class DeploymentController extends Controller
         $data->module()->attach($request->input('module_id'));
         $data->serverType()->attach($request->input('server_type_id'));
 
-        
+
         return redirect()->route('admin.deployments.deployment.index')
             ->with('success', 'Success Create Deployment');
     }

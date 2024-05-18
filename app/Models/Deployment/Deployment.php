@@ -21,10 +21,12 @@ class Deployment extends Model
     ];
 
     public function module(){
-        return $this->belongsToMany(DeploymentModule::class, 'deployment_has_module', 'deployment_id', 'module_id');
+        return $this->belongsToMany(DeploymentModule::class, 'deployment_has_module', 'deployment_id', 'module_id')
+        ->withTimestamps('created_at', 'updated_at');
     }
 
     public function serverType(){
-        return $this->belongsToMany(DeploymentServerType::class, 'deployment_has_server_type', 'deployment_id', 'server_type_id');
+        return $this->belongsToMany(DeploymentServerType::class, 'deployment_has_server_type', 'deployment_id', 'server_type_id')
+        ->withTimestamps('created_at', 'updated_at');
     }
 }

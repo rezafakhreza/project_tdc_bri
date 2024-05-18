@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreign('deployment_id')->references('id')->on('deployments')->onDelete('cascade');
             $table->unsignedBigInteger('module_id');
             $table->foreign('module_id')->references('id')->on('deployment_modules')->onDelete('cascade');
+            $table->timestamps();
             $table->primary(['deployment_id', 'module_id']);
         });
     }

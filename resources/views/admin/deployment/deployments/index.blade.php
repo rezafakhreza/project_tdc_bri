@@ -90,6 +90,8 @@
                         data: 'updated_at',
                         name: 'updated_at'
                     },
+                    
+                    
                     {
                         data: 'action',
                         name: 'action',
@@ -168,8 +170,9 @@
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">CM
                                         Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Updated
-                                        At</th>
+                                        Updated At</th>
+                                        <!-- <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Updated module</th> -->
                                     <th style="max-width: 1%"
                                         class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Action
