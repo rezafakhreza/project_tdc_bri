@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             SuperAdminSeeder::class,
             ModuleSeeder::class,
             ServerTypeSeeder::class,
+            JobSeeder::class,
         ]);
     }
 }
