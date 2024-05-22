@@ -85,10 +85,10 @@
 
             try {
                 const response = await fetch(url);
-                const levelUkers = await response.json();
+                const kanwils = await response.json();
 
-                const kanwilNames = levelUkers.map(uker => uker.level_uker);
-                const requestCounts = levelUkers.map(uker => uker.total_requests);
+                const kanwilNames = kanwils.map(kanwil => kanwil.kanwil_name);
+                const requestCounts = kanwils.map(kanwil => kanwil.total_requests);
 
                 // Perbarui Pie Chart
                 const ctx = document.getElementById('branchPieChart').getContext('2d');

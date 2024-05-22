@@ -97,11 +97,7 @@
                         name: 'branch_name',
                         searchable: true,
                     },
-                    {
-                        data: 'level_uker',
-                        name: 'level_uker',
-                        searchable: true,
-                    },
+                    
                     {
                         data: 'kanwil_name',
                         name: 'kanwil_name',
@@ -205,8 +201,7 @@
                                         Type</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Unit Kerja</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Level Uker</th>
+                                    
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Kantor Wilayah</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
