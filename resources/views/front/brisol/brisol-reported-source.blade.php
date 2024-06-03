@@ -60,10 +60,8 @@
         let currentChart;
 
         // Predefined colors array
-        const predefinedColors = [
-            '#FFC107', '#2ECC71', '#152C5B', '#FF8333', '#2B4CDE',
-            '#EE1515', '#BFBFBF', '#17A2B8', '#6C97DF', '#262628',
-            '#CCDAFCCC', '#FF6A88CC'
+        const predefinedColors = ["#6fe7dd", "#3490de", "#6639a6", "#521262", "#ffbf00", "#ff6f61", 
+        "#2ec4b6", "#ff9f1c", "#9b51e0", "#f2c94c", "#e76f51","#264653"
         ];
 
         function getColor(index) {

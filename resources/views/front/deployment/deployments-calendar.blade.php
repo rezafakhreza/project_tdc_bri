@@ -6,6 +6,12 @@
 
 @section('style')
     @vite(['resources/js/calendar.js'])
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css" rel="stylesheet">
+@endsection
+
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+    <script src="{{ mix('resources/js/calendar.js') }}"></script>
 @endsection
 
 @section('content')

@@ -1,6 +1,14 @@
 import { Calendar } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 
+// Daftar hari libur nasional dan cuti bersama
+const holidays = [
+    '2024-01-01', // New Year's Day
+    '2024-02-11', // Some Holiday
+    '2024-03-23', // Another Holiday
+    // Tambahkan hari libur lainnya di sini
+];
+
 // Array warna yang telah ditentukan sebelumnya
 const predefinedColors = [
     "#435585",
@@ -23,10 +31,9 @@ function getColorForModule(moduleId) {
 }
 
 // Fungsi bantuan untuk mengubah string menjadi hash code
-String.prototype.hashCode = function () {
+String.prototype.hashCode = function() {
     let hash = 0,
-        i,
-        chr;
+        i, chr;
     for (i = 0; i < this.length; i++) {
         chr = this.charCodeAt(i);
         hash = (hash << 5) - hash + chr;
@@ -56,14 +63,14 @@ function updateLegend() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const calendarEl = document.getElementById("calendar");
 
     // Initialize and render the full calendar
     const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin],
         events: "/api/deployments/events",
-        eventContent: function (arg) {
+        eventContent: function(arg) {
             const truncatedTitle = arg.event.title.substring(0, 20);
             const title = document.createElement("div");
             title.innerHTML =
@@ -90,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             return { domNodes: [title, module, serverType] };
         },
-        eventDidMount: function (info) {
+        eventDidMount: function(info) {
             info.el.style.cursor = "pointer";
             info.el.style.maxWidth = "100%";
             const module = info.event.extendedProps.module;
@@ -99,15 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
             updateLegend();
             info.el.style.backgroundColor = color;
         },
-        eventClick: function (info) {
+        eventClick: function(info) {
             const modalTitle = document.getElementById("modalTitle");
             const modalBody = document.getElementById("modalBody");
             const modal = document.getElementById("eventInfoModal");
 
             modalTitle.textContent = info.event.title;
             const formattedDate = new Date(info.event.start).toLocaleDateString(
-                "id-ID",
-                { year: "numeric", month: "long", day: "numeric" }
+                "id-ID", { year: "numeric", month: "long", day: "numeric" }
             );
             modalBody.innerHTML = `
                 <p><strong>Deploy:</strong> ${formattedDate}</p>
@@ -123,14 +129,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             document
                 .getElementById("modalCloseButton")
-                .addEventListener("click", function () {
+                .addEventListener("click", function() {
                     modal.classList.add("hidden");
                     modal.classList.remove("flex");
                 });
         },
-        dayCellDidMount: function (info) {
-            const dayIndex = new Date(info.date).getDay();
-            if (dayIndex === 0 || dayIndex === 6) {
+        dayCellDidMount: function(info) {
+            const dateStr = info.date.toISOString().split('T')[0];
+            const dayIndex = info.date.getDay();
+            if (dayIndex === 0 || dayIndex === 6 || holidays.includes(dateStr)) {
                 info.el.style.backgroundColor = "rgba(255, 0, 0, 0.2)";
             }
         },
@@ -138,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document
         .getElementById("calendarFilterForm")
-        .addEventListener("submit", function (e) {
+        .addEventListener("submit", function(e) {
             e.preventDefault();
             const month = parseInt(document.getElementById("month").value, 10);
             const year = parseInt(document.getElementById("year").value, 10);

@@ -89,41 +89,35 @@
 
         // Predefined colors array
         const predefinedColors = [{
-                background: '#FFC107'
+                background: "#6fe7dd"
             },
             {
-                background: '#2ECC71'
+                background: "#3490de"
             },
             {
-                background: '#152C5B'
+                background: "#6639a6"
             },
             {
-                background: '#FF8333'
+                background: "#521262"
             },
             {
-                background: '#2B4CDE'
+                background: "#ffbf00"
             },
             {
-                background: '#EE1515'
+                background: "#ff6f61"
             },
             {
-                background: '#BFBFBF'
+                background: "#2ec4b6"
             },
             {
-                background: '#17A2B8'
+                background: "#ff9f1c"
             },
             {
-                background: '#6C97DF'
+                background: "#9b51e0"
             },
             {
-                background: '#262628'
+                background: "#f2c94c"
             },
-            {
-                background: '#CCDAFCCC'
-            },
-            {
-                background: '#FF6A88CC'
-            }
         ];
 
         // Function to get color, either predefined or random

@@ -10,7 +10,7 @@
         <div class="flex w-1/3 text-center" style="margin-left: 67%; margin-top: -60px; margin-bottom: 50px;">
             <select id="chartDropdownSelector"
                 class="w-full px-4 py-4 text-xl text-dark-blue rounded-lg font-semibold cursor-pointer bg-white focus:border-blue-900 focus:shadow-outline-blue shadow-lg"
-                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;"> <!-- Menambahkan outline -->
+                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                 <option value="{{ route('user-management.top-branch') }}" style="margin-top: 20px;">Top 5 Kanwil Request
                 </option>
                 <option value="{{ route('user-management.request-by-type') }}" style="margin-top: 20px;">User Management
@@ -44,22 +44,21 @@
 
             <div class="w-1/3">
                 <div class="flex items-end justify-end gap-4">
-                    <div id="reqTypeFilter"> <!-- Menambahkan kelas w-full di sini -->
+                    <div id="reqTypeFilter">
                         <select name="req_type" id="reqTypeSelect" onchange="fetchData()" class="rounded-xl w-60">
-                            <!-- Menambahkan kelas w-full di sini juga -->
                             <option value="all">All Requests</option>
                             <option value="Create User">Create User</option>
                             <option value="Change Role">Change Role</option>
                             <option value="Reset User">Reset User</option>
                             <option value="Delete User">Delete User</option>
-                            <!-- Add more options as needed -->
                         </select>
                     </div>
                 </div>
             </div>
-
         </div>
-        <canvas id="branchPieChart" class="mt-6 w-full max-w-lg h-[300px] mx-auto"></canvas>
+        <div class="w-full">
+            <canvas id="branchBarChart" class="mt-6 h-[300px]"></canvas>
+        </div>
     </div>
 @endsection
 
@@ -73,14 +72,13 @@
                 window.location.href = selectedURL;
             }
         });
-        let branchPieChart;
+        let branchBarChart;
 
         async function fetchData() {
             const month = document.getElementById('monthSelect').value;
             const year = document.getElementById('yearSelect').value;
-            const reqType = document.getElementById('reqTypeSelect').value; // Ambil nilai jenis permintaan yang dipilih
+            const reqType = document.getElementById('reqTypeSelect').value;
 
-            // Ubah URL untuk mengambil data kanwil dengan filter bulan, tahun, dan jenis permintaan
             let url = `/api/usman/get-top-kanwil-request-chart?month=${month}&year=${year}&req_type=${reqType}`;
 
             try {
@@ -90,13 +88,12 @@
                 const kanwilNames = kanwils.map(kanwil => kanwil.kanwil_name);
                 const requestCounts = kanwils.map(kanwil => kanwil.total_requests);
 
-                // Perbarui Pie Chart
-                const ctx = document.getElementById('branchPieChart').getContext('2d');
-                if (branchPieChart) {
-                    branchPieChart.destroy(); // Hancurkan grafik yang ada sebelum memperbarui
+                const ctx = document.getElementById('branchBarChart').getContext('2d');
+                if (branchBarChart) {
+                    branchBarChart.destroy();
                 }
-                branchPieChart = new Chart(ctx, {
-                    type: 'pie',
+                branchBarChart = new Chart(ctx, {
+                    type: 'bar',
                     data: {
                         labels: kanwilNames,
                         datasets: [{
@@ -109,8 +106,30 @@
                                 '#EE1515',
                                 '#FF8333'
                             ],
-                            borderWidth: 1
+                            borderWidth: 1,
+                            barThickness: 50,  // Mengatur ketebalan bar
+                            maxBarThickness: 50  // Mengatur ketebalan maksimum bar
                         }]
+                    },
+                    options: {
+                        indexAxis: 'y', // Mengubah orientasi chart menjadi horizontal
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false,
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Top 5 Kanwil Requests'
+                            }
+
+                        }
                     }
                 });
 
@@ -119,7 +138,6 @@
             }
         }
 
-        // Panggil fungsi saat halaman dimuat
         window.onload = fetchData;
     </script>
 @endsection
