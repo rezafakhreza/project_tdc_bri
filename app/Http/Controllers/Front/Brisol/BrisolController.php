@@ -26,7 +26,7 @@ class BrisolController extends Controller
                     ->groupBy('service_ci')
                     ->select('service_ci', DB::raw('count(*) as total'))
                     ->get()
-                    ->filter(function($value, $key) {
+                    ->filter(function ($value, $key) {
                         return !empty($value->service_ci);
                     })
                     ->pluck('total', 'service_ci')
@@ -90,8 +90,20 @@ class BrisolController extends Controller
     {
         $year = $request->input('year', date('Y'));
 
-        $allMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-                    'August', 'September', 'October', 'November', 'December'];
+        $allMonths = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
 
         $data = DB::table('brisol_incident')
             ->select(DB::raw('MONTH(reported_date) as month, slm_status, COUNT(*) as count'))
@@ -171,26 +183,28 @@ class BrisolController extends Controller
         $year = $request->input('year', date('Y'));
 
         $monthlyTargets = MonthlyTarget::where('year', $year)
-                                    ->orderBy('month', 'asc')
-                                    ->get();
+            ->orderBy('month', 'asc')
+            ->get();
 
-        $targetData = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $monthData = $monthlyTargets->firstWhere('month', $i);
-            $targetData[] = $monthData ? $monthData->monthly_target_value : 0;
+        // Initialize target data with default value of 80
+        $targetData = array_fill(0, 12, 80); // 12 months, default value 80
+
+        // Override with specific targets if available
+        foreach ($monthlyTargets as $monthData) {
+            $targetData[$monthData->month - 1] = $monthData->monthly_target_value;
         }
 
         $months = range(1, 12);
         $actualPercentageData = [];
         foreach ($months as $month) {
             $completedIncidents = Incident::whereYear('reported_date', $year)
-                                        ->whereMonth('reported_date', $month)
-                                        ->where('status', ['closed', 'resolved'])
-                                        ->count();
+                ->whereMonth('reported_date', $month)
+                ->where('status', ['closed', 'resolved'])
+                ->count();
 
             $totalIncidents = Incident::whereYear('reported_date', $year)
-                                        ->whereMonth('reported_date', $month)
-                                        ->count();
+                ->whereMonth('reported_date', $month)
+                ->count();
 
             if ($totalIncidents != 0) {
                 $percentageCompleted = ($completedIncidents / $totalIncidents) * 100;
@@ -219,13 +233,13 @@ class BrisolController extends Controller
 
         // Get issues and group by service_ci
         $serviceCisWithIssues = DB::table('brisol_incident')
-                                    ->select('service_ci', 'ctg_tier2')
-                                    ->whereYear('reported_date', '=', $year)
-                                    ->whereMonth('reported_date', '=', $month)
-                                    ->groupBy('service_ci', 'ctg_tier2')
-                                    ->orderByRaw('COUNT(*) DESC')
-                                    ->get()
-                                    ->groupBy('service_ci');
+            ->select('service_ci', 'ctg_tier2')
+            ->whereYear('reported_date', '=', $year)
+            ->whereMonth('reported_date', '=', $month)
+            ->groupBy('service_ci', 'ctg_tier2')
+            ->orderByRaw('COUNT(*) DESC')
+            ->get()
+            ->groupBy('service_ci');
 
         $serviceCiData = [];
 
@@ -245,10 +259,10 @@ class BrisolController extends Controller
 
                     // Count the issues
                     $issueCount = DB::table('brisol_incident')
-                                    ->whereYear('reported_date', '=', $year)
-                                    ->where('service_ci', '=', $serviceCi)
-                                    ->where('ctg_tier2', '=', $issueCategory)
-                                    ->count();
+                        ->whereYear('reported_date', '=', $year)
+                        ->where('service_ci', '=', $serviceCi)
+                        ->where('ctg_tier2', '=', $issueCategory)
+                        ->count();
 
                     $issuesData[] = [
                         'issue' => $issueCategory,
@@ -279,13 +293,13 @@ class BrisolController extends Controller
 
         // Get the top 5 issues by count
         $issuesWithCounts = DB::table('brisol_incident')
-                                ->select('ctg_tier2', DB::raw('COUNT(*) as count'))
-                                ->whereYear('reported_date', '=', $year)
-                                ->whereMonth('reported_date', '=', $month)
-                                ->groupBy('ctg_tier2')
-                                ->orderByRaw('COUNT(*) DESC')
-                                ->limit(5) // Limit the results to top 5
-                                ->get();
+            ->select('ctg_tier2', DB::raw('COUNT(*) as count'))
+            ->whereYear('reported_date', '=', $year)
+            ->whereMonth('reported_date', '=', $month)
+            ->groupBy('ctg_tier2')
+            ->orderByRaw('COUNT(*) DESC')
+            ->limit(5) // Limit the results to top 5
+            ->get();
 
         $issueData = [];
 

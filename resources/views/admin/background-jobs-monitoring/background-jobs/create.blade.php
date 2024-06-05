@@ -13,7 +13,7 @@
             <div class="p-6 bg-white rounded-lg">
                 <h1 class="mb-10 text-2xl font-medium">Add Background Job</h1>
                 @if ($errors->any())
-                    <div class="mb-5" role="alert">
+                    <div id="alertBox" class="mb-5" role="alert">
                         <div class="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
                             Ada kesalahan!
                         </div>
@@ -25,6 +25,8 @@
                             </ul>
                             <button id="editButton"
                                 class="mt-4 px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Edit</button>
+                            <button id="closeAlertButton"
+                                class="mt-4 px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Close</button>
                         </div>
                     </div>
                 @endif
@@ -212,6 +214,16 @@
                     $('#process_id').empty();
                 }
             });
+
+            // Close alert box
+            $('#closeAlertButton').on('click', function() {
+                $('#alertBox').remove();
+            });
+
+            // Access existingJobId js 
+            $('#editButton').on('click', function() {
+                window.location.href = "/admin/background-jobs-monitoring/jobs/" + existingJobId + "/edit";
+            });
         });
     </script>
     @if (session('existingJobId'))
@@ -219,7 +231,7 @@
             var existingJobId = "{{ session('existingJobId') }}";
         </script>
     @endif
-
+    
     <script>
         $(document).ready(function() {
             // akses existingJobId js 

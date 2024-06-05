@@ -21,7 +21,7 @@
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                     <a href="{{ route('admin.background-jobs-monitoring.processes.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Jobs
+                        Jobs Name
                     </a>
                 </div>
             </div>
@@ -182,7 +182,7 @@
                                         Module</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
-                                        Job</th>
+                                        Job Name</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Data Amount to EIM</th>
