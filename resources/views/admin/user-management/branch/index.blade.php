@@ -80,6 +80,19 @@
                         searchable: true,
                     },
                     {
+                        data: 'is_active',
+                        name: 'is_active',
+                        searchable: true,
+                        render: function(data, type, row) {
+                            var statusLabel = data ? 'Active' : 'Non-Active';
+                            var textColorClass = 'text-white';
+                            var statusClass = data ? 'bg-green-500' : 'bg-red-600';
+
+                            return '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' +
+                                statusClass + ' ' + textColorClass + '">' + statusLabel + '</span>';
+                        }
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -250,7 +263,8 @@
                                         Uker Induk KC</th>
                                     <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         SBO</th>
-
+                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                        Status</th>
                                     <th style="max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Action
                                     </th>

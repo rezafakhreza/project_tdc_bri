@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('kanwil_name');
             $table->string('uker_induk_kc');
             $table->enum('sbo', ['NON SBO', 'SBO']);
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

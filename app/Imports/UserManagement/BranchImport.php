@@ -3,6 +3,7 @@
 namespace App\Imports\UserManagement;
 
 use App\Models\UserManagement\Branch;
+use App\Models\UserManagement\Incident;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -41,7 +42,8 @@ class BranchImport implements ToCollection, WithHeadingRow
             'uker_induk_wilayah_code' => $row['uker_induk_kanwil'],
             'kanwil_name' => $row['nama_kanwil'],
             'uker_induk_kc' => $row['uker_induk_kc'],
-            'sbo' => $row['sbo']
+            'sbo' => $row['sbo'],
+            'is_active' => Incident::where('branch_code', $row['kode_uker'])->exists() ? true : false
         ];
     }
 
@@ -54,6 +56,10 @@ class BranchImport implements ToCollection, WithHeadingRow
             if ($branch->$key != $value) {
                 $changes[$key] = $value;
             }
+        }
+
+        if ($branch->is_active!= $attributes['is_active']) {
+            $changes['is_active'] = $attributes['is_active'];
         }
 
         return $changes;

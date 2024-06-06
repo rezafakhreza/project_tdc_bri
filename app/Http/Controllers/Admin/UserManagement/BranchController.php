@@ -8,11 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserManagement\Branch;
 use Yajra\DataTables\Facades\DataTables;
 use App\Imports\UserManagement\BranchImport;
-use Illuminate\Support\Facades\Storage;
-// use DB;
-use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use App\Models\UserManagement\Incident;
 
 class BranchController extends Controller
 {
@@ -23,9 +19,7 @@ class BranchController extends Controller
     {
         if (request()->ajax()) {
             $query = Branch::query();
-            // ->select('usman_branch.branch_code', 'usman_branch.branch_name', 'usman_branch.kanwil_code', 'usman_branch.kanwil_name')
-
-
+            
             return DataTables::of($query)
                 ->addColumn('action', function ($branch) {
                     return '
@@ -80,9 +74,6 @@ class BranchController extends Controller
                     // Jika konfirmasi dilakukan, hapus file lama
                     unlink(public_path('/DataImport/' . $namaFile));
 
-                    // -> masih error gamau hapus database karena jadi FK
-                    // Branch::truncate();
-
                 } else {
                     // Jika tidak ingin menimpa, kembalikan dengan pesan error
                     return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
@@ -96,7 +87,8 @@ class BranchController extends Controller
             Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
             return redirect()->route('admin.user-management.branch.index')
                 ->with('success', 'Branch imported successfully');
-                
+
+
         } elseif ($request->input_method == 'manual') {
             $request->validate([
                 'branch_code' => 'required|max:4',
@@ -117,19 +109,20 @@ class BranchController extends Controller
                 'branch_name' => $request->input('branch_name'),
                 'level_uker' => $request->input('level_uker'),
                 'uker_induk_wilayah_code' => $uker_induk_wilayah_code,
-                'kanwil_name' =>$request->input('kanwil_name'),
+                'kanwil_name' => $request->input('kanwil_name'),
                 'uker_induk_kc' => $uker_induk_kc,
                 'sbo' => $request->input('sbo'),
+                'is_active' => Incident::where('branch_code', $branch_code)->exists() ? true : false
             ];
 
             if (Branch::where('branch_code', $branch_code)->first()) {
                 return redirect()->back()->withInput()->with('error', 'Kode Uker ' . $branch_code . ' already exists.');
             }
-            
+
             if (Branch::where('uker_induk_wilayah_code', $uker_induk_wilayah_code)->first()) {
                 return redirect()->back()->withInput()->with('error', 'Kode Uker Induk Wilayah ' . $uker_induk_wilayah_code . ' already exists.');
             }
-            
+
             if (Branch::where('uker_induk_kc', $uker_induk_kc)->first()) {
                 return redirect()->back()->withInput()->with('error', 'Kode Uker Induk KC ' . $uker_induk_kc . ' already exists.');
             }
