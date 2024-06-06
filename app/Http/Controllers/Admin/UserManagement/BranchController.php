@@ -112,7 +112,7 @@ class BranchController extends Controller
                 'kanwil_name' => $request->input('kanwil_name'),
                 'uker_induk_kc' => $uker_induk_kc,
                 'sbo' => $request->input('sbo'),
-                'is_active' => Incident::where('branch_code', $branch_code)->exists() ? true : false
+                'is_active' => $request->boolean('is_active'),
             ];
 
             if (Branch::where('branch_code', $branch_code)->first()) {
@@ -168,6 +168,7 @@ class BranchController extends Controller
             'level_uker' => 'required|string|max:255',
             'kanwil_name' => 'required|string|max:255',
             'sbo' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
         ]);
 
         // Temukan cabang berdasarkan ID
@@ -193,6 +194,7 @@ class BranchController extends Controller
             'level_uker' => $request->level_uker,
             'kanwil_name' => $request->kanwil_name,
             'sbo' => $request->sbo,
+            'is_active' => $request->boolean('is_active'),
         ]);
 
         return redirect()->route('admin.user-management.branch.index')->with('success', 'Branch updated successfully.');

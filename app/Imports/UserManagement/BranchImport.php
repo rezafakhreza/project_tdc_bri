@@ -43,7 +43,6 @@ class BranchImport implements ToCollection, WithHeadingRow
             'kanwil_name' => $row['nama_kanwil'],
             'uker_induk_kc' => $row['uker_induk_kc'],
             'sbo' => $row['sbo'],
-            'is_active' => Incident::where('branch_code', $row['kode_uker'])->exists() ? true : false
         ];
     }
 
@@ -56,10 +55,6 @@ class BranchImport implements ToCollection, WithHeadingRow
             if ($branch->$key != $value) {
                 $changes[$key] = $value;
             }
-        }
-
-        if ($branch->is_active!= $attributes['is_active']) {
-            $changes['is_active'] = $attributes['is_active'];
         }
 
         return $changes;

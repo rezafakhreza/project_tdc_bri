@@ -29,9 +29,9 @@ class Branch extends Model
         return $this->hasMany(Incident::class, 'branch_code');
     }
 
-    public function updateIsActiveStatus()
-    {
-        $this->is_active = true;
-        $this->save();
-    }
+    // public function updateIsActiveStatus()
+    // {
+    //     $this->is_active = true;
+    //     $this->save();
+    // }
 }

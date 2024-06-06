@@ -44,11 +44,11 @@ class IncidentsImport implements ToModel, WithHeadingRow
             $id = str_replace('-', '', $date) . substr($title, 0, 2) . $randomDigits;
             $row['id'] = [$id];
 
-            $branch = Branch::where('branch_code', $branchCode)->first(); // Menggunakan first() untuk mendapatkan satu objek
-            // Update status branch menjadi active
-            if ($branch) {
-                $branch->updateIsActiveStatus();
-            }
+            // $branch = Branch::where('branch_code', $branchCode)->first(); // Menggunakan first() untuk mendapatkan satu objek
+            // // Update status branch menjadi active
+            // if ($branch) {
+            //     $branch->updateIsActiveStatus();
+            // }
 
             return new Incident([
                 'id' => $id,
