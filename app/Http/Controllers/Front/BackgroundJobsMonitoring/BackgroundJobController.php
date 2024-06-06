@@ -93,8 +93,8 @@ class BackgroundJobController extends Controller
         $chosenYear = $request->input('year', date('Y'));
 
         $processes = Process::where(function ($query) {
-            $query->where('name', 'like', '%INBOUND%')
-                ->orWhere('name', 'like', '%OUTBOUND%');
+            // $query->where('name', 'like', '%INBOUND%')
+            //     ->orWhere('name', 'like', '%OUTBOUND%');
         })->get();
 
         $allChartData = [];

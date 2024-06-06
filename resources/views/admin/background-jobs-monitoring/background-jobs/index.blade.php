@@ -179,7 +179,7 @@
 
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
-                                        Module</th>
+                                        Type</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Job Name</th>

@@ -209,7 +209,7 @@
                                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                             <div class="sm:flex sm:items-start">
                                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                                    <h3 class="text-lg font-medium text-gray-900 py-20" id="modal-title">
+                                                    <h3 class="text-lg font-medium text-gray-900" id="modal-title">
                                                         Import Data
                                                     </h3>
                                                     <div class="mt-2">
@@ -221,7 +221,7 @@
                                                             <div class="mb-3">
                                                                 <input type="hidden" name="input_method" value="excel">
                                                                 <input type="file" name="file" class=" rounded-lg" value="excel" required>
-                                                                <button type="submit" class="px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
+                                                                <button type="submit" class="btn-large px-4 py-2 ml-2 text-white rounded-lg bg-darker-blue">Import</button>
                                                             </div>
 
                                                             <div class="mb-3">
@@ -249,23 +249,23 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 1%" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 10%; max-width: 1%" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Kode Unit Kerja</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 15%;" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Unit Kerja</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 10%;" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Level Unit Kerja</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 15%;" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Kode Kantor Wilayah</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 15%;" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Kantor Wilayah</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white  uppercase tracking-wider">
+                                    <th style="width: 15%;" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white  uppercase tracking-wider">
                                         Uker Induk KC</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 10%;" class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         SBO</th>
-                                    <th class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 10%;" class="px-30 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Status</th>
-                                    <th style="max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <th style="width: 5%; max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Action
                                     </th>
                                 </tr>
@@ -288,6 +288,12 @@
         .dataTables_wrapper {
             margin-top: -20px;
 
+        }
+
+        .btn-large {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
         }
 
         .dataTables_wrapper .dataTables_filter {
