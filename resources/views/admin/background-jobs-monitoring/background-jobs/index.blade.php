@@ -64,6 +64,24 @@
                     {
                         data: 'status',
                         name: 'status',
+                        render: function(data, type, row) {
+                            var status = row.status;
+                            var statusClass = '';
+                            var textColorClass = 'text-white';
+
+                            if (status == 'Normal Run') {
+                                statusClass = 'bg-green-500';
+                            } else if (status == 'Rerun Background Job') {
+                                statusClass = 'bg-yellow-500';
+                            } else if (status == 'Manual Background Job') {
+                                statusClass = 'bg-green-700';
+                            } else if (status == 'Pending') {
+                                statusClass = 'bg-red-600';
+                            }
+
+                            return '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' +
+                                statusClass + ' ' + textColorClass + '">' + status + '</span>';
+                        }
                     },
                     {
                         data: 'duration_to_EIM',
@@ -189,8 +207,8 @@
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Data Amount to S4GL</th>
-                                    <th
-                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
+                                    <th style="width: 20%;"
+                                        class="px-30 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
