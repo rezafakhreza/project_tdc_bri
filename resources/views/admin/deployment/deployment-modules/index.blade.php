@@ -23,6 +23,10 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Server Types
                     </a>
+                    <a href="{{ route('admin.deployments.cm-status.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        CM Status
+                    </a>
                     <a href="{{ route('admin.deployments.deployment.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Deployments

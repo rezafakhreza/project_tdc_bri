@@ -16,7 +16,7 @@ class Deployment extends Model
         'deploy_date',
         'document_status',
         'document_description',
-        'cm_status',
+        'cm_status_id',
         'cm_description',
     ];
 
@@ -28,5 +28,10 @@ class Deployment extends Model
     public function serverType(){
         return $this->belongsToMany(DeploymentServerType::class, 'deployment_has_server_type', 'deployment_id', 'server_type_id')
         ->withTimestamps('created_at', 'updated_at');
+    }
+
+    public function cmStatus()
+    {
+        return $this->belongsTo(DeploymentCMStatus::class, 'cm_status_id');
     }
 }

@@ -6,7 +6,7 @@
                 <button @click="open = !open" type="button"
                     class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none 0 focus:ring focus:ring-slate-400"
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
-                    Server Types
+                    CM Status
                     <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd"
@@ -19,10 +19,7 @@
             <div x-show="open" @click.away="open = false"
                 class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                    <a href="{{ route('admin.deployments.cm-status.index') }}"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        CM Status
-                    </a>
+        
                     <a href="{{ route('admin.deployments.deployment.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Deployments
@@ -30,6 +27,10 @@
                     <a href="{{ route('admin.deployments.modules.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Modules
+                    </a>
+                    <a href="{{ route('admin.deployments.server-types.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        Server Types
                     </a>
                     
                 </div>
@@ -46,27 +47,21 @@
                 serverSide: false,
                 stateSave: true,
                 ajax: {
-                    url: '{{ route('admin.deployments.server-types.index') }}',
+                    url: '{{ route('admin.deployments.cm-status.index')}}',
                     type: 'GET',
                 },
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                 },
                 columns: [{
-                        data: 'name',
-                        name: 'name'
+                        data: 'cm_status_name',
+                        name: 'cm_status_name'
                     },
                     {
-                        data: 'is_active',
-                        name: 'is_active',
-                        render: function(data, type, row) {
-                            var statusLabel = data ? 'Active' : 'Non-Active';
-                            var textColorClass = 'text-white';
-                            var statusClass = data ? 'bg-green-500' : 'bg-red-600';
-
-                            return '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' +
-                                statusClass + ' ' + textColorClass + '">' + statusLabel + '</span>';
-                        }
+                        data: 'colour',
+                        name: 'colour',
+                        
+                        //isian blom
                     },
                     {
                         data: 'action',
@@ -135,10 +130,10 @@
                         </div>
                         <div class="button-container flex gap-4">
                             @hasanyrole('Super Admin|Admin Deployments')
-                                <a href="{{ route('admin.deployments.server-types.create') }}"
+                                <a href="{{ route('admin.deployments.cm-status.create') }}"
                                     class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                     style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                    + Add Server Type
+                                    + Add CM Status
                                 </a>
                             @endhasanyrole
                         </div>
@@ -149,11 +144,10 @@
                                 <tr>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
-                                        Server Type Name</th>
-                                    <!-- <th>Module Name</th> -->
+                                        CM Status Name</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
-                                        Status</th>
+                                        Colour</th>
                                     <th style="max-width: 1%"
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Action</th>

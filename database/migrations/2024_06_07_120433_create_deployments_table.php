@@ -17,9 +17,8 @@ return new class extends Migration
             $table->date('deploy_date');
             $table->enum('document_status', ['Done', 'Not Done', 'In Progress']);
             $table->text('document_description');
-            $table->enum('cm_status', ['Draft', 'Reviewer', 'Checker', 'Signer', 'Done deploy']);
+            $table->foreignId('cm_status_id')->constrained('deployment_cm_status');
             $table->text('cm_description');
-
             $table->timestamps();
         });
     }

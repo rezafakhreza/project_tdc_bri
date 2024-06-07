@@ -21,6 +21,7 @@ class RolePermissionSeeder extends Seeder
             'view deployments', 'manage deployments',
             'view module deployments', 'manage module deployments',
             'view server type deployments', 'manage server type deployments',
+            'view cm status deployments', 'manage cm status deployments',
             'view background jobs', 'manage background jobs',
             'view process background jobs', 'manage process background jobs',
             'view incidents user management', 'manage incidents user management',
@@ -43,11 +44,11 @@ class RolePermissionSeeder extends Seeder
 
         // Admin Deployments - can manage and view deployments
         $adminDeploymentsRole = Role::create(['name' => 'Admin Deployments']);
-        $adminDeploymentsRole->givePermissionTo(['manage deployments', 'view deployments', 'manage module deployments', 'view module deployments', 'manage server type deployments', 'view server type deployments']);
+        $adminDeploymentsRole->givePermissionTo(['manage deployments', 'view deployments', 'manage module deployments', 'view module deployments', 'manage server type deployments', 'view server type deployments', 'manage cm status deployments', 'view cm status deployments']);
 
-        // User Deployments - can manage deployments and view module and server type deployments
+        // User Deployments - can manage deployments and view module, server type, cm status deployments
         $userDeploymentsRole = Role::create(['name' => 'User Deployments']);
-        $userDeploymentsRole->givePermissionTo(['manage deployments', 'view deployments', 'view module deployments', 'view server type deployments']);
+        $userDeploymentsRole->givePermissionTo(['manage deployments', 'view deployments', 'view module deployments', 'view server type deployments', 'view cm status deployments']);
 
         // Admin Background Jobs - can manage and view background jobs
         $adminBackgroundJobsRole = Role::create(['name' => 'Admin Background Jobs']);

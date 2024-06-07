@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Deployment\DeploymentController;
 use App\Http\Controllers\Admin\Deployment\DeploymentModuleController;
 use App\Http\Controllers\Admin\Deployment\DeploymentServerTypeController;
+use App\Http\Controllers\Admin\Deployment\CMStatusController;
 use App\Http\Controllers\Admin\BackgroundJobsMonitoring\ProcessController;
 use App\Http\Controllers\Admin\BackgroundJobsMonitoring\BackgroundJobController;
 use App\Http\Controllers\Front\Brisol\BrisolController as FrontBrisolController;
@@ -61,10 +62,12 @@ Route::middleware([
             Route::resource('deployment', DeploymentController::class)->middleware('permission:manage deployments');
             Route::resource('modules', DeploymentModuleController::class)->middleware('permission:manage module deployments');
             Route::resource('server-types', DeploymentServerTypeController::class)->middleware('permission:manage server type deployments');
+            Route::resource('cm-status', CMStatusController::class)->middleware('permission:manage cm status deployments');
 
-            // only view module deployments and server type deployments
+            // only view module deployments, server type deployments, cm status deployments
             Route::get('/modules', [DeploymentModuleController::class, 'index'])->name('modules.index')->middleware('permission:view module deployments');
             Route::get('/server-types', [DeploymentServerTypeController::class, 'index'])->name('server-types.index')->middleware('permission:view server type deployments');
+            Route::get('/cm-status', [CMStatusController::class, 'index'])->name('cm-status.index')->middleware('permission:view cm status deployments');
         });
 
         Route::prefix('background-jobs-monitoring')->name('background-jobs-monitoring.')->group(function () {

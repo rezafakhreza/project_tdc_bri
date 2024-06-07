@@ -98,15 +98,14 @@
 
                                 <!-- CM Status -->
                                 <div class="mb-4">
-                                    <label for="cm_status" class="block mb-2 text-sm font-bold text-gray-600">CM Status*</label>
-                                    <select id="cm_status" name="cm_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                        <option value="" selected disabled>-- Pilih Status CM --</option>
-                                        <option value="Draft" {{ old('cm_status') == 'Draft' ? 'selected' : '' }}>Draft</option>
-                                        <option value="Reviewer" {{ old('cm_status') == 'Reviewer' ? 'selected' : '' }}>Reviewer</option>
-                                        <option value="Checker" {{ old('cm_status') == 'Checker' ? 'selected' : '' }}>Checker</option>
-                                        <option value="Signer" {{ old('cm_status') == 'Signer' ? 'selected' : '' }}>Signer</option>
-                                        <option value="Done Deploy" {{ old('cm_status') == 'Done Deploy' ? 'selected' : '' }}>Done Deploy</option>
-                                    </select>
+                                    <label for="cm_status_id" class="block mb-2 text-sm font-bold text-gray-600">CM Status*</label>
+                                    <select id="cm_status_id" name="cm_status_id"
+                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                    
+                                    required>
+                                    <option value="" disabled selected>Select CM Status</option>
+                                    
+                                </select>
                                 </div>
 
                                 <!-- CM Description -->

@@ -19,7 +19,7 @@ class DeploymentController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Deployment::with(['module', 'serverType']);
+            $query = Deployment::with(['module', 'serverType', 'cmStatus']);
 
             return DataTables::of($query)
                 ->addColumn('module', function ($deployment) {
@@ -30,6 +30,11 @@ class DeploymentController extends Controller
                     $serverTypeNames = $deployment->serverType()->pluck('name')->implode(', ');
                     return $serverTypeNames;
                 }) 
+
+                ->addColumn('cm_status_id', function ($deployment) {
+                    $cmStatusNames = $deployment->cmStatus()->pluck('cm_status_name');
+                    return $cmStatusNames;
+                })
                 
                 ->addColumn('updated_at', function ($deployment) {
                     $latestUpdate = null;
@@ -121,7 +126,7 @@ class DeploymentController extends Controller
             'deploy_date' => $request->input('deploy_date'),
             'document_status' => $request->input('document_status'),
             'document_description' => $request->input('document_description'),
-            'cm_status' => $request->input('cm_status'),
+            'cm_status_id' => $request->input('cm_status_id'),
             'cm_description' => $request->input('cm_description'),
         ]);
 
@@ -163,7 +168,7 @@ class DeploymentController extends Controller
             'deploy_date' => $request->input('deploy_date'),
             'document_status' => $request->input('document_status'),
             'document_description' => $request->input('document_description'),
-            'cm_status' => $request->input('cm_status'),
+            'cm_status_id' => $request->input('cm_status_id'),
             'cm_description' => $request->input('cm_description'),
         ]);
 

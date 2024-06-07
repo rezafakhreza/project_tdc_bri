@@ -28,6 +28,10 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Server Types
                     </a>
+                    <a href="{{ route('admin.deployments.cm-status.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        CM Status
+                    </a>
                 </div>
             </div>
         </div>
@@ -83,8 +87,8 @@
                         }
                     },
                     {
-                        data: 'cm_status',
-                        name: 'cm_status'
+                        data: 'cm_status_id',
+                        name: 'cm_status_id'
                     },
                     {
                         data: 'updated_at',
