@@ -29,53 +29,33 @@
             </div>
 
             <div class="flex justify-center">
-                @if ($mode == 'date')
-                    <div class="mr-4">
-                        <form action="{{ route('background-jobs-monitoring.data-amount') }}" method="GET">
-                            <input type="hidden" name="mode" value="date">
-                            <select name="month" onchange="this.form.submit()"
-                                class="form-select rounded-lg font-semibold mx-auto"
-                                style="padding-right: 90px; font-size: 20px; margin-left: 670px;">
-                                @foreach (range(1, 12) as $m)
-                                    <option value="{{ $m }}" {{ $chosenMonth == $m ? 'selected' : '' }}>
-                                        {{ DateTime::createFromFormat('!m', $m)->format('F') }}</option>
-                                @endforeach
-                            </select>
-                        </form>
-                    </div>
-                @endif
-
-                @if ($mode == 'month')
-                    <div class="mr-4">
-                        <select name="year" onchange="this.form.submit()"
+                <div class="mr-4">
+                    <form action="{{ route('background-jobs-monitoring.data-amount') }}" method="GET" id="filterForm">
+                        <input type="hidden" name="mode" value="date">
+                        <select name="month" onchange="document.getElementById('filterForm').submit()"
                             class="form-select rounded-lg font-semibold mx-auto"
-                            style="padding-right: 90px; font-size: 20px; margin-left: 730px;">
+                            style="padding-right: 90px; font-size: 20px;">
+                            @foreach (range(1, 12) as $m)
+                                <option value="{{ $m }}" {{ $chosenMonth == $m ? 'selected' : '' }}>
+                                    {{ DateTime::createFromFormat('!m', $m)->format('F') }}</option>
+                            @endforeach
+                        </select>
+                        <select name="year" onchange="document.getElementById('filterForm').submit()"
+                            class="form-select rounded-lg font-semibold mx-auto mt-2"
+                            style="padding-right: 90px; font-size: 20px;">
                             @foreach (range(date('Y') - 5, date('Y')) as $year)
                                 <option value="{{ $year }}" {{ $chosenYear == $year ? 'selected' : '' }}>
                                     {{ $year }}</option>
                             @endforeach
                         </select>
-                    </div>
-                @endif
-            </div>
-
-            <div class="w-1/3">
-                <form method="GET" action="{{ route('background-jobs-monitoring.data-amount') }}"
-                    class="flex flex-col items-end justify-end gap-4">
-                    <div class="flex mr-4 overflow-hidden border rounded-lg">
-                        <button type="button" onclick="setMode('month', event)"
-                            class="px-4 py-2 {{ $mode == 'month' ? 'bg-darker-blue text-white' : 'text-gray-600' }}">Month</button>
-                        <button type="button" onclick="setMode('date', event)"
-                            class="px-4 py-2 {{ $mode == 'date' ? 'bg-darker-blue text-white' : 'text-gray-600' }}">Day</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
 
         <h3 class="mt-4 text-xl font-semibold text-center sm:text-2xl" id="chartTitle">Loading...</h3>
         <canvas id="singleChart" class="mt-4"></canvas>
     </div>
-
 @endsection
 
 @section('script')
@@ -85,23 +65,6 @@
                 window.location.href = this.value;
             }
         });
-
-        function setMode(selectedMode, event) {
-            event.preventDefault();
-
-            const form = document.createElement('form');
-            form.method = 'GET';
-            form.action = "{{ route('background-jobs-monitoring.data-amount') }}";
-
-            const hiddenField = document.createElement('input');
-            hiddenField.type = 'hidden';
-            hiddenField.name = 'mode';
-            hiddenField.value = selectedMode;
-
-            form.appendChild(hiddenField);
-            document.body.appendChild(form);
-            form.submit();
-        }
 
         document.addEventListener('DOMContentLoaded', function() {
             const chartsData = @json($allChartData);
@@ -155,7 +118,7 @@
                 chartDropdown.value = savedChart;
                 renderChart(savedChart);
             } else {
-                renderChart(Object.keys(chartsData)[0]);
+                renderChart(Object.keys(chartsData)[0]); // Render default chart
             }
         });
     </script>
