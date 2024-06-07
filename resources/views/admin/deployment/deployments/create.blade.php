@@ -99,13 +99,14 @@
                                 <!-- CM Status -->
                                 <div class="mb-4">
                                     <label for="cm_status_id" class="block mb-2 text-sm font-bold text-gray-600">CM Status*</label>
-                                    <select id="cm_status_id" name="cm_status_id"
-                                    class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                                    
-                                    required>
-                                    <option value="" disabled selected>Select CM Status</option>
-                                    
-                                </select>
+                                    <select name="cm_status_id" id="cm_status_id" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" required>
+                                        <option value="" disabled selected>Select CM Status</option>
+                                        @foreach ($cmStatuses as $cmStatus)
+                                        <option value="{{ $cmStatus->id }}" {{ (is_array(old('cm_status_id')) && in_array($cmStatus->id, old('cm_status_id'))) ? 'selected' : '' }}>
+                                            {{ $cmStatus->cm_status_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <!-- CM Description -->

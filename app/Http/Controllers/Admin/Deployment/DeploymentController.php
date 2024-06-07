@@ -8,6 +8,7 @@ use App\Models\Deployment\Deployment;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Deployment\DeploymentModule;
 use App\Models\Deployment\DeploymentServerType;
+use App\Models\Deployment\DeploymentCMStatus;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -29,11 +30,10 @@ class DeploymentController extends Controller
                 ->addColumn('server_type', function ($deployment) {
                     $serverTypeNames = $deployment->serverType()->pluck('name')->implode(', ');
                     return $serverTypeNames;
-                }) 
+                })
 
                 ->addColumn('cm_status_id', function ($deployment) {
-                    $cmStatusNames = $deployment->cmStatus()->pluck('cm_status_name');
-                    return $cmStatusNames;
+                    return $deployment->cmStatus ? $deployment->cmStatus->cm_status_name : 'N/A';
                 })
                 
                 ->addColumn('updated_at', function ($deployment) {
@@ -101,8 +101,9 @@ class DeploymentController extends Controller
     {
         $modules = DeploymentModule::where('is_active', 1)->get();
         $serverTypes = DeploymentServerType::where('is_active', 1)->get();
+        $cmStatuses = DeploymentCMStatus::all();
 
-        return view('admin.deployment.deployments.create', compact('modules', 'serverTypes'));
+        return view('admin.deployment.deployments.create', compact('modules', 'serverTypes', 'cmStatuses'));
     }
 
     /**
@@ -148,10 +149,11 @@ class DeploymentController extends Controller
         $id = $deployment->id;
         $module = $deployment->module;
         $serverType = $deployment->serverType;
+        $cmStatuses = DeploymentCMStatus::all();
         $modules = DeploymentModule::where('is_active', 1)->get();
         $serverTypes = DeploymentServerType::where('is_active', 1)->get();
 
-        return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'modules', 'serverTypes'));
+        return view('admin.deployment.deployments.edit', compact('id', 'deployment', 'modules', 'serverTypes', 'cmStatuses'));
     }
 
     public function update(Request $request, Deployment $deployment)
