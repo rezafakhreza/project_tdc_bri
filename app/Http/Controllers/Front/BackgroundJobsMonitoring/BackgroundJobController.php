@@ -88,32 +88,31 @@ class BackgroundJobController extends Controller
 
     public function showDataAmountCharts(Request $request)
     {
-        $mode = $request->input('mode', 'month');
+        $mode = 'date'; // Tetapkan mode default ke 'date'
         $chosenMonth = $request->input('month', date('m'));
         $chosenYear = $request->input('year', date('Y'));
 
-        $processes = Process::where(function ($query) {
-            // $query->where('name', 'like', '%INBOUND%')
-            //     ->orWhere('name', 'like', '%OUTBOUND%');
-        })->get();
+        $processes = Process::all();
 
         $allChartData = [];
 
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $chosenMonth, $chosenYear);
+        $labels = range(1, $daysInMonth);
         foreach ($processes as $process) {
+            $s4glAmounts = array_fill(0, $daysInMonth, 0);
+            $eimAmounts = array_fill(0, $daysInMonth, 0);
+
             $results = $process->backgroundJobs()
                 ->whereYear('execution_date', $chosenYear)
                 ->whereMonth('execution_date', $chosenMonth)
                 ->orderBy('execution_date', 'asc')
                 ->get();
 
-            $labels = [];
-            $s4glAmounts = [];
-            $eimAmounts = [];
-
             foreach ($results as $result) {
-                $labels[] = $result->execution_date->format('d');
-                $s4glAmounts[] = $result->data_amount_to_S4GL;
-                $eimAmounts[] = $result->data_amount_to_EIM;
+                $executionDate = is_string($result->execution_date) ? new \DateTime($result->execution_date) : $result->execution_date;
+                $day = (int) $executionDate->format('d') - 1;
+                $s4glAmounts[$day] = $result->data_amount_to_S4GL;
+                $eimAmounts[$day] = $result->data_amount_to_EIM;
             }
 
             $allChartData[$process->name] = [
@@ -135,59 +134,38 @@ class BackgroundJobController extends Controller
 
     public function showDurationCharts(Request $request)
     {
-        $mode = $request->input('mode', 'month');
+        $mode = 'date'; // Tetapkan mode default ke 'date'
         $chosenMonth = $request->input('month', date('m'));
         $chosenYear = $request->input('year', date('Y'));
 
-        $processes = Process::where(function ($query) {
-            // $query->where('name', 'like', '%INBOUND%')
-            //     ->orWhere('name', 'like', '%OUTBOUND%');
-        })->get();
+        $processes = Process::all();
 
         $allChartData = [];
 
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $chosenMonth, $chosenYear);
+        $labels = range(1, $daysInMonth);
         foreach ($processes as $process) {
-            if ($mode == 'month') {
-                $results = $process->backgroundJobs()
-                    ->whereYear('execution_date', $chosenYear)
-                    ->select(
-                        DB::raw('MONTH(execution_date) as month_num'),
-                        DB::raw('SUM(duration_to_EIM) as total_duration_eim'),
-                        DB::raw('SUM(duration_to_S4GL) as total_duration_s4gl')
-                    )
-                    ->groupBy(DB::raw('MONTH(execution_date)'))
-                    ->orderBy(DB::raw('MONTH(execution_date)'), 'asc')
-                    ->get();
+            $durationsEIM = array_fill(0, $daysInMonth, 0);
+            $durationsS4GL = array_fill(0, $daysInMonth, 0);
 
-                $durationsEIM = array_fill(0, 12, 0);
-                $durationsS4GL = array_fill(0, 12, 0);
-                $labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            } else {
-                $results = $process->backgroundJobs()
-                    ->select(
-                        DB::raw('DAY(execution_date) as day_num'),
-                        DB::raw('SUM(duration_to_EIM) as total_duration_eim'),
-                        DB::raw('SUM(duration_to_S4GL) as total_duration_s4gl')
-                    )
-                    ->whereMonth('execution_date', $chosenMonth)
-                    ->whereYear('execution_date', $chosenYear)
-                    ->groupBy(DB::raw('DAY(execution_date)'))
-                    ->orderBy(DB::raw('DAY(execution_date)'), 'asc')
-                    ->get();
-
-                $lastDay = date('t', mktime(0, 0, 0, $chosenMonth, 1, date('Y')));
-                $durationsEIM = array_fill(0, $lastDay, 0);
-                $durationsS4GL = array_fill(0, $lastDay, 0);
-                $labels = range(1, $lastDay);
-            }
+            $results = $process->backgroundJobs()
+                ->whereYear('execution_date', $chosenYear)
+                ->whereMonth('execution_date', $chosenMonth)
+                ->orderBy('execution_date', 'asc')
+                ->get();
 
             foreach ($results as $result) {
-                $index = ($mode == 'month' ? $result->month_num : $result->day_num) - 1;
-                $durationsEIM[$index] = $result->total_duration_eim;
-                $durationsS4GL[$index] = $result->total_duration_s4gl;
+                $executionDate = is_string($result->execution_date) ? new \DateTime($result->execution_date) : $result->execution_date;
+                $day = (int) $executionDate->format('d') - 1;
+                $durationsEIM[$day] += $result->duration_to_EIM;
+                $durationsS4GL[$day] += $result->duration_to_S4GL;
             }
 
-            $allChartData[$process->name] = ['labels' => $labels, 'durationsEIM' => $durationsEIM, 'durationsS4GL' => $durationsS4GL];
+            $allChartData[$process->name] = [
+                'labels' => $labels,
+                'durationsEIM' => $durationsEIM,
+                'durationsS4GL' => $durationsS4GL
+            ];
         }
 
         return view('front.background-jobs-monitoring.background-jobs-duration', [
@@ -197,4 +175,5 @@ class BackgroundJobController extends Controller
             'chosenYear' => $chosenYear
         ]);
     }
+
 }
