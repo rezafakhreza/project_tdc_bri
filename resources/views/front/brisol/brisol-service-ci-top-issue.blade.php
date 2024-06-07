@@ -7,7 +7,7 @@
 @section('content')
     <div class="p-10 mx-auto my-10 bg-white rounded-lg shadow-lg" style="background-color: white; border: 1px solid #d9d9d9;">
         <h1 class="mb-4 text-2xl font-semibold sm:text-3xl">Brisol Top Issue</h1>
-        <div class="flex w-1/3 text-center" style="margin-left: 67%; margin-top: -60px; margin-bottom: 50px;">
+        <div class="flex w-1/3 text-center" style="margin-left: auto; margin-top: -60px; margin-bottom: 50px;">
             <select id="chartDropdownSelector"
                 class="w-full px-4 py-4 text-xl text-dark-blue rounded-lg font-semibold cursor-pointer bg-white focus:border-blue-900 focus:shadow-outline-blue shadow-lg"
                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
@@ -18,7 +18,7 @@
                 <option value="{{ route('brisol.monthly-target') }}">Brisol Monthly Target</option>
             </select>
         </div>
-        <div class="flex items-center justify-between gap-3 mt-10" style="margin-bottom: 2cm">
+        <div class="flex items-center justify-between gap-3 mt-10 mb-8">
             <div class="w-1/3 flex">
                 <div class="mr-2">
                     <select id="monthFilter" class="rounded-xl">
@@ -40,9 +40,9 @@
             </div>
         </div>
         <!-- Adjusted container size and added shadow for the Overall Top Issues Chart -->
-        <div class="w-full p-8 mx-auto mt-8 shadow-lg lg:w-2/3">
+        <div class="w-full p-4 mx-auto mt-8 shadow-lg lg:w-2/3">
             <h2 class="mb-4 text-2xl font-semibold text-center text-gray-800 sm:text-3xl">Overall Top Issues</h2>
-            <div class="rounded-lg chart-container" style="position: relative; height:50vh; width:90vw">
+            <div class="rounded-lg chart-container" style="position: relative; height:50vh; width:100%">
                 <canvas id="overallTopIssuesChart"></canvas>
             </div>
         </div>
@@ -88,8 +88,7 @@
                         },
                         options: {
                             responsive: true,
-                            maintainAspectRatio: true, // Maintain aspect ratio
-                            aspectRatio: 1.8, // Adjust this value to control the chart size
+                            maintainAspectRatio: false, // Maintain aspect ratio
                             plugins: {
                                 legend: {
                                     position: 'right',
@@ -128,8 +127,6 @@
                     console.error('Error loading overall top issue chart data:', error);
                 });
         }
-
-
 
         function loadPieCharts(year = document.getElementById('yearFilter').value, month = document.getElementById(
             'monthFilter').value) {
@@ -170,21 +167,11 @@
                                 datasets: [{
                                     label: `Top Issues for ${serviceCiData.service_ci}`,
                                     data: counts,
-                                    backgroundColor: [
-                                        '#FFC107',
-                                        '#FB4141',
-                                        '#2ECC71',
-                                        '#FF8333',
-                                        '#6C97DF',
-                                        '#D3D3D3',
+                                    backgroundColor: ['#FFC107', '#FB4141', '#2ECC71',
+                                        '#FF8333', '#6C97DF', '#D3D3D3'
                                     ],
-                                    borderColor: [
-                                        '#FFC107',
-                                        '#FB4141',
-                                        '#2ECC71',
-                                        '#FF8333',
-                                        '#6C97DF',
-                                        '#D3D3D3',
+                                    borderColor: ['#FFC107', '#FB4141', '#2ECC71', '#FF8333',
+                                        '#6C97DF', '#D3D3D3'
                                     ],
                                     borderWidth: 1
                                 }]
@@ -229,7 +216,6 @@
                                     animateRotate: true
                                 }
                             }
-
                         });
                     });
                 })
@@ -237,7 +223,6 @@
                     console.error('Error loading pie chart data:', error);
                 });
         }
-
 
         document.addEventListener("DOMContentLoaded", function() {
             const year = document.getElementById('yearFilter').value;
