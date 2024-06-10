@@ -149,7 +149,7 @@
                                         Type</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
-                                        Module</th>
+                                        Name</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Status</th>

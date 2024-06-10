@@ -67,10 +67,7 @@ class DeploymentController extends Controller
                 
                     return '';
                 })
-                
-                          
-                
-                
+            
                 ->addColumn('action', function ($deployment) {
                     return '
                         <div class="flex gap-2">

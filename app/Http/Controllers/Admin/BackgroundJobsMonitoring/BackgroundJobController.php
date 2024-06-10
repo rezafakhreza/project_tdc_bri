@@ -96,7 +96,7 @@ class BackgroundJobController extends Controller
             'id' => $id,
             'type' => $request->input('type'),
             'process_id' => $request->input('process_id'),
-            'data_amount_to_EIM' => $request->input('process_id'),
+            'data_amount_to_EIM' => $request->input('data_amount_to_EIM'),
             'data_amount_to_S4GL' => $request->input('data_amount_to_S4GL'),
             'status' => $request->input('status'),
             'duration_to_EIM' => $request->input('duration_to_EIM'),
@@ -143,7 +143,7 @@ class BackgroundJobController extends Controller
         $data = [
             'type' => $request->input('type'),
             'process_id' => $request->input('process_id'),
-            'data_amount_to_EIM' => $request->input('process_id'),
+            'data_amount_to_EIM' => $request->input('data_amount_to_EIM'),
             'data_amount_to_S4GL' => $request->input('data_amount_to_S4GL'),
             'status' => $request->input('status'),
             'duration_to_EIM' => $request->input('duration_to_EIM'),

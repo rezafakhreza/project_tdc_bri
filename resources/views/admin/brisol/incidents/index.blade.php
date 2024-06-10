@@ -45,7 +45,8 @@
                         url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                     },
 
-                    columns: [{
+                    columns: [
+                        {
                             data: 'inc_id',
                             name: 'inc_id',
                         },
@@ -62,36 +63,12 @@
                             name: 'region',
                         },
                         {
-                            data: 'site_group',
-                            name: 'site_group',
-                        },
-                        {
-                            data: 'site',
-                            name: 'site',
-                        },
-                        {
-                            data: 'description',
-                            name: 'description',
-                        },
-                        {
                             data: 'detailed_description',
                             name: 'detailed_description',
                         },
                         {
                             data: 'service_ci',
                             name: 'service_ci',
-                        },
-                        {
-                            data: 'prd_tier1',
-                            name: 'prd_tier1',
-                        },
-                        {
-                            data: 'prd_tier2',
-                            name: 'prd_tier2',
-                        },
-                        {
-                            data: 'prd_tier3',
-                            name: 'prd_tier3',
                         },
                         {
                             data: 'ctg_tier1',
@@ -104,18 +81,6 @@
                         {
                             data: 'ctg_tier3',
                             name: 'ctg_tier3',
-                        },
-                        {
-                            data: 'resolution_category',
-                            name: 'resolution_category',
-                        },
-                        {
-                            data: 'resolution',
-                            name: 'resolution',
-                        },
-                        {
-                            data: 'responded_date',
-                            name: 'responded_date',
                         },
                         {
                             data: 'reported_source',
@@ -134,14 +99,6 @@
                             name: 'priority',
                         },
                         {
-                            data: 'urgency',
-                            name: 'urgency',
-                        },
-                        {
-                            data: 'impact',
-                            name: 'impact',
-                        },
-                        {
                             data: 'status',
                             name: 'status',
                         },
@@ -156,7 +113,7 @@
                     ],
                     // Column definitions for handling the rendering of certain columns
                     columnDefs: [{
-                            targets: [7], // index for Detailed Description
+                            targets: [4], // index for Detailed Description
                             render: function(data, type, row) {
                                 if (type === 'display') {
                                     return `<div class="cursor-pointer modal-trigger" data-content="${data}">${data.length > 30 ? data.substr(0, 30) + '...' : data}</div>`;
@@ -165,16 +122,6 @@
                                 }
                             }
                         },
-                        {
-                            targets: [16], // index for Resolution
-                            render: function(data, type, row) {
-                                if (type === 'display') {
-                                    return `<div class="cursor-pointer modal-trigger" data-content="${data}">${data.length > 30 ? data.substr(0, 30) + '...' : data}</div>`;
-                                } else {
-                                    return data;
-                                }
-                            }
-                        }
                     ]
 
                 });
@@ -236,21 +183,9 @@
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Region</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Site Group</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Site</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Description</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Detailed Description</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Service CI</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Product Categorization Tier 1</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Product Categorization Tier 2</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Product Categorization Tier 3</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Categorization Tier 1</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
@@ -258,30 +193,20 @@
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Categorization Tier 3</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Resolution Category</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Resolution</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Responded Date</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Reported Source</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Assigned Group</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Assignee</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Priority</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Urgency</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Impact</th>
+                                        Priority</th>                                    
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Status</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">SLM
-                                        Status</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        SLM Status</th>
                                     <th style="max-width: 1%"
                                         class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-                                        Resolved Date</th>
+                                        Last Resolved Date</th>
                                 </tr>
                             </thead>
 

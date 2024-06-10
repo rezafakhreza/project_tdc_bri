@@ -70,11 +70,11 @@
                             var textColorClass = 'text-white';
 
                             if (status == 'Normal Run') {
-                                statusClass = 'bg-green-500';
+                                statusClass = 'bg-green-600';
                             } else if (status == 'Rerun Background Job') {
-                                statusClass = 'bg-yellow-500';
-                            } else if (status == 'Manual Background Job') {
-                                statusClass = 'bg-green-700';
+                                statusClass = 'bg-green-500';
+                            } else if (status == 'Manual Run Background Job') {
+                                statusClass = 'bg-yellow-400';
                             } else if (status == 'Pending') {
                                 statusClass = 'bg-red-600';
                             }

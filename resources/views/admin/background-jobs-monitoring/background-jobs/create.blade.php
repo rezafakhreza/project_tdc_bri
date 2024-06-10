@@ -40,7 +40,7 @@
                             <!-- Type Dropdown -->
                             <div class="mb-4">
                                 <label for="type"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Module*</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Type*</label>
                                 <select id="type" name="type"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                     required>
@@ -49,7 +49,7 @@
                                     <option value="Non-Product">Non-Product</option>
                                 </select>
                                 <div class="mt-2 text-sm text-gray-500">
-                                    Select the module of background job. Mandatory.
+                                    Select the type of background job. Mandatory.
                                 </div>
                             </div>
 
