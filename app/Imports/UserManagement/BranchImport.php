@@ -17,6 +17,7 @@ class BranchImport implements ToCollection, WithHeadingRow
 
     public function collection(Collection $rows)
     {
+        ini_set('max_execution_time', 3600);
         foreach ($rows as $row) {
             $rowArray = $row->toArray();
 

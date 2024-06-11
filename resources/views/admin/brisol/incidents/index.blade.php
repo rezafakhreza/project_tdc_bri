@@ -145,6 +145,15 @@
                     $('#modal').addClass('hidden');
                 });
             });
+
+            function downloadTemplate() {
+                var templateUrl = '{{ asset('TemplateExcel/Template_Brisol.xlsx ') }}';
+                var link = document.createElement('a');
+                link.href = templateUrl;
+                link.download = 'Template_Brisol.xlsx';
+                link.click();
+            }
+
         </script>
     </x-slot>
 
@@ -157,6 +166,13 @@
                             <!-- Filter search akan muncul di sini -->
                         </div>
                         <div class="button-container flex gap-4">
+
+                            <button onclick="downloadTemplate()"
+                                class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
+                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                                Download Template
+                            </button>
+
                             <a href="{{ route('admin.brisol.incidents.create') }}"
                                 class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
                                 style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">

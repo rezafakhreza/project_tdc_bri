@@ -147,7 +147,7 @@
                 var templateUrl = '{{ asset('TemplateExcel/Template_User_Management.xlsx ') }}';
                 var link = document.createElement('a');
                 link.href = templateUrl;
-                link.download = 'Template_Excel_UserManagement.xlsx';
+                link.download = 'Template_User_Management.xlsx';
                 link.click();
             }
         </script>

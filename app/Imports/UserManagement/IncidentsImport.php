@@ -14,6 +14,7 @@ class IncidentsImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
+        ini_set('max_execution_time', 3600);
         return DB::transaction(function () use ($row) {
             $branchCode = ltrim($row['branch_code'], '0'); // Menghapus nol di awal
 
