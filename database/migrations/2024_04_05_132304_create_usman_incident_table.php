@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('reported_date');
             $table->string('pn');
             $table->string('nama');
-            $table->string('jabatan');
+            $table->string('jabatan')->nullable();
             $table->string('bagian');
             $table->string('req_type');
             $table->string('branch_code');

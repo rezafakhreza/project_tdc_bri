@@ -35,22 +35,22 @@
 
                         <div class="grid grid-cols-2 gap-16">
                             <div>
-                                <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
-                                    <div class="w-full">
+                                
+                                    <div class="mb-4">
                                         <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="branch_name">
-                                            Nama Branch
+                                            Nama Unit Kerja*
                                         </label>
                                         <input value="{{ old('branch_name') ?? $branch->branch_name }}" name="branch_name" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="branch_name" type="text" placeholder="Nama Branch">
                                         <div class="mt-2 text-sm text-gray-500">
                                             <!-- Nama modul deployment. Contoh: Module 1, Module 2, dsb. -->
                                         </div>
                                     </div>
-                                </div>
+                                
 
-                                <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
-                                    <div class="w-full">
+                                
+                                    <div class="mb-4">
                                         <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="level_uker">
-                                            Level Unit Kerja
+                                            Level Unit Kerja*
                                         </label>
                                         <!-- <input value="{{ old('level_uker') ?? $branch->level_uker }}" name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="kanwil_name" type="text" placeholder="Nama Kanwil"> -->
                                         <select name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="level_uker" required>
@@ -65,10 +65,10 @@
                                             <option value="Regional Office" {{ old('level_uker', $branch->level_uker) === 'Regional Office' ? 'selected' : ''}}>Regional Office</option>
                                         </select>
                                     </div>
-                                </div>
+                                
 
-                                <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
-                                    <div class="w-full">
+                                
+                                    <div class="mb-4">
                                         <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="is_active">
                                             Status*
                                         </label>
@@ -81,14 +81,12 @@
                                             Select the status of the module. Mandatory.
                                         </div>
                                     </div>
-                                </div>
-
+                                
                             </div>
 
                             <div>
-
-                                <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
-                                    <div class="w-full">
+                                
+                                    <div class="mb-4">
 
                                         <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="kanwil_name">
                                             Nama Kantor Wilayah
@@ -98,10 +96,10 @@
                                             <!-- Nama modul deployment. Contoh: Module 1, Module 2, dsb. -->
                                         </div>
                                     </div>
-                                </div>
+                                
 
-                                <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
-                                    <div class="w-full">
+                                
+                                    <div class="mb-4">
                                         <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="sbo">
                                             SBO
                                         </label>
@@ -113,7 +111,7 @@
 
                                         </select>
                                     </div>
-                                </div>
+                                
                             </div>
                         </div>
 

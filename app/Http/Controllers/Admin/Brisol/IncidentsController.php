@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Brisol\IncidentsImport;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\QueryException;
 
 class IncidentsController extends Controller
 {
@@ -49,28 +50,40 @@ class IncidentsController extends Controller
         $file = $request->file('file');
         $namaFile = $file->getClientOriginalName();
 
-        // Memeriksa apakah file dengan nama yang sama sudah ada
-        if (file_exists(public_path('/DataImport/' . $namaFile))) {
-            // Menampilkan pesan konfirmasi untuk menimpa file
-            if ($request->has('overwrite') && $request->overwrite == 'true') {
-                // Jika konfirmasi dilakukan, hapus file lama
-                unlink(public_path('/DataImport/' . $namaFile));
+        try {
+            // Memeriksa apakah file dengan nama yang sama sudah ada
+            if (file_exists(public_path('/DataImport/' . $namaFile))) {
+                // Menampilkan pesan konfirmasi untuk menimpa file
+                if ($request->has('overwrite') && $request->overwrite == 'true') {
+                    // Jika konfirmasi dilakukan, hapus file lama
+                    unlink(public_path('/DataImport/' . $namaFile));
 
-                // Hapus semua insiden
-                Incident::truncate();
-            } else {
-                // Jika tidak ingin menimpa, kembalikan dengan pesan error
-                return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+                    // Hapus semua insiden
+                    Incident::truncate();
+                } else {
+                    // Jika tidak ingin menimpa, kembalikan dengan pesan error
+                    return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+                }
             }
+            // Pindahkan file baru ke direktori tujuan
+            $file->move('DataImport', $namaFile);
+            Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
+            return redirect()->route('admin.brisol.incidents.index')->with('success', 'Incidents imported successfully');
+
+        } catch (QueryException $e) {
+            // Tangani kesalahan query database
+            $errorInfo = $e->errorInfo; // Ambil informasi kesalahan dari QueryException
+            // Ambil pesan kesalahan dari errorInfo
+            $errorMessage = isset($errorInfo[2]) ? $errorInfo[2] : 'Unknown database error';
+            // Decode HTML entities to convert &#039; to '
+            $errorMessage = html_entity_decode($errorMessage);
+            // Kembalikan dengan pesan kesalahan yang sudah di-decode
+            return redirect()->back()->withErrors(['Database error' => $errorMessage]);
+
+        } catch (\Exception $e) {
+            // Tangani kesalahan umum
+            return redirect()->back()->with('error', 'There was an error processing the file: ' . $e->getMessage());
         }
-
-        // Pindahkan file baru ke direktori tujuan
-        $file->move('DataImport', $namaFile);
-
-
-        Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
-
-        return redirect()->route('admin.brisol.incidents.index')->with('success', 'Incidents imported successfully');
     }
 
     /**

@@ -43,7 +43,7 @@
     <div class="py-12 font-poppins">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-6 bg-white rounded-lg">
-                <h1 class="mb-6 text-2xl font-medium">Add Data</h1>
+                <h1 class="mb-6 text-2xl font-medium">Add Branch</h1>
 
                 <form class="w-full" action="{{ route('admin.user-management.branch.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="is_active">
+                                <label class="block mb-2 text-sm font-bold text-gray-600" for="is_active">
                                     Status*
                                 </label>
                                 <select name="is_active" id="is_active" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" required>
@@ -92,11 +92,9 @@
                                     Select the status of the module. Mandatory.
                                 </div>
                             </div>
-
-
                         </div>
-                        <div>
 
+                        <div>
                             <div class="mb-4">
                                 <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah*</label>
                                 <input type="number" id="uker_induk_wilayah_code" name="uker_induk_wilayah_code" value="{{ old('uker_induk_wilayah_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>

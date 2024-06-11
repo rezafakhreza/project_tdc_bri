@@ -140,6 +140,18 @@ class BackgroundJobController extends Controller
         
         $job = BackgroundJob::findOrFail($id);
 
+        // Check if background job already exists in that date
+        $existingJob = BackgroundJob::where('process_id', $request->process_id)
+            ->where('execution_date', $request->execution_date)
+            ->first();
+
+        if ($existingJob) {
+
+            $request->session()->put('existingJobId', $existingJob->id);
+
+            return redirect()->back()->withErrors(['error' => 'Background job already exists in that date. Would you like to edit it?']);
+        }
+
         $data = [
             'type' => $request->input('type'),
             'process_id' => $request->input('process_id'),

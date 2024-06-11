@@ -207,8 +207,8 @@
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
                                         Data Amount to S4GL</th>
-                                    <th style="width: 20%;"
-                                        class="px-30 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <th style="width: 80%;"
+                                        class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase ">
