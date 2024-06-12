@@ -29,10 +29,14 @@
                             <div>
                                 <!-- Title -->
                                 <div class="mb-4">
-                                    <label for="title" class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
-                                    <input type="text" id="title" name="title" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('title', $deployment->title) }}" required>
+                                    <label for="title"
+                                        class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
+                                    <input type="text" id="title" name="title"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        value="{{ old('title', $deployment->title) }}" required>
                                     <div class="mt-2 text-sm text-gray-500">
-                                        Contoh: 20240107 - NCM - FAM - Enhancement Asset Verification. Maksimal 200 karakter.
+                                        Contoh: 20240107 - NCM - FAM - Enhancement Asset Verification. Maksimal 200
+                                        karakter.
                                     </div>
                                 </div>
 
@@ -40,20 +44,28 @@
                                 <div class="mb-4">
                                     <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy
                                         Date:</label>
-                                    <input type="date" id="deploy_date" name="deploy_date" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" value="{{ old('deploy_date', $deployment->deploy_date) }}" required>
+                                    <input type="date" id="deploy_date" name="deploy_date"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        value="{{ old('deploy_date', $deployment->deploy_date) }}" required>
                                 </div>
 
                                 <!-- Module ID Dropdown -->
                                 <div class="mb-4">
-                                    <label for="module_id" class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
-                                    <select id="module_id" name="module_id[]" multiple="multiple" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                    <label for="module_id"
+                                        class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
+                                    <select id="module_id" name="module_id[]" multiple="multiple"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        required>
                                         @foreach ($modules as $module)
-                                        @php
-                                        $selected = in_array($module->id, $deployment->module->pluck('id')->toArray());
-                                        @endphp
-                                        <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
-                                        {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
-                                        </option>
+                                            @php
+                                                $selected = in_array(
+                                                    $module->id,
+                                                    $deployment->module->pluck('id')->toArray(),
+                                                );
+                                            @endphp
+                                            <option value="{{ $module->id }}" {{ $selected ? 'selected' : '' }}>
+                                                {{ $module->name }}{{ $module->is_active == 0 ? ' (Currently Non-Active)' : '' }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     <div class="mt-2 text-sm text-gray-500">
@@ -63,15 +75,21 @@
 
                                 <!-- Server Type ID Dropdown -->
                                 <div class="mb-4">
-                                    <label for="server_type_id" class="block mb-2 text-sm font-bold text-gray-600">Server Type:</label>
-                                    <select id="server_type_id" name="server_type_id[]" multiple="multiple" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                    <label for="server_type_id"
+                                        class="block mb-2 text-sm font-bold text-gray-600">Server Type:</label>
+                                    <select id="server_type_id" name="server_type_id[]" multiple="multiple"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        required>
                                         @foreach ($serverTypes as $serverType)
-                                        @php
-                                        $selected = in_array($serverType->id, $deployment->serverType->pluck('id')->toArray());
-                                        @endphp
-                                        <option value="{{ $serverType->id }}" {{ $selected ? 'selected' : '' }}>
-                                            {{ $serverType->name }}{{ $serverType->is_active == 0 ? ' (Currently Non-Active)' : '' }}
-                                        </option>
+                                            @php
+                                                $selected = in_array(
+                                                    $serverType->id,
+                                                    $deployment->serverType->pluck('id')->toArray(),
+                                                );
+                                            @endphp
+                                            <option value="{{ $serverType->id }}" {{ $selected ? 'selected' : '' }}>
+                                                {{ $serverType->name }}{{ $serverType->is_active == 0 ? ' (Currently Non-Active)' : '' }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     <div class="mt-2 text-sm text-gray-500">
@@ -84,16 +102,22 @@
                             <div>
                                 <!-- Document Status -->
                                 <div class="mb-4">
-                                    <label for="document_status" class="block mb-2 text-sm font-bold text-gray-600">Document
+                                    <label for="document_status"
+                                        class="block mb-2 text-sm font-bold text-gray-600">Document
                                         Status:</label>
-                                    <select id="document_status" name="document_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                        <option value="Not Done" {{ old('document_status', $deployment->document_status) == 'Not Done' ? 'selected' : '' }}>
+                                    <select id="document_status" name="document_status"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        required>
+                                        <option value="Not Done"
+                                            {{ old('document_status', $deployment->document_status) == 'Not Done' ? 'selected' : '' }}>
                                             Not Done
                                         </option>
-                                        <option value="In Progress" {{ old('document_status', $deployment->document_status) == 'In Progress' ? 'selected' : '' }}>
+                                        <option value="In Progress"
+                                            {{ old('document_status', $deployment->document_status) == 'In Progress' ? 'selected' : '' }}>
                                             In Progress
                                         </option>
-                                        <option value="Done" {{ old('document_status', $deployment->document_status) == 'Done' ? 'selected' : '' }}>
+                                        <option value="Done"
+                                            {{ old('document_status', $deployment->document_status) == 'Done' ? 'selected' : '' }}>
                                             Done
                                         </option>
                                     </select>
@@ -101,30 +125,26 @@
 
                                 <!-- Document Description -->
                                 <div class="mb-4">
-                                    <label for="document_description" class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
-                                    <textarea id="document_description" name="document_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>{{ old('document_description', $deployment->document_description) }}</textarea>
+                                    <label for="document_description"
+                                        class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
+                                    <textarea id="document_description" name="document_description" rows="4"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        required>{{ old('document_description', $deployment->document_description) }}</textarea>
                                 </div>
 
                                 <!-- CM Status -->
                                 <div class="mb-4">
-                                    <label for="cm_status" class="block mb-2 text-sm font-bold text-gray-600">CM
-                                        Status:</label>
-                                    <select id="cm_status" name="cm_status" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                        <option value="Draft" {{ old('cm_status', $deployment->cm_status) == 'Draft' ? 'selected' : '' }}>
-                                            Draft
-                                        </option>
-                                        <option value="Reviewer" {{ old('cm_status', $deployment->cm_status) == 'Reviewer' ? 'selected' : '' }}>
-                                            Reviewer
-                                        </option>
-                                        <option value="Checker" {{ old('cm_status', $deployment->cm_status) == 'Checker' ? 'selected' : '' }}>
-                                            Checker
-                                        </option>
-                                        <option value="Signer" {{ old('cm_status', $deployment->cm_status) == 'Signer' ? 'selected' : '' }}>
-                                            Signer
-                                        </option>
-                                        <option value="Done Deploy" {{ old('cm_status', $deployment->cm_status) == 'Done Deploy' ? 'selected' : '' }}>
-                                            Done Deploy
-                                        </option>
+                                    <label for="cm_status_id" class="block mb-2 text-sm font-bold text-gray-600">CM
+                                        Status*</label>
+                                    <select name="cm_status_id" id="cm_status_id"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
+                                        required>
+                                        <option value="" disabled selected>Select CM Status</option>
+                                        @foreach ($cmStatuses as $cmStatus)
+                                            <option value="{{ $cmStatus->id }}" {{ ($cmStatus->cm_status_name == $cmStatus->id) ? 'selected' : '' }}>
+                                                {{ $cmStatus->cm_status_name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -132,12 +152,15 @@
                                 <div class="mb-4">
                                     <label for="cm_description" class="block mb-2 text-sm font-bold text-gray-600">CM
                                         Description:</label>
-                                    <textarea id="cm_description" name="cm_description" rows="4" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>{{ old('cm_description', $deployment->cm_description) }}</textarea>
+                                    <textarea id="cm_description" name="cm_description" rows="4"
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                                        required>{{ old('cm_description', $deployment->cm_description) }}</textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Update
+                            <button type="submit"
+                                class="px-4 py-2 font-bold text-white rounded shadow-lg bg-darker-blue">Update
                                 Deployment</button>
                         </div>
                     </form>

@@ -88,14 +88,30 @@
                     },
                     {
                         data: 'cm_status_id',
-                        name: 'cm_status_id'
+                        name: 'cm_status_id',
+                        render: function(data, type, row) {
+                            var cmStatusColor = row.cm_status_id; // Ambil kode warna CM Status dari data
+                            var statusClass = row.cm_status_color;
+                            var textColorClass = 'text-white'; // Text color set to white
+
+                            // Atur warna latar berdasarkan kode warna CM Status
+                            if (cmStatusColor) {
+                                // Gunakan langsung kode warna sebagai class CSS
+                                statusClass = 'background-color: ' + row.cm_status_color + ';';
+                            }
+
+                            return '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' +
+                                textColorClass + '" style="' + statusClass + '">' + cmStatusColor + '</span>';
+                        }
                     },
+
+
                     {
                         data: 'updated_at',
                         name: 'updated_at'
                     },
-                    
-                    
+
+
                     {
                         data: 'action',
                         name: 'action',
@@ -175,7 +191,7 @@
                                         Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Updated At</th>
-                                        <!-- <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <!-- <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Updated module</th> -->
                                     <th style="max-width: 1%"
                                         class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
@@ -199,13 +215,14 @@
         }
 
         .dataTables_wrapper {
-            margin-top: -80px;
+            margin-top: 40px;
         }
 
         .dataTables_wrapper .dataTables_filter {
             float: left;
             text-align: left;
             margin-bottom: 30px;
+            display: none;
         }
 
         .dataTables_wrapper .dataTables_length {

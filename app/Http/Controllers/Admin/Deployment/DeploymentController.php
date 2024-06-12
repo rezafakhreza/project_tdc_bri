@@ -35,6 +35,10 @@ class DeploymentController extends Controller
                 ->addColumn('cm_status_id', function ($deployment) {
                     return $deployment->cmStatus ? $deployment->cmStatus->cm_status_name : 'N/A';
                 })
+
+                ->addColumn('cm_status_color', function ($deployment) {
+                    return $deployment->cmStatus ? $deployment->cmStatus->colour : 'N/A';
+                })
                 
                 ->addColumn('updated_at', function ($deployment) {
                     $latestUpdate = null;
@@ -94,6 +98,7 @@ class DeploymentController extends Controller
     /**
      * Show the form to create a new deployment.
      */
+    
     public function create()
     {
         $modules = DeploymentModule::where('is_active', 1)->get();
