@@ -110,6 +110,10 @@
                             data: 'priority',
                             name: 'priority',
                         },
+<<<<<<< Updated upstream
+=======
+                        
+>>>>>>> Stashed changes
                         {
                             data: 'status',
                             name: 'status',
@@ -123,6 +127,7 @@
                             name: 'resolved_date',
                         },
                     ],
+
                     // Column definitions for handling the rendering of certain columns
                     columnDefs: [{
                             targets: [4], // index for Detailed Description
@@ -229,7 +234,12 @@
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Assignee</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+<<<<<<< Updated upstream
                                         Priority</th>                                    
+=======
+                                        Priority</th>
+
+>>>>>>> Stashed changes
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
