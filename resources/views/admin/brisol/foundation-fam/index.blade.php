@@ -19,12 +19,14 @@
                     <a href="{{ route('admin.brisol.incidents.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Brisol
                     </a>
-                    <a href="{{ route('admin.brisol.monthly-target.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Monthly Target
+
+                    <a href="{{ route('admin.brisol.foundation-iem.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        Foundation IEM
                     </a>
 
                     <a href="{{ route('admin.brisol.monthly-target.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Foundation IEM
+                        Monthly Target
                     </a>
 
 
@@ -32,9 +34,6 @@
             </div>
         </div>
     </x-slot>
-
-
-
 
     <x-slot name="script">
         <script>
@@ -92,26 +91,13 @@
                         name: 'resolution_category',
                         searchable: true,
                     },
-                    // {
-                    //     data: 'is_active',
-                    //     name: 'is_active',
-                    //     searchable: true,
-                    //     render: function(data, type, row) {
-                    //         var statusLabel = data ? 'Active' : 'Non-Active';
-                    //         var textColorClass = 'text-white';
-                    //         var statusClass = data ? 'bg-green-500' : 'bg-red-600';
-
-                    //         return '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' +
-                    //             statusClass + ' ' + textColorClass + '">' + statusLabel + '</span>';
-                    //     }
-                    // },
-                    // {
-                    //     data: 'action',
-                    //     name: 'action',
-                    //     orderable: false,
-                    //     searchable: false,
-                    //     width: '15%'
-                    // }
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                        width: '15%'
+                    }
 
                 ],
             });
@@ -165,10 +151,10 @@
 
         <script>
             function downloadTemplate() {
-                var templateUrl = '{{ asset('TemplateExcel/Template_Data_Branch.xlsx') }}';
+                var templateUrl = '{{ asset('TemplateExcel/Template_Foundation_FAM.xlsx') }}';
                 var link = document.createElement('a');
                 link.href = templateUrl;
-                link.download = 'Template_Data_Branch.xlsx';
+                link.download = 'Template_Foundation_FAM.xlsx';
                 link.click();
             }
         </script>
@@ -203,9 +189,6 @@
                             <button onclick="downloadTemplate()" class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 Download Template
                             </button>
-                            <!-- <a href="{{ route('admin.user-management.branch.create') }}" class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
-                                + Add Branch
-                            </a> -->
                             <a class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248; cursor: pointer;" onclick="showImportForm()">
                                 + Import Data
                             </a>
@@ -295,9 +278,9 @@
                                         Operational Categorization Tier 3</th>
                                     <th style="width: 10%;" class="px-30 py-3 bg-darker-blue text-left text-xs font-medium text-white uppercase tracking-wider">
                                         Resolution Categorization</th>
-                                    <!-- <th style="width: 5%; max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <th style="width: 5%; max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Action
-                                    </th> -->
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
