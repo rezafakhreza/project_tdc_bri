@@ -24,7 +24,7 @@
     </div>
 
     @if ($errors->any())
-    <div class="py-6 font-poppins mx-auto max-w-7xl lg:px-8" role="alert">
+    <div class="pt-6 font-poppins mx-auto max-w-7xl lg:px-8" role="alert">
         <div class="px-4 py-2 font-bold text-white bg-red-500 rounded-t">
             Ada kesalahan!
         </div>
