@@ -58,11 +58,8 @@ class CMStatusController extends Controller
 
         $request->validate([
             'cm_status_name' => 'required|string|max:255',
-<<<<<<< Updated upstream
             'colour' => 'required|string|max:17'
-=======
-            'colour' => 'required|string|max:7'
->>>>>>> Stashed changes
+
         ]);
 
         // check if process already exists
@@ -89,11 +86,7 @@ class CMStatusController extends Controller
     {
         $request->validate([
             'cm_status_name' => 'required|string|max:255',
-<<<<<<< Updated upstream
             'colour' => 'required|string|max:17',
-=======
-            'colour' => 'required|string|max:7',
->>>>>>> Stashed changes
         ]);
 
         $cmStatus = DeploymentCMStatus::findOrFail($id);

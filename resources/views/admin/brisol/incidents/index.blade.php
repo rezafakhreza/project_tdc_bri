@@ -110,10 +110,6 @@
                             data: 'priority',
                             name: 'priority',
                         },
-<<<<<<< Updated upstream
-=======
-                        
->>>>>>> Stashed changes
                         {
                             data: 'status',
                             name: 'status',
@@ -234,12 +230,7 @@
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Assignee</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
-<<<<<<< Updated upstream
-                                        Priority</th>                                    
-=======
                                         Priority</th>
-
->>>>>>> Stashed changes
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
