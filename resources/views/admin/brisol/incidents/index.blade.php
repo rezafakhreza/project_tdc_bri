@@ -24,6 +24,17 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Monthly Target
                     </a>
+
+                    <a href="{{ route('admin.brisol.foundation-fam.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        Foundation FAM
+                    </a>
+
+                    <!-- <a href="{{ route('admin.brisol.foundation-iem.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        Foundation IEM
+                    </a> -->
+
                 </div>
             </div>
         </div>
@@ -162,9 +173,11 @@
             <div class="overflow-hidden shadow sm:rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <div class="flex justify-between mb-10">
+                        
                         <div class="dataTables_filter">
                             <!-- Filter search akan muncul di sini -->
                         </div>
+                        
                         <div class="button-container flex gap-4">
 
                             <button onclick="downloadTemplate()"

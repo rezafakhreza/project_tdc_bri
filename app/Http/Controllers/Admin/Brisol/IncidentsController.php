@@ -49,15 +49,15 @@ class IncidentsController extends Controller
 
         $file = $request->file('file');
         $namaFile = $file->getClientOriginalName();
+        $filePath = public_path('/DataImport/' . $namaFile);
 
         try {
             // Memeriksa apakah file dengan nama yang sama sudah ada
-            if (file_exists(public_path('/DataImport/' . $namaFile))) {
+            if (file_exists($filePath)) {
                 // Menampilkan pesan konfirmasi untuk menimpa file
                 if ($request->has('overwrite') && $request->overwrite == 'true') {
                     // Jika konfirmasi dilakukan, hapus file lama
-                    unlink(public_path('/DataImport/' . $namaFile));
-
+                    unlink($filePath);
                     // Hapus semua insiden
                     Incident::truncate();
                 } else {
@@ -82,7 +82,11 @@ class IncidentsController extends Controller
 
         } catch (\Exception $e) {
             // Tangani kesalahan umum
-            return redirect()->back()->with('error', 'There was an error processing the file: ' . $e->getMessage());
+            // Jika terjadi kesalahan, kembalikan dengan pesan error
+            if (file_exists($filePath)) {
+                unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
+            }
+            return redirect()->back()->with('error', 'The data does not match to the template: ' . $e->getMessage());
         }
     }
 

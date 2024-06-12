@@ -59,7 +59,9 @@
                             <a href="{{ route('deployments.calendar') }}"
                                 class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Calendar</a>
                             <a href="{{ route('deployments.index') }}"
-                                class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chart</a>
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chart Module</a>
+                                <a href="{{ route('deployments.server-type') }}"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chart Server</a>
                         </div>
                     </div>
                 </div>

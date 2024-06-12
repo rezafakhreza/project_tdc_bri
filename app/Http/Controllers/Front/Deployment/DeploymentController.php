@@ -22,6 +22,11 @@ class DeploymentController extends Controller
         return view('front.deployment.deployments-calendar');
     }
 
+    public function chartServerType()
+    {
+        return view('front.deployment.deployments-chart-server-type');
+    }
+
     /**
      * Get events for calendar
      */

@@ -9,15 +9,17 @@ use App\Http\Controllers\Admin\Deployment\DeploymentServerTypeController;
 use App\Http\Controllers\Admin\Deployment\CMStatusController;
 use App\Http\Controllers\Admin\BackgroundJobsMonitoring\ProcessController;
 use App\Http\Controllers\Admin\BackgroundJobsMonitoring\BackgroundJobController;
-use App\Http\Controllers\Front\Brisol\BrisolController as FrontBrisolController;
 use App\Http\Controllers\Admin\Brisol\IncidentsController as BrisolIncidentsController;
-use App\Http\Controllers\Front\Deployment\DeploymentController as FrontDeploymentController;
-use App\Http\Controllers\Admin\UserManagement\IncidentsController as UsmanIncidentsController;
-
-
-use App\Http\Controllers\Admin\UserManagement\BranchController as UsmanBranchController;
 use App\Http\Controllers\Admin\Brisol\MonthlyTargetController as BrisolMonthlyTargetController;
+use App\Http\Controllers\Admin\Brisol\FoundationFAMController;
+use App\Http\Controllers\Admin\Brisol\FoundationIEMController;
+use App\Http\Controllers\Admin\UserManagement\IncidentsController as UsmanIncidentsController;
 use App\Http\Controllers\Admin\UserManagement\MonthlyTargetController as UsmanMonthlyTargetController;
+use App\Http\Controllers\Admin\UserManagement\BranchController as UsmanBranchController;
+
+
+use App\Http\Controllers\Front\Brisol\BrisolController as FrontBrisolController;
+use App\Http\Controllers\Front\Deployment\DeploymentController as FrontDeploymentController;
 use App\Http\Controllers\Front\UserManagement\UserManagementController as FrontUserManagementController;
 use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController as FrontBackgroundJobController;
 
@@ -37,6 +39,7 @@ Route::get('/', function () {
 });
 
 Route::get('/deployments/chart', [FrontDeploymentController::class, 'index'])->name('deployments.index');
+Route::get('/deployments/chart-server-type', [FrontDeploymentController::class, 'chartServerType'])->name('deployments.server-type');
 Route::get('/deployments/calendar', [FrontDeploymentController::class, 'calendar'])->name('deployments.calendar');
 Route::get('/background-jobs-monitoring/daily', [FrontBackgroundJobController::class, 'daily'])->name('background-jobs-monitoring.daily');
 Route::get('/background-jobs-monitoring/data-amount', [FrontBackgroundJobController::class, 'showDataAmountCharts'])->name('background-jobs-monitoring.data-amount');
@@ -83,7 +86,7 @@ Route::middleware([
             Route::resource('monthly-target', UsmanMonthlyTargetController::class)->middleware('permission:manage monthly target user management');
             Route::resource('branch', UsmanBranchController::class)->middleware('permission:manage branch user management');
 
-            // only view incidents user management and monthly target user management
+            // only view branch user management and monthly target user management
             Route::get('/monthly-target', [UsmanMonthlyTargetController::class, 'index'])->name('monthly-target.index')->middleware('permission:view monthly target user management');
             Route::get('/branch', [UsmanBranchController::class, 'index'])->name('branch.index')->middleware('permission:view branch user management');
         });
@@ -91,9 +94,14 @@ Route::middleware([
         Route::prefix('brisol')->name('brisol.')->group(function () {
             Route::resource('incidents', BrisolIncidentsController::class)->middleware('permission:manage incidents brisol');
             Route::resource('monthly-target', BrisolMonthlyTargetController::class)->middleware('permission:manage monthly target brisol');
+            Route::resource('foundation-fam', FoundationFAMController::class)->middleware('permission:manage foundation fam brisol');
+            Route::resource('foundation-iem', FoundationIEMController::class)->middleware('permission:manage foundation iem brisol');
 
             // only view incidents brisol and monthly target brisol
             Route::get('/monthly-target', [BrisolMonthlyTargetController::class, 'index'])->name('monthly-target.index')->middleware('permission:view monthly target brisol');
+            Route::get('/foundation-fam', [FoundationFAMController::class, 'index'])->name('foundation-fam.index')->middleware('permission:view foundation fam brisol');
+            Route::get('/foundation-iem', [FoundationIEMController::class, 'index'])->name('foundation-iem.index')->middleware('permission:view foundation iem brisol');
+            
         });
 
         
