@@ -89,7 +89,7 @@
                                     <option value="0">Non-Active</option>
                                 </select>
                                 <div class="mt-2 text-sm text-gray-500">
-                                    Select the status of the module. Mandatory.
+                                    <!-- Select the status of the module. Mandatory. -->
                                 </div>
                             </div>
                         </div>
