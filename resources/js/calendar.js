@@ -25,10 +25,22 @@ const predefinedColors = [
 ];
 
 // Fungsi untuk mendapatkan warna berdasarkan ID modul
-function getColorForModule(moduleId) {
-    const index = Math.abs(moduleId.hashCode()) % predefinedColors.length;
-    return predefinedColors[index];
+// Update the getColorForModule function to use color fetched from backend
+async function getColorForModule(moduleId) {
+    try {
+        const response = await fetch(`/api/deployments/events`); // Adjust API endpoint as per your route
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.color;
+    } catch (error) {
+        console.error('Error fetching color:', error);
+        // Fallback color if fetching fails
+        return data.color;
+    }
 }
+
 
 // Fungsi bantuan untuk mengubah string menjadi hash code
 String.prototype.hashCode = function() {
@@ -46,22 +58,27 @@ String.prototype.hashCode = function() {
 let moduleColors = {};
 
 // Update the legend showing the colors associated with different modules
+// Update the legend showing the colors associated with different modules
 function updateLegend() {
     const legendDiv = document.getElementById("calendarLegend");
     legendDiv.innerHTML = "";
-    for (const [module, color] of Object.entries(moduleColors)) {
+    for (const [cmStatus, color] of Object.entries(moduleColors)) {
         const colorBox = document.createElement("div");
         colorBox.style.backgroundColor = color;
         colorBox.style.width = "20px";
         colorBox.style.height = "20px";
         colorBox.style.display = "inline-block";
+        colorBox.style.border = "none"; // Pastikan tidak ada border
+        colorBox.style.marginRight = "5px"; // Contoh pengaturan margin jika diperlukan
 
         const text = document.createElement("span");
-        text.innerHTML = ` : ${module} &nbsp;`;
+        text.innerHTML = ` : ${cmStatus} &nbsp;`;
         legendDiv.appendChild(colorBox);
-        legendDiv.appendChild(text);
+        // legendDiv.appendChild(text);
     }
 }
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const calendarEl = document.getElementById("calendar");
@@ -97,12 +114,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
             return { domNodes: [title, module, serverType] };
         },
-        eventDidMount: function(info) {
+        eventDidMount: async function(info) {
             info.el.style.cursor = "pointer";
             info.el.style.maxWidth = "100%";
-            const module = info.event.extendedProps.module;
-            const color = getColorForModule(module);
-            moduleColors[module] = color;
+            const cmStatus = info.event.extendedProps.status_cm;
+            const color = await getColorForModule(cmStatus);
+            moduleColors[cmStatusy] = color;
             updateLegend();
             info.el.style.backgroundColor = color;
         },

@@ -135,7 +135,6 @@ class DeploymentController extends Controller
 
         $data->module()->attach($request->input('module_id'));
         $data->serverType()->attach($request->input('server_type_id'));
-        $data->cmStatus()->attach($request->input('cm_status_id'));
 
 
         return redirect()->route('admin.deployments.deployment.index')
@@ -181,7 +180,6 @@ class DeploymentController extends Controller
 
         $deployment->module()->sync($request->input('module_id'));
         $deployment->serverType()->sync($request->input('server_type_id'));
-        $deployment->cmStatus()->attach($request->input('cm_status_id'));
 
         return redirect()->route('admin.deployments.deployment.index')->with('success', 'Deployment updated successfully.');
     }

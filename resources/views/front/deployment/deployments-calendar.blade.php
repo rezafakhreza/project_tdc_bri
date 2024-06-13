@@ -85,7 +85,6 @@
 @endsection
 
 @section('script')
-@section('script')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Handle dropdown menu toggle
