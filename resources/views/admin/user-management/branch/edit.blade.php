@@ -54,7 +54,7 @@
                                     </label>
                                     <!-- <input value="{{ old('level_uker') ?? $branch->level_uker }}" name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="kanwil_name" type="text" placeholder="Nama Kanwil"> -->
                                     <select name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="level_uker" required>
-                                        <option value="" disabled {{ old('level_uker', $branch->level_uker) ? '' : 'selected'}}>Select Level Uker</option>
+                                        <option value="" disabled {{ old('level_uker', $branch->level_uker) ? '' : 'selected'}}>-- Select Level Uker --</option>
                                         <option value="AIW" {{ old('level_uker', $branch->level_uker) === 'AIW' ? 'selected' : ''}}>AIW</option>
                                         <option value="BRI UNIT" {{ old('level_uker', $branch->level_uker) === 'BRI UNIT' ? 'selected' : ''}}>BRI UNIT</option>
                                         <option value="Campus" {{ old('level_uker', $branch->level_uker) === 'Campus' ? 'selected' : ''}}>Campus</option>
@@ -66,40 +66,38 @@
                                     </select>
                                 </div>
 
-                                <div class="mb-4">
-                                    <label class="block mb-2 text-sm font-bold text-gray-600" for="uker_induk_wilayah_code">
-                                        Kode Kantor Wilayah*
-                                    </label>
-                                    <input value="{{ old('uker_induk_wilayah_code') ?? $branch->uker_induk_wilayah_code }}" name="uker_induk_wilayah_code" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="uker_induk_wilayah_code" type="number" placeholder="">
-                                    <div class="mt-2 text-sm text-gray-500">
-                                    Kode tidak boleh lebih dari 4 digit.
-                                    </div>
-                                </div>
 
                                 <div class="mb-4">
                                     <label class="block mb-2 text-sm font-bold text-gray-600" for="kanwil_name">
                                         Nama Kantor Wilayah*
                                     </label>
-                                    <input value="{{ old('kanwil_name') ?? $branch->kanwil_name }}" name="kanwil_name" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="kanwil_name" type="text" placeholder="">
+                                    <select name="kanwil_name" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="kanwil_name" required>
+                                        <option value="" disabled selected>-- Pilih Kantor Wilayah --</option>
+                                    </select>
                                     <div class="mt-2 text-sm text-gray-500">
-                                        <!-- Nama modul deployment. Contoh: Module 1, Module 2, dsb. -->
+                                        Pilih Level Unit Kerja terlebih dahulu
                                     </div>
                                 </div>
 
-                                
-
+                                <div class="mb-4">
+                                    <label class="block mb-2 text-sm font-bold text-gray-600" for="uker_induk_wilayah_code">
+                                        Kode Kantor Wilayah*
+                                    </label>
+                                    <input value="{{ old('uker_induk_wilayah_code') ?? $branch->uker_induk_wilayah_code }}" name="uker_induk_wilayah_code" class="block w-full px-4 py-3 leading-tight text-gray-500 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none no-focus-border focus:border-gray-500" id="uker_induk_wilayah_code" readonly>
+                                    <div class="mt-2 text-sm text-gray-500">
+                                        <!-- Kode tidak boleh lebih dari 4 digit. -->
+                                    </div>
+                                </div>
                             </div>
 
                             <div>
-                                
-
                                 <div class="mb-4">
                                     <label class="block mb-2 text-sm font-bold text-gray-600" for="uker_induk_kc">
                                         Uker Induk KC*
                                     </label>
                                     <input value="{{ old('uker_induk_kc') ?? $branch->uker_induk_kc }}" name="uker_induk_kc" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="uker_induk_kc" type="number" placeholder="">
                                     <div class="mt-2 text-sm text-gray-500">
-                                    Kode tidak boleh lebih dari 4 digit.
+                                        Kode tidak boleh lebih dari 4 digit.
                                     </div>
                                 </div>
 
@@ -109,10 +107,8 @@
                                     </label>
                                     <!-- <input value="{{ old('level_uker') ?? $branch->level_uker }}" name="level_uker" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="kanwil_name" type="text" placeholder="Nama Kanwil"> -->
                                     <select name="sbo" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="sbo" required>
-                                        <option value="" disabled {{ old('sbo', $branch->sbo) ? '' : 'selected'}}>Select SBO</option>
                                         <option value="SBO" {{ old('sbo', $branch->sbo) === 'SBO' ? 'selected' : ''}}>SBO</option>
                                         <option value="NON SBO" {{ old('sbo', $branch->sbo) === 'NON SBO' ? 'selected' : ''}}>NON SBO</option>
-
                                     </select>
                                 </div>
 
@@ -121,7 +117,7 @@
                                         Status*
                                     </label>
                                     <select name="is_active" id="is_active" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" required>
-                                        <option value="" disabled>Select Status</option>
+                                        <option value="" disabled>-- Select Status --</option>
                                         <option value="1" {{ $branch->is_active == 1 ? 'selected' : '' }}>Active</option>
                                         <option value="0" {{ $branch->is_active == 0 ? 'selected' : '' }}>Non-Active</option>
                                     </select>
@@ -145,4 +141,89 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var branchData = {}; // Object to store branch data based on branch_code
+
+            // Function to populate kanwil_name dropdown
+            function populateKanwilDropdown(level_uker, selectedKanwil) {
+                if (level_uker) {
+                    $.ajax({
+                        url: '/api/usman/get-kanwil-by-uker',
+                        type: 'GET',
+                        data: {
+                            level_uker: level_uker
+                        },
+                        success: function(data) {
+                            $('#kanwil_name').empty();
+                            // $('#kanwil_name').append('<option value="" disabled>Select Kantor Wilayah</option>');
+
+                            if (data.length === 0) {
+                                $('#kanwil_name').append('<option value="" disabled selected>-- Tidak Ada Data --</option>'); // Tambahkan opsi default
+                                $('#kanwil_name').append('<option value="" disabled>-</option>');
+                            } else {
+                                $('#kanwil_name').append('<option value="" disabled selected>-- Pilih Data --</option>'); // Tambahkan opsi default
+                                var kanwilNames = {}; // Object to track added kanwil_names
+                                branchData = {}; // Reset branchData
+                                $.each(data, function(key, value) {
+                                    if (!kanwilNames[value.kanwil_name]) { // If kanwil_name not added yet
+                                        $('#kanwil_name').append('<option value="' + value.kanwil_name + '"' + (value.kanwil_name === selectedKanwil ? ' selected' : '') + '>' + value.kanwil_name + '</option>');
+                                        kanwilNames[value.kanwil_name] = true; // Mark kanwil_name as added
+                                        branchData[value.kanwil_name] = value; // Store branch data by branch_code
+                                    }
+                                });
+                            }
+                            // Set uker_induk_wilayah_code if there's a selected kanwil_name
+                            if ($('#kanwil_name').val()) {
+                                var kanwil_name = $('#kanwil_name').val();
+                                if (kanwil_name && branchData[kanwil_name]) {
+                                    $('#uker_induk_wilayah_code').val(branchData[kanwil_name].uker_induk_wilayah_code);
+                                } else {
+                                    $('#uker_induk_wilayah_code').val('');
+                                }
+                            }
+                        },
+                        error: function() {
+                            $('#kanwil_name').empty();
+                        }
+                    });
+                } else {
+                    $('#kanwil_name').empty();
+                }
+            }
+
+            // On page load, populate kanwil_name based on existing level_uker and kanwil_name
+            var initialLevelUker = '{{ old("level_uker") ?? $branch->level_uker }}';
+            var initialKanwilName = '{{ old("kanwil_name") ?? $branch->kanwil_name }}';
+
+            if (initialLevelUker) {
+                populateKanwilDropdown(initialLevelUker, initialKanwilName);
+            }
+
+            // On level_uker change, update kanwil_name dropdown
+            $('#level_uker').on('change', function() {
+                var level_uker = $(this).val();
+                populateKanwilDropdown(level_uker, null);
+            });
+
+            // On kanwil_name change, update uker_induk_wilayah_code
+            $('#kanwil_name').on('change', function() {
+                var branch_code = $(this).val();
+                if (branch_code && branchData[branch_code]) {
+                    $('#uker_induk_wilayah_code').val(branchData[branch_code].uker_induk_wilayah_code);
+                } else {
+                    $('#uker_induk_wilayah_code').val('');
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .no-focus-border:focus {
+            outline: none;
+            border-color: transparent;
+            box-shadow: none;
+        }
+    </style>
 </x-app-layout>

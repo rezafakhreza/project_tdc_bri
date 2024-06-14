@@ -95,19 +95,26 @@
                         </div>
 
                         <div>
-                            <div class="mb-4">
-                                <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah*</label>
-                                <input type="number" id="uker_induk_wilayah_code" name="uker_induk_wilayah_code" value="{{ old('uker_induk_wilayah_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                <div class="mt-2 text-sm text-gray-500">
-                                    Kode tidak boleh lebih dari 4 digit.
-                                </div>
-                            </div>
 
                             <div class="mb-4">
                                 <label for="kanwil_name" class="block mb-2 text-sm font-bold text-gray-600">Nama Kantor Wilayah*</label>
-                                <input type="text" id="kanwil_name" name="kanwil_name" value="{{ old('kanwil_name') }}" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                <select id="kanwil_name" name="kanwil_name" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
+                                    <option value="" disabled selected>-- Pilih Kantor Wilayah --</option>
+                                </select>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    Pilih Level Unit Kerja terlebih dahulu
+                                </div>
 
                             </div>
+
+                            <div class="mb-4">
+                                <label for="uker_induk_wilayah_code" class="block mb-2 text-sm font-bold text-gray-600">Kode Kantor Wilayah*</label>
+                                <input id="uker_induk_wilayah_code" name="uker_induk_wilayah_code" value="{{ old('uker_induk_wilayah_code') }}" class="block w-full px-4 py-3 leading-tight text-gray-500 bg-gray-200 border border-gray-200 rounded appearance-none no-focus-border" readonly>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    <!-- Kode tidak boleh lebih dari 4 digit. -->
+                                </div>
+                            </div>
+
 
                             <div class="mb-4">
                                 <label for="uker_induk_kc" class="block mb-2 text-sm font-bold text-gray-600">Uker Induk KC*</label>
@@ -121,7 +128,7 @@
                             <div class="mb-4">
                                 <label for="sbo" class="block mb-2 text-sm font-bold text-gray-600">SBO*</label>
                                 <select id="sbo" name="sbo" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
-                                    <option value="" disabled selected>-- Select SBO --</option>
+                                    <option value="" disabled selected>-- Pilih SBO --</option>
                                     <option value="SBO" {{ old('sbo') == 'SBO' ? 'selected' : '' }}>SBO</option>
                                     <option value="NON SBO" {{ old('sbo') == 'NON SBO' ? 'selected' : '' }}>NON SBO</option>
                                 </select>
@@ -141,6 +148,61 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var branchData = {}; // Objek untuk menyimpan data branch berdasarkan branch_code
+
+            $('#level_uker').on('change', function() {
+                var level_uker = $(this).val();
+                if (level_uker) {
+                    $.ajax({
+                        url: '/api/usman/get-kanwil-by-uker',
+                        type: 'GET',
+                        data: {
+                            level_uker: level_uker // Pastikan ini sesuai dengan input parameter di controller
+                        },
+                        success: function(data) {
+                            $('#kanwil_name').empty();
+
+
+                            if (data.length === 0) {
+                                $('#kanwil_name').append('<option value="" disabled selected>-- Tidak Ada Data --</option>'); // Tambahkan opsi default
+                                $('#kanwil_name').append('<option value="" disabled>-</option>');
+                            } else {
+                                $('#kanwil_name').append('<option value="" disabled selected>-- Pilih Data --</option>'); // Tambahkan opsi default
+                                var kanwilNames = {}; // Objek untuk melacak kanwil_name yang sudah ditambahkan
+                                branchData = {}; // Reset branchData
+                                $.each(data, function(key, value) {
+                                    if (!kanwilNames[value.kanwil_name]) { // Jika kanwil_name belum ditambahkan
+                                        $('#kanwil_name').append('<option value="' + value.kanwil_name + '">' + value.kanwil_name + '</option>');
+                                        kanwilNames[value.kanwil_name] = true; // Tandai kanwil_name sebagai sudah ditambahkan
+                                        branchData[value.kanwil_name] = value; // Simpan data branch berdasarkan kanwil_name
+                                    }
+                                });
+                            }
+                        },
+                        error: function() {
+                            $('#kanwil_name').empty();
+                        }
+                    });
+                } else {
+                    $('#kanwil_name').empty();
+                }
+            });
+
+            $('#kanwil_name').on('change', function() {
+                var kanwil_name = $(this).val();
+                if (kanwil_name && branchData[kanwil_name]) {
+                    $('#uker_induk_wilayah_code').val(branchData[kanwil_name].uker_induk_wilayah_code);
+                } else {
+                    $('#uker_induk_wilayah_code').val('');
+                }
+            });
+        });
+    </script>
+
+
 
     <script>
         document.getElementById("uploadForm").addEventListener("submit", function() {
@@ -170,6 +232,14 @@
             100% {
                 transform: rotate(360deg);
             }
+        }
+    </style>
+
+    <style>
+        .no-focus-border:focus {
+            outline: none;
+            border-color: transparent;
+            box-shadow: none;
         }
     </style>
 </x-app-layout>

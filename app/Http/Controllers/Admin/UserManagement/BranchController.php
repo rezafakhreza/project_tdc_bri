@@ -19,7 +19,7 @@ class BranchController extends Controller
     {
         if (request()->ajax()) {
             $query = Branch::query();
-            
+
             return DataTables::of($query)
                 ->addColumn('action', function ($branch) {
                     return '
@@ -73,7 +73,6 @@ class BranchController extends Controller
                 if ($request->has('overwrite') && $request->overwrite == 'true') {
                     // Jika konfirmasi dilakukan, hapus file lama
                     unlink(public_path('/DataImport/' . $namaFile));
-
                 } else {
                     // Jika tidak ingin menimpa, kembalikan dengan pesan error
                     return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
@@ -87,17 +86,16 @@ class BranchController extends Controller
             Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
             return redirect()->route('admin.user-management.branch.index')
                 ->with('success', 'Branch imported successfully');
-
-
         } elseif ($request->input_method == 'manual') {
             $request->validate([
                 'branch_code' => 'required|max:4',
-                'branch_name' => 'required|max:200',
+                'branch_name' => 'required|string|max:255',
                 'level_uker' => 'required|in:AIW,BRI UNIT,Campus,Kanpus,KC,KCP,KK,Regional Office',
                 'uker_induk_wilayah_code' => 'required|max:4',
-                'kanwil_name' => 'required|max:200',
+                'kanwil_name' => 'required|string|max:255',
                 'uker_induk_kc' => 'required|max:4',
-                'sbo' => 'required|in:SBO,NON SBO',
+                'sbo' => 'required|string|in:SBO,NON SBO',
+                'is_active' => 'required|boolean',
             ]);
 
             $branch_code = str_pad($request['branch_code'], 4, '0', STR_PAD_LEFT);
@@ -117,10 +115,6 @@ class BranchController extends Controller
 
             if (Branch::where('branch_code', $branch_code)->first()) {
                 return redirect()->back()->withInput()->with('error', 'Kode Uker ' . $branch_code . ' already exists.');
-            }
-
-            if (Branch::where('uker_induk_wilayah_code', $uker_induk_wilayah_code)->first()) {
-                return redirect()->back()->withInput()->with('error', 'Kode Uker Induk Wilayah ' . $uker_induk_wilayah_code . ' already exists.');
             }
 
             if (Branch::where('uker_induk_kc', $uker_induk_kc)->first()) {
@@ -166,6 +160,7 @@ class BranchController extends Controller
         $request->validate([
             'branch_name' => 'required|string|max:255',
             'level_uker' => 'required|string|max:255',
+            'uker_induk_wilayah_code' => 'required|max:4',
             'kanwil_name' => 'required|string|max:255',
             'sbo' => 'required|string|max:255',
             'is_active' => 'required|boolean',
@@ -173,6 +168,7 @@ class BranchController extends Controller
 
         // Temukan cabang berdasarkan ID
         $branch = Branch::findOrFail($id);
+        $uker_induk_kc = str_pad($request['uker_induk_kc'], 4, '0', STR_PAD_LEFT);
 
         // Periksa apakah nama cabang sudah ada
         if ($branch->branch_code != $request->branch_name) {
@@ -180,20 +176,14 @@ class BranchController extends Controller
                 return redirect()->back()->with('error', 'Branch name already exists.');
             }
         }
-
-        // Periksa apakah nama kanwil sudah ada
-        if ($branch->uker_induk_wilayah_code != $request->level_uker) {
-            if (Branch::where('branch_code', $request->level_uker)->exists()) {
-                return redirect()->back()->with('error', 'Level Uker name already exists.');
-            }
-        }
-
         // Update data cabang
         $branch->update([
-            'branch_name' => $request->branch_name,
-            'level_uker' => $request->level_uker,
-            'kanwil_name' => $request->kanwil_name,
-            'sbo' => $request->sbo,
+            'branch_name' => $request->input('branch_name'),
+            'level_uker' => $request->input('level_uker'),
+            'uker_induk_wilayah_code' => $request->input('uker_induk_wilayah_code'),
+            'kanwil_name' => $request->input('kanwil_name'),
+            'uker_induk_kc' => $uker_induk_kc,
+            'sbo' => $request->input('sbo'),
             'is_active' => $request->boolean('is_active'),
         ]);
 
@@ -217,5 +207,21 @@ class BranchController extends Controller
 
         return redirect()->route('admin.user-management.branch.index')
             ->with('success', 'Branch deleted successfully');
+    }
+
+    public function getKanwilByUker(Request $request)
+    {
+        $level_uker = $request->input('level_uker');
+        $currentProcessId = $request->input('currentProcessId');
+
+        $branch = Branch::where(function ($query) use ($level_uker, $currentProcessId) {
+            $query->where('level_uker', $level_uker);
+            if ($currentProcessId) {
+                $query->orWhere('branch_code', $currentProcessId);
+            }
+        })
+            ->get();
+
+        return response()->json($branch);
     }
 }
