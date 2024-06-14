@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/modules/{module_id}/server-types/{selectedServerTypeId?}', [DeploymentController::class, 'getServerTypesByModule']);
 Route::get('/deployments/events', [FrontDeploymentController::class, 'getEvents']);
 Route::get('/deployments/chart-data', [FrontDeploymentController::class, 'getChartData']);
+Route::get('/deployments/chart-data-server', [FrontDeploymentController::class, 'getChartDataServer']);
 
 // background jobs monitoring
 Route::get('/bjm/get-processes-by-type', [BackgroundJobController::class, 'getProcessesByType']);

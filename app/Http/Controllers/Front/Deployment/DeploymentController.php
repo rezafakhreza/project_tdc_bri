@@ -8,6 +8,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 use App\Models\Deployment\Deployment;
 use App\Models\Deployment\DeploymentModule;
+use App\Models\Deployment\DeploymentServerType;
+use Illuminate\Support\Facades\Log;
 
 class DeploymentController extends Controller
 {
@@ -24,7 +26,8 @@ class DeploymentController extends Controller
 
     public function chartServerType()
     {
-        return view('front.deployment.deployments-chart-server-type');
+        $serverTypes = DeploymentServerType::all();
+        return view('front.deployment.deployments-chart-server-type', compact('serverTypes'));
     }
 
     /**
@@ -79,6 +82,28 @@ class DeploymentController extends Controller
         ->get();
 
         return response()->json($data);
+    }
+    public function getChartDataServer(Request $request)
+    {
+        
+        $server_type_id = $request->input('server_type_id');
+        $year = $request->input('year', date('Y'));
+
+        $data = DB::table('deployments')
+        ->select(DB::raw('MONTH(deployments.deploy_date) as month'), 'deployment_server_types.name as server_type', 'deployment_modules.name as module', DB::raw('COUNT(*) as count'))
+        ->join('deployment_has_module', 'deployment_has_module.deployment_id', '=', 'deployments.id')
+        ->join('deployment_has_server_type', 'deployment_has_server_type.deployment_id', '=', 'deployments.id')
+        ->join('deployment_server_types', 'deployment_has_server_type.server_type_id', '=', 'deployment_server_types.id')
+        ->join('deployment_modules', 'deployment_has_module.module_id', '=', 'deployment_modules.id')
+        ->where('deployment_server_types.id', $server_type_id)
+        ->whereYear('deployments.deploy_date', $year)
+        ->groupBy(DB::raw('MONTH(deployments.deploy_date)'), 'deployment_modules.name', 'deployment_server_types.name')
+        ->get();
+
+        Log::info($data);
+
+        return response()->json($data);
+
     }
 }
         
