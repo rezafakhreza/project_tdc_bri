@@ -25,16 +25,10 @@
                         Brisol
                     </a>
 
-                    <a href="{{ route('admin.brisol.foundation-fam.index') }}"
+                    <a href="{{ route('admin.brisol.foundation.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Foundation FAM
-                    </a>
-
-                    <a href="{{ route('admin.brisol.foundation-iem.index') }}"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Foundation IEM
-                    </a>
-                    
+                        Foundation
+                    </a>                    
                 </div>
             </div>
         </div>

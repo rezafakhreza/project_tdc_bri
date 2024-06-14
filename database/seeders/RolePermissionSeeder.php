@@ -29,8 +29,7 @@ class RolePermissionSeeder extends Seeder
             'view branch user management', 'manage branch user management', 
             'view incidents brisol', 'manage incidents brisol',
             'view monthly target brisol', 'manage monthly target brisol',
-            'view foundation fam brisol', 'manage foundation fam brisol',
-            'view foundation iem brisol', 'manage foundation iem brisol',
+            'view foundation brisol', 'manage foundation brisol',
             'view users', 'manage users', 
         ];
 
@@ -68,12 +67,12 @@ class RolePermissionSeeder extends Seeder
         $userUserManagementRole = Role::create(['name' => 'User Usman']);
         $userUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'view monthly target user management', 'view branch user management']);
 
-        // Admin Brisol - can manage incidents, manage monthly target, manage foundation fam, manage foundation iem
+        // Admin Brisol - can manage incidents, manage monthly target, manage foundation
         $adminBrisolRole = Role::create(['name' => 'Admin Brisol']);
-        $adminBrisolRole->givePermissionTo(['manage incidents brisol', 'view incidents brisol', 'manage monthly target brisol', 'view monthly target brisol', 'view foundation fam brisol', 'manage foundation fam brisol', 'view foundation iem brisol', 'manage foundation iem brisol']);
+        $adminBrisolRole->givePermissionTo(['manage incidents brisol', 'view incidents brisol', 'manage monthly target brisol', 'view monthly target brisol', 'view foundation brisol', 'manage foundation brisol']);
 
-        // User Brisol - can manage incidents and view monthly target, view foundation fam, view foundation iem
+        // User Brisol - can manage incidents and view monthly target, view foundation
         $userBrisolRole = Role::create(['name' => 'User Brisol']);
-        $userBrisolRole->givePermissionTo(['manage incidents brisol', 'view incidents brisol', 'view monthly target brisol', 'view foundation fam brisol', 'view foundation iem brisol']);
+        $userBrisolRole->givePermissionTo(['manage incidents brisol', 'view incidents brisol', 'view monthly target brisol', 'view foundation brisol']);
     }
 }

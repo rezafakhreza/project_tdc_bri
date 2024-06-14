@@ -11,8 +11,7 @@ use App\Http\Controllers\Admin\BackgroundJobsMonitoring\ProcessController;
 use App\Http\Controllers\Admin\BackgroundJobsMonitoring\BackgroundJobController;
 use App\Http\Controllers\Admin\Brisol\IncidentsController as BrisolIncidentsController;
 use App\Http\Controllers\Admin\Brisol\MonthlyTargetController as BrisolMonthlyTargetController;
-use App\Http\Controllers\Admin\Brisol\FoundationFAMController;
-use App\Http\Controllers\Admin\Brisol\FoundationIEMController;
+use App\Http\Controllers\Admin\Brisol\FoundationController;
 use App\Http\Controllers\Admin\UserManagement\IncidentsController as UsmanIncidentsController;
 use App\Http\Controllers\Admin\UserManagement\MonthlyTargetController as UsmanMonthlyTargetController;
 use App\Http\Controllers\Admin\UserManagement\BranchController as UsmanBranchController;
@@ -94,13 +93,11 @@ Route::middleware([
         Route::prefix('brisol')->name('brisol.')->group(function () {
             Route::resource('incidents', BrisolIncidentsController::class)->middleware('permission:manage incidents brisol');
             Route::resource('monthly-target', BrisolMonthlyTargetController::class)->middleware('permission:manage monthly target brisol');
-            Route::resource('foundation-fam', FoundationFAMController::class)->middleware('permission:manage foundation fam brisol');
-            Route::resource('foundation-iem', FoundationIEMController::class)->middleware('permission:manage foundation iem brisol');
+            Route::resource('foundation', FoundationController::class)->middleware('permission:manage foundation brisol');
 
-            // only view incidents brisol and monthly target brisol
+            // only view incidents brisol, monthly target brisol, foundation brisol
             Route::get('/monthly-target', [BrisolMonthlyTargetController::class, 'index'])->name('monthly-target.index')->middleware('permission:view monthly target brisol');
-            Route::get('/foundation-fam', [FoundationFAMController::class, 'index'])->name('foundation-fam.index')->middleware('permission:view foundation fam brisol');
-            Route::get('/foundation-iem', [FoundationIEMController::class, 'index'])->name('foundation-iem.index')->middleware('permission:view foundation iem brisol');
+            Route::get('/foundation', [FoundationController::class, 'index'])->name('foundation.index')->middleware('permission:view foundation brisol');
             
         });
 
