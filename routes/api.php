@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BackgroundJobsMonitoring\BackgroundJobController;
 use App\Http\Controllers\Admin\Deployment\DeploymentController;
+use App\Http\Controllers\Admin\UserManagement\BranchController;
 use App\Http\Controllers\Front\Deployment\DeploymentController as FrontDeploymentController;
 use App\Http\Controllers\Front\BackgroundJobsMonitoring\BackgroundJobController as FrontBackgroundJobController;
 use App\Http\Controllers\Front\UserManagement\UserManagementController as FrontUserManagementController;
@@ -39,6 +40,7 @@ Route::get('/usman/get-request-by-type-chart', [FrontUserManagementController::c
 Route::get('/usman/get-sla-category-chart', [FrontUserManagementController::class, 'getSLADataForYear']);
 Route::get('/usman/get-top-kanwil-request-chart', [FrontUserManagementController::class, 'getTopKanwilRequests']);
 Route::get('/usman/get-monthly-target-actual', [FrontUserManagementController::class, 'getMonthlyDataTargetActual']);
+Route::get('/usman/get-kanwil-by-uker', [BranchController::class, 'getKanwilByUker']);
 
 // brisol
 Route::get('/brisol/get-service-ci-chart', [FrontBrisolController::class, 'getServiceCIChart']);
