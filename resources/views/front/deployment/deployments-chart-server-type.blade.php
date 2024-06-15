@@ -8,9 +8,9 @@
     <div class="p-8 mx-auto my-8 bg-white shadow-lg max-w-7xl">
         <div class="flex justify-between p-2 mb-4 text-white rounded calendar-filter">
             <div>
-                <select id="moduleSelect" class="p-2 mx-2 border rounded w-28 bg-darker-blue">
-                    @foreach ($serverTypes as $server)
-                        <option value="{{ $server->id }}">{{ $server->name }}</option>
+                <select id="serverTypeSelect" class="p-2 mx-2 border rounded w-28 bg-darker-blue">
+                    @foreach ($serverTypes as $serverType)
+                        <option value="{{ $serverType->id }}">{{ $serverType->name }}</option>
                     @endforeach
                 </select>
 
@@ -36,10 +36,10 @@
                 </button>
                 <div
                     class="absolute right-0 z-10 hidden w-48 py-2 mt-2 bg-white border border-gray-300 rounded shadow dropdown-menu">
-                    <a href="{{ route('deployments.index') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chart
-                        Module</a>
                     <a href="{{ route('deployments.calendar') }}"
                         class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Calendar</a>
+                    <a href="{{ route('deployments.index') }}"
+                        class="block px-4 py-2 text-gray-800 hover:bg-gray-200">Chart Module</a>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
         }
 
         function fetchData() {
-            var selectedServer = document.getElementById('serverSelect').value;
+            var selectedServer = document.getElementById('serverTypeSelect').value;
             var selectedYear = document.getElementById('yearSelect').value;
             fetch(`/api/deployments/chart-data-server?server_type_id=${selectedServer}&year=${selectedYear}`)
                 .then(response => response.json())
@@ -162,9 +162,9 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             fetchData();
-            var serverSelect = document.getElementById('serverSelect');
+            var serverTypeSelect = document.getElementById('serverTypeSelect');
             var yearSelect = document.getElementById('yearSelect');
-            serverSelect.addEventListener('change', fetchData);
+            serverTypeSelect.addEventListener('change', fetchData);
             yearSelect.addEventListener('change', fetchData);
         });
     </script>

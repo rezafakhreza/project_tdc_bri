@@ -100,8 +100,6 @@ class DeploymentController extends Controller
         ->groupBy(DB::raw('MONTH(deployments.deploy_date)'), 'deployment_modules.name', 'deployment_server_types.name')
         ->get();
 
-        Log::info($data);
-
         return response()->json($data);
 
     }
