@@ -35,6 +35,18 @@
 
                         <div class="grid grid-cols-2 gap-16">
                             <div>
+
+                                <div class="mb-4">
+                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="buss_service">
+                                        Business Service*
+                                    </label>
+                                    <select name="buss_service" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="buss_service" required>
+                                        <option value="" disabled {{ old('buss_service', $foundation->buss_service) ? '' : 'selected'}}>Business Service</option>
+                                        <option value="BRIFirst - FAM" {{ old('buss_service', $foundation->buss_service) === 'BRIFirst - FAM' ? 'selected' : ''}}>BRIFirst - FAM</option>
+                                        <option value="BRIFirst - IEM" {{ old('buss_service', $foundation->buss_service) === 'BRIFirst - IEM' ? 'selected' : ''}}>BRIFirst - IEM</option>
+                                    </select>
+                                </div>
+
                                 <div class="mb-4">
                                     <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="level_uker">
                                         Product Categorization Tier 1*

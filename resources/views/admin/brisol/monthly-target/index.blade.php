@@ -22,7 +22,7 @@
                     
                     <a href="{{ route('admin.brisol.incidents.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Brisol
+                        BRISolution
                     </a>
 
                     <a href="{{ route('admin.brisol.foundation.index') }}"

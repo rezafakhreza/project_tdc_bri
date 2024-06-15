@@ -71,14 +71,11 @@ class IncidentsController extends Controller
             return redirect()->route('admin.brisol.incidents.index')->with('success', 'Incidents imported successfully');
 
         } catch (QueryException $e) {
-            // Tangani kesalahan query database
-            $errorInfo = $e->errorInfo; // Ambil informasi kesalahan dari QueryException
-            // Ambil pesan kesalahan dari errorInfo
-            $errorMessage = isset($errorInfo[2]) ? $errorInfo[2] : 'Unknown database error';
-            // Decode HTML entities to convert &#039; to '
-            $errorMessage = html_entity_decode($errorMessage);
-            // Kembalikan dengan pesan kesalahan yang sudah di-decode
-            return redirect()->back()->withErrors(['Database error' => $errorMessage]);
+            // Jika terjadi kesalahan, kembalikan dengan pesan error
+            if (file_exists($filePath)) {
+                unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
+            }
+            return redirect()->back()->with('error', 'Database error'. $e->getMessage());
 
         } catch (\Exception $e) {
             // Tangani kesalahan umum

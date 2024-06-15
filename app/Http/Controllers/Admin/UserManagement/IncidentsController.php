@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Database\QueryException;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
 
 class IncidentsController extends Controller
 {
@@ -68,14 +67,15 @@ class IncidentsController extends Controller
 
         $file = $request->file('file');
         $namaFile = $file->getClientOriginalName();
+        $filePath = public_path('/DataImport/' . $namaFile);
 
         try {
             // Memeriksa apakah file dengan nama yang sama sudah ada
-            if (file_exists(public_path('/DataImport/' . $namaFile))) {
+            if (file_exists($filePath)) {
                 // Menampilkan pesan konfirmasi untuk menimpa file (ini masih gangaruh)
                 if ($request->has('overwrite') && $request->overwrite == 'true') {
                     // Jika konfirmasi dilakukan, hapus file lama
-                    unlink(public_path('/DataImport/' . $namaFile));
+                    unlink($filePath);
                     // Hapus semua insiden
                     Incident::truncate();
                 } else {
@@ -83,18 +83,15 @@ class IncidentsController extends Controller
                     return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
                 }
             }
-
             // Pindahkan file baru ke direktori tujuan
             $file->move('DataImport', $namaFile);
-
-
             $branchCount = DB::table('usman_branch')->count(); // Menghitung jumlah data branch
 
             // Mengecek apakah ada data branch
             if ($branchCount > 0) {
                 // Mengecek apakah semua kode UKER yang ada di file ada di database
                 // Membaca file Excel
-                $spreadsheet = IOFactory::load(public_path('/DataImport/' . $namaFile));
+                $spreadsheet = IOFactory::load($filePath);
                 $worksheet = $spreadsheet->getActiveSheet();
 
                 // Mengambil jumlah baris yang terisi dalam kolom 'G'
@@ -125,7 +122,7 @@ class IncidentsController extends Controller
                 }
 
                 if (!empty($missingBranchCodes)) {
-                    unlink(public_path('/DataImport/' . $namaFile));
+                    unlink($filePath);
                     $errorMessage = 'Kode UKER berikut tidak tersedia dalam data Branch: ' . implode(', ', $missingBranchCodes);
                     return redirect()->back()->withErrors(['file' => $errorMessage]);
                 }
@@ -135,7 +132,7 @@ class IncidentsController extends Controller
             }
 
             // Import data dari file baru
-            Excel::import(new IncidentsImport, public_path('/DataImport/' . $namaFile));
+            Excel::import(new IncidentsImport, $filePath);
             return redirect()->route('admin.user-management.incidents.index')
                 ->with('success', 'Incidents imported successfully');
 
@@ -146,12 +143,19 @@ class IncidentsController extends Controller
             $errorMessage = isset($errorInfo[2]) ? $errorInfo[2] : 'Unknown database error';
             // Decode HTML entities to convert &#039; to '
             $errorMessage = html_entity_decode($errorMessage);
+
+            if (file_exists($filePath)) {
+                unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
+            }
             // Kembalikan dengan pesan kesalahan yang sudah di-decode
             return redirect()->back()->withErrors(['Database error' => $errorMessage]);
 
         } catch (\Exception $e) {
             // Tangani kesalahan umum
-            return redirect()->back()->with('error', 'There was an error processing the file: ' . $e->getMessage());
+            if (file_exists($filePath)) {
+                unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
+            }
+            return redirect()->back()->with('error', 'The data does not match to the template: ' . $e->getMessage());
         }
     }
 

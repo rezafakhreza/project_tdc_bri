@@ -17,7 +17,7 @@
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
 
                     <a href="{{ route('admin.brisol.incidents.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                        Brisol
+                        BRISolution
                     </a>
 
                     <a href="{{ route('admin.brisol.monthly-target.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">

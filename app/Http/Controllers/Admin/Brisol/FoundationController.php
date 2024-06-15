@@ -80,7 +80,7 @@ class FoundationController extends Controller
                     $file->move('DataImport', $namaFile);
                 
                 // Import data dari file baru
-                Excel::import(new FoundationImport, public_path('/DataImport/' . $namaFile));
+                Excel::import(new FoundationImport, $filePath);
                 return redirect()->route('admin.brisol.foundation.index')
                     ->with('success', 'Foundation imported successfully');
     
@@ -93,7 +93,6 @@ class FoundationController extends Controller
     
                 } catch (\Exception $e) {
                     // Tangani kesalahan umum
-                    // Jika terjadi kesalahan, kembalikan dengan pesan error
                     if (file_exists($filePath)) {
                         unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
                     }

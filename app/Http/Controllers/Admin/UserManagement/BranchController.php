@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\UserManagement\Branch;
 use Yajra\DataTables\Facades\DataTables;
 use App\Imports\UserManagement\BranchImport;
-use App\Models\UserManagement\Incident;
+use Illuminate\Database\QueryException;
 
 class BranchController extends Controller
 {
@@ -55,7 +55,6 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-
         if ($request->input_method == 'excel') {
             $request->validate([
                 'file' => 'required|mimes:xlsx,xls,csv',
@@ -66,26 +65,44 @@ class BranchController extends Controller
 
             $file = $request->file('file');
             $namaFile = $file->getClientOriginalName();
+            $filePath = public_path('/DataImport/' . $namaFile);
 
-            // Memeriksa apakah file dengan nama yang sama sudah ada
-            if (file_exists(public_path('/DataImport/' . $namaFile))) {
-                // Menampilkan pesan konfirmasi untuk menimpa file
-                if ($request->has('overwrite') && $request->overwrite == 'true') {
-                    // Jika konfirmasi dilakukan, hapus file lama
-                    unlink(public_path('/DataImport/' . $namaFile));
-                } else {
-                    // Jika tidak ingin menimpa, kembalikan dengan pesan error
-                    return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+            try {
+                // Memeriksa apakah file dengan nama yang sama sudah ada
+                if (file_exists($filePath)) {
+                    // Menampilkan pesan konfirmasi untuk menimpa file
+                    if ($request->has('overwrite') && $request->overwrite == 'true') {
+                        // Jika konfirmasi dilakukan, hapus file lama
+                        unlink(public_path('/DataImport/' . $namaFile));
+                    } else {
+                        // Jika tidak ingin menimpa, kembalikan dengan pesan error
+                        return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
+                    }
                 }
+
+                // Pindahkan file baru ke direktori tujuan
+                $file->move('DataImport', $namaFile);
+
+                // Import data dari file baru
+                Excel::import(new BranchImport, $filePath);
+                return redirect()->route('admin.user-management.branch.index')
+                    ->with('success', 'Branch imported successfully');
+
+            } catch (QueryException $e) {
+                // Jika terjadi kesalahan, kembalikan dengan pesan error
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
+                }
+                return redirect()->back()->with('error', 'Database error' . $e->getMessage());
+                
+            } catch (\Exception $e) {
+                // Tangani kesalahan umum
+                if (file_exists($filePath)) {
+                    unlink($filePath); // Hapus file jika sudah dipindahkan ke direktori tujuan
+                }
+                return redirect()->back()->with('error', 'The data does not match to the template: ' . $e->getMessage());
             }
 
-            // Pindahkan file baru ke direktori tujuan
-            $file->move('DataImport', $namaFile);
-
-            // Import data dari file baru
-            Excel::import(new BranchImport, public_path('/DataImport/' . $namaFile));
-            return redirect()->route('admin.user-management.branch.index')
-                ->with('success', 'Branch imported successfully');
         } elseif ($request->input_method == 'manual') {
             $request->validate([
                 'branch_code' => 'required|max:4',

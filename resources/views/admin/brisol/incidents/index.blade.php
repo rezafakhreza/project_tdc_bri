@@ -7,7 +7,7 @@
                     class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400"
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                     {{-- show menu apa sekarang --}}
-                    Brisol
+                    BRISolution
                     <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd"
