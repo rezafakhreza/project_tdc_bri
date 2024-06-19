@@ -3,31 +3,23 @@
     <x-slot name="header">
         <div x-data="{ open: false }" class="relative inline-block text-left font-poppins">
             <div>
-                <button @click="open = !open" type="button"
-                    class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400"
-                    id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <button @click="open = !open" type="button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white rounded-md bg-darker-blue focus:outline-none focus:ring focus:ring-slate-400" id="menu-button" aria-expanded="true" aria-haspopup="true">
                     {{-- show menu apa sekarang --}}
                     BRISolution
-                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                            d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
+                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.293 9.293a1 1 0 011.414 0L10 12.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                 </button>
             </div>
 
-            <div x-show="open" @click.away="open = false"
-                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+            <div x-show="open" @click.away="open = false" class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
 
-                    <a href="{{ route('admin.brisol.foundation.index') }}"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="{{ route('admin.brisol.foundation.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Foundation
                     </a>
 
-                    <a href="{{ route('admin.brisol.monthly-target.index') }}"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                    <a href="{{ route('admin.brisol.monthly-target.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Monthly Target
                     </a>
 
@@ -45,15 +37,14 @@
                     stateSave: true,
                     scrollX: true,
                     ajax: {
-                        url: '{{ route('admin.brisol.incidents.index') }}',
+                        url: '{{ route('admin.brisol.incidents.index')}}',
                         type: 'GET',
                     },
                     language: {
                         url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                     },
 
-                    columns: [
-                        {
+                    columns: [{
                             data: 'inc_id',
                             name: 'inc_id',
                         },
@@ -117,20 +108,30 @@
                             data: 'resolved_date',
                             name: 'resolved_date',
                         },
+                        {
+                            data: 'branch_id',
+                            name: 'branch_id',
+                        },
+                        {
+                            data: 'branch.kanwil_name',
+                            name: 'branch.kanwil_name',
+                            render: function(data, type, row) {
+                                return data ? data : null;
+                            }
+                        },
                     ],
 
                     // Column definitions for handling the rendering of certain columns
                     columnDefs: [{
-                            targets: [4], // index for Detailed Description
-                            render: function(data, type, row) {
-                                if (type === 'display') {
-                                    return `<div class="cursor-pointer modal-trigger" data-content="${data}">${data.length > 30 ? data.substr(0, 30) + '...' : data}</div>`;
-                                } else {
-                                    return data;
-                                }
+                        targets: [4], // index for Detailed Description
+                        render: function(data, type, row) {
+                            if (type === 'display') {
+                                return `<div class="cursor-pointer modal-trigger" data-content="${data}">${data.length > 30 ? data.substr(0, 30) + '...' : data}</div>`;
+                            } else {
+                                return data;
                             }
-                        },
-                    ]
+                        }
+                    }, ]
 
                 });
 
@@ -155,13 +156,12 @@
             });
 
             function downloadTemplate() {
-                var templateUrl = '{{ asset('TemplateExcel/Template_Brisol.xlsx ') }}';
+                var templateUrl = '{{ asset('TemplateExcel/Template_Brisol.xlsx') }}';
                 var link = document.createElement('a');
                 link.href = templateUrl;
                 link.download = 'Template_Brisol.xlsx';
                 link.click();
             }
-
         </script>
     </x-slot>
 
@@ -170,27 +170,21 @@
             <div class="overflow-hidden shadow sm:rounded-md">
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <div class="flex justify-between mb-10">
-                        
+
                         <div class="dataTables_filter">
                             <!-- Filter search akan muncul di sini -->
                         </div>
-                        
+
                         <div class="button-container flex gap-4">
 
-                            <button onclick="downloadTemplate()"
-                                class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue"
-                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <button onclick="downloadTemplate()" class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 Download Template
                             </button>
 
-                            <a href="{{ route('admin.brisol.incidents.create') }}"
-                                class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
-                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <a href="{{ route('admin.brisol.incidents.create') }}" class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 + Import Data
                             </a>
-                            <a href="{{ route('brisol.service-ci') }}" target="_blank"
-                                class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue"
-                                style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
+                            <a href="{{ route('brisol.service-ci') }}" target="_blank" class="pressed-button px-4 py-2 font-bold text-dark-blue rounded-lg shadow-lg font-poppins bg-white  focus:border-blue-900 focus:shadow-outline-blue" style="outline: 2px solid rgb(34, 31, 96); color: #1f1248;">
                                 View Chart
                             </a>
                         </div>
@@ -199,8 +193,7 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th style="max-width: 1%"
-                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">INC
+                                    <th style="max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">INC
                                         ID</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Reported Date</th>
@@ -230,9 +223,12 @@
                                         Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         SLM Status</th>
-                                    <th style="max-width: 1%"
-                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                    <th style="max-width: 1%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Last Resolved Date</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Branch Code</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Kantor Wilayah</th>
                                 </tr>
                             </thead>
 
@@ -241,12 +237,10 @@
 
                     <div class="flex items-center space-x-4" style="margin-top: 0.9cm">
 
-                        <form action="{{ route('admin.brisol.incidents.destroyAll') }}" method="POST"
-                            id="deleteAllForm">
+                        <form action="{{ route('admin.brisol.incidents.destroyAll') }}" method="POST" id="deleteAllForm">
                             @csrf
                             @method('DELETE')
-                            <button type="button"
-                                class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
+                            <button type="button" class="px-4 py-2 font-bold text-white rounded-lg shadow-lg font-poppins bg-red-600 focus:border-blue-900 focus:shadow-outline-blue btn-delete-all">
                                 Hapus Semua Data
                             </button>
                         </form>
@@ -278,14 +272,12 @@
             </div>
         </div>
         <!-- Modal Structure -->
-        <div id="modal"
-            class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-600 bg-opacity-50">
+        <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-gray-600 bg-opacity-50">
             <div class="w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
                 <div id="modal-content" class="text-sm overflow-y-auto max-h-[60vh]">
                     <!-- Dynamic content goes here -->
                 </div>
-                <button id="modal-close"
-                    class="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                <button id="modal-close" class="px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
                     Close
                 </button>
             </div>

@@ -4,6 +4,7 @@ namespace App\Models\UserManagement;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Brisol\IncidentBrisol;
 
 class Branch extends Model
 {
@@ -27,5 +28,10 @@ class Branch extends Model
     public function usman()
     {
         return $this->hasMany(Incident::class, 'branch_code');
+    }
+
+    public function brisol()
+    {
+        return $this->hasMany(IncidentBrisol::class, 'branch_id');
     }
 }

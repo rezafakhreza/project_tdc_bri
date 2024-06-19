@@ -2,11 +2,13 @@
 
 namespace App\Imports\Brisol;
 
-use App\Models\Brisol\Incident;
+use App\Models\Brisol\IncidentBrisol;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\Importable;
+use App\Models\UserManagement\Branch;
+use Illuminate\Support\Facades\Log;
 
 class IncidentsImport implements ToCollection, WithHeadingRow
 {
@@ -18,7 +20,7 @@ class IncidentsImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) {
             $rowArray = $row->toArray();
 
-            $incident = Incident::where('inc_id', $rowArray['incident_number'])->first();
+            $incident = IncidentBrisol::where('inc_id', $rowArray['incident_number'])->first();
 
             if ($incident) {
                 $updatedFields = $this->checkForUpdates($incident, $rowArray);
@@ -26,13 +28,17 @@ class IncidentsImport implements ToCollection, WithHeadingRow
                     $incident->update($updatedFields);
                 }
             } else {
-                Incident::create($this->modelArray($rowArray));
+                IncidentBrisol::create($this->modelArray($rowArray));
             }
         }
     }
 
     private function modelArray(array $row)
     {
+
+        $branchCode = $this->extractBranchCode($row['detailed_decription']);
+        $branchId = $this->getBranchIdByCode($branchCode);
+
         return [
             'inc_id' => $row['incident_number'],
             'reported_date' => $this->convertExcelDate($row['reported_date']),
@@ -61,10 +67,11 @@ class IncidentsImport implements ToCollection, WithHeadingRow
             'status' => $row['status'],
             'slm_status' => $row['slm_status'],
             'resolved_date' => $this->convertExcelDate($row['last_resolved_date']),
+            'branch_id' => $branchId
         ];
     }
 
-    private function checkForUpdates(Incident $incident, array $row)
+    private function checkForUpdates(IncidentBrisol $incident, array $row)
     {
         $attributes = $this->modelArray($row);
         $changes = [];
@@ -88,6 +95,22 @@ class IncidentsImport implements ToCollection, WithHeadingRow
         return null;
     }
 
+    private function extractBranchCode($detailedDescription)
+    {
+        // Ekstrak kode cabang dari detailed_description
+        if (preg_match('/Code Branch:\s*(\d{4})/', $detailedDescription, $matches)) {
+            return $matches[1];
+        }
+        return null;
+    }
+
+    private function getBranchIdByCode($branchCode)
+    {
+        // Dapatkan branch_id berdasarkan kode cabang
+        $branch = Branch::where('branch_code', $branchCode)->first();
+        return $branch ? $branch->branch_code : null;
+    }
+
     /**
      * @return int
      */
@@ -97,4 +120,3 @@ class IncidentsImport implements ToCollection, WithHeadingRow
     //     return 4;
     // }
 }
-

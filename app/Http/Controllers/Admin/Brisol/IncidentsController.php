@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Brisol;
 
 use Illuminate\Http\Request;
-use App\Models\Brisol\Incident;
+use App\Models\Brisol\IncidentBrisol;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\Brisol\IncidentsImport;
@@ -19,9 +19,17 @@ class IncidentsController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = Incident::all();
+            $query = IncidentBrisol::with(['branch']);
 
             return DataTables::of($query)
+                ->addColumn('branch_code', function ($incident){
+                    return $incident->branch ? $incident->branch->branch_code : 'N/A';
+                })
+
+                ->addColumn('branch_code', function ($incident){
+                    return $incident->branch ? $incident->branch->kanwil_name : 'N/A';
+                })
+                
                 ->make();
         }
         return view('admin.brisol.incidents.index');
@@ -59,7 +67,7 @@ class IncidentsController extends Controller
                     // Jika konfirmasi dilakukan, hapus file lama
                     unlink($filePath);
                     // Hapus semua insiden
-                    Incident::truncate();
+                    IncidentBrisol::truncate();
                 } else {
                     // Jika tidak ingin menimpa, kembalikan dengan pesan error
                     return redirect()->back()->withErrors(['file' => 'File with the same name already exists.']);
@@ -117,7 +125,7 @@ class IncidentsController extends Controller
     public function destroy(string $id)
     {
         // Temukan semua data incident
-        $incidents = Incident::all();
+        $incidents = IncidentBrisol::all();
 
         // Periksa apakah ada data incident yang ditemukan
         if ($incidents->isEmpty()) {
@@ -134,7 +142,7 @@ class IncidentsController extends Controller
         }
 
         // Hapus semua data incident dari database
-        Incident::truncate();
+        IncidentBrisol::truncate();
 
         // Redirect dengan pesan sukses
         return redirect()->route('admin.brisol.incidents.index')

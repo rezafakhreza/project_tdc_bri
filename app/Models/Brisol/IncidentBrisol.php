@@ -4,8 +4,9 @@ namespace App\Models\Brisol;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\UserManagement\Branch;
 
-class Incident extends Model
+class IncidentBrisol extends Model
 {
     use HasFactory;
 
@@ -42,5 +43,10 @@ class Incident extends Model
         'status',
         'slm_status',
         'resolved_date',
+        'branch_id'
     ];
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
 }

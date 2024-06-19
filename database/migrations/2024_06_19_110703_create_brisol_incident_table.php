@@ -39,6 +39,8 @@ return new class extends Migration
             $table->string('status');
             $table->string('slm_status');
             $table->date('resolved_date')->nullable();
+            $table->string('branch_id')->nullable();
+            $table->foreign('branch_id')->references('branch_code')->on('usman_branch');
             $table->timestamps();
         });
     }
