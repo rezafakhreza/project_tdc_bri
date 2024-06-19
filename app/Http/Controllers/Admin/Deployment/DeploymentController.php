@@ -151,6 +151,7 @@ class DeploymentController extends Controller
         $id = $deployment->id;
         $module = $deployment->module;
         $serverType = $deployment->serverType;
+        $cmStatus = $deployment->cmStatus;
         $cmStatuses = DeploymentCMStatus::all();
         $modules = DeploymentModule::where('is_active', 1)->get();
         $serverTypes = DeploymentServerType::where('is_active', 1)->get();

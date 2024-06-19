@@ -137,11 +137,9 @@
                                     <label for="cm_status_id" class="block mb-2 text-sm font-bold text-gray-600">CM
                                         Status*</label>
                                     <select name="cm_status_id" id="cm_status_id"
-                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
-                                        required>
-                                        <option value="" disabled selected>Select CM Status</option>
+                                        class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" required>
                                         @foreach ($cmStatuses as $cmStatus)
-                                            <option value="{{ $cmStatus->id }}" {{ ($cmStatus->cm_status_name == $cmStatus->id) ? 'selected' : '' }}>
+                                            <option value="{{ $cmStatus->id }}" {{ ($deployment->cm_status_id == $cmStatus->id) ? 'selected' : '' }}>
                                                 {{ $cmStatus->cm_status_name }}
                                             </option>
                                         @endforeach

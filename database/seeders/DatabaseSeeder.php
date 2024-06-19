@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ModuleSeeder::class,
             ServerTypeSeeder::class,
             JobSeeder::class,
+            cmStatusSeeder::class,
         ]);
     }
 }
