@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Brisol\FoundationController;
 use App\Http\Controllers\Admin\UserManagement\IncidentsController as UsmanIncidentsController;
 use App\Http\Controllers\Admin\UserManagement\MonthlyTargetController as UsmanMonthlyTargetController;
 use App\Http\Controllers\Admin\UserManagement\BranchController as UsmanBranchController;
+use App\Http\Controllers\Admin\UserManagement\UsmanSAPController;
 
 
 use App\Http\Controllers\Front\Brisol\BrisolController as FrontBrisolController;
@@ -84,10 +85,12 @@ Route::middleware([
             Route::resource('incidents', UsmanIncidentsController::class)->middleware('permission:manage incidents user management');
             Route::resource('monthly-target', UsmanMonthlyTargetController::class)->middleware('permission:manage monthly target user management');
             Route::resource('branch', UsmanBranchController::class)->middleware('permission:manage branch user management');
+            Route::resource('sap', UsmanSAPController::class)->middleware('permission:manage sap user management');
 
             // only view branch user management and monthly target user management
             Route::get('/monthly-target', [UsmanMonthlyTargetController::class, 'index'])->name('monthly-target.index')->middleware('permission:view monthly target user management');
             Route::get('/branch', [UsmanBranchController::class, 'index'])->name('branch.index')->middleware('permission:view branch user management');
+            Route::get('/sap', [UsmanSAPController::class, 'index'])->name('sap.index')->middleware('permission:view sap user management');
         });
 
         Route::prefix('brisol')->name('brisol.')->group(function () {
@@ -106,5 +109,6 @@ Route::middleware([
         Route::post('/deployments/deployment/jabar', [DeploymentController::class, 'jabar'])->name('deployments.deployment.jabar');
         Route::delete('/brisol/incidents/destroyAll', [BrisolIncidentsController::class, 'destroyAll'])->name('brisol.incidents.destroyAll');
         Route::delete('/user-management/incidents/destroyAll', [UsmanIncidentsController::class, 'destroyAll'])->name('user-management.incidents.destroyAll');
+        Route::delete('/user-management/sap/destroyAll', [UsmanSAPController::class, 'destroyAll'])->name('user-management.sap.destroyAll');
     });
 });

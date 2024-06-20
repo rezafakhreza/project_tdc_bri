@@ -27,6 +27,7 @@ class RolePermissionSeeder extends Seeder
             'view incidents user management', 'manage incidents user management',
             'view monthly target user management', 'manage monthly target user management',
             'view branch user management', 'manage branch user management', 
+            'view sap user management', 'manage sap user management',
             'view incidents brisol', 'manage incidents brisol',
             'view monthly target brisol', 'manage monthly target brisol',
             'view foundation brisol', 'manage foundation brisol',
@@ -61,11 +62,11 @@ class RolePermissionSeeder extends Seeder
 
         // Admin User Management - can manage incidents and manage monthly target and (manage branch (masih forbidden))
         $adminUserManagementRole = Role::create(['name' => 'Admin Usman']);
-        $adminUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'manage monthly target user management', 'view monthly target user management', 'manage branch user management', 'view branch user management']);
+        $adminUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'manage monthly target user management', 'view monthly target user management', 'manage branch user management', 'view branch user management', 'view sap user management', 'manage sap user management']);
 
         // User User Management - can manage incidents and view monthly target and (view branch (masih forbidden))
         $userUserManagementRole = Role::create(['name' => 'User Usman']);
-        $userUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'view monthly target user management', 'view branch user management']);
+        $userUserManagementRole->givePermissionTo(['manage incidents user management', 'view incidents user management', 'view monthly target user management', 'view branch user management', 'view sap user management']);
 
         // Admin Brisol - can manage incidents, manage monthly target, manage foundation
         $adminBrisolRole = Role::create(['name' => 'Admin Brisol']);

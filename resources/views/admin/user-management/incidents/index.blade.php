@@ -26,6 +26,11 @@
                         Branch
                     </a>
 
+                    <a href="{{ route('admin.user-management.sap.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                        User SAP
+                    </a>
+
                     <a href="{{ route('admin.user-management.monthly-target.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Monthly Target
