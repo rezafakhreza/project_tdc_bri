@@ -20,17 +20,17 @@
             <div x-show="open" @click.away="open = false"
                 class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                    
+
                     <a href="{{ route('admin.user-management.branch.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Branch
                     </a>
-                    
+
                     <a href="{{ route('admin.user-management.monthly-target.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Monthly Target
                     </a>
-                    
+
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                         name: 'branch_name',
                         searchable: true,
                     },
-                    
+
                     {
                         data: 'kanwil_name',
                         name: 'kanwil_name',
@@ -146,6 +146,10 @@
                 ],
             });
 
+            $('#personalNumberFilter').on('keyup', function() {
+                datatable.columns(1).search(this.value).draw();
+            });
+
             function downloadTemplate() {
                 var templateUrl = '{{ asset('TemplateExcel/Template_User_Management.xlsx ') }}';
                 var link = document.createElement('a');
@@ -162,7 +166,11 @@
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <div class="flex justify-between mb-10">
                         <div class="dataTables_filter">
-                            <!-- Filter search akan muncul di sini -->
+                            <label for="personalNumberFilter" class="block text-sm font-medium text-gray-700">Search
+                                Personal Number:</label>
+                            <input type="text" id="personalNumberFilter"
+                                class="mt-1 block px-4 py-2 text-base border-gray-300 focus:outline-none focus:ring-darker-blue focus:border-darker-blue sm:text-sm rounded-md"
+                                placeholder="Search...">
                         </div>
 
                         <div class="button-container flex gap-4">
@@ -204,7 +212,7 @@
                                         Type</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Unit Kerja</th>
-                                    
+
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Kantor Wilayah</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
@@ -279,6 +287,7 @@
                 float: left;
                 text-align: left;
                 margin-top: -60px;
+                display: none;
             }
 
             .dataTables_wrapper .dataTables_length {
@@ -314,9 +323,20 @@
                 /* Atur radius lengkungan pada sudut kanan bawah */
             }
 
-            .button-container a {
+            .button-container a,
+            .button-container button {
                 position: relative;
                 z-index: 1;
+                width: 180px;
+                margin-top: 16px;
+                /* Adjust the width as needed */
+                height: 50px;
+                /* Adjust the height as needed */
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                /* Remove extra padding */
             }
 
             .pressed-button {

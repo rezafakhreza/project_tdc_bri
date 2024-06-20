@@ -36,7 +36,7 @@
                     <!-- Brisol Link - Visible to admin brisol and user brisol -->
                     @role('Super Admin|Admin Brisol|User Brisol')
                     <x-nav-link href="{{ route('admin.brisol.incidents.index') }}" :active="request()->routeIs('admin.brisol.*')">
-                        {{ __('Brisol') }}
+                        {{ __('Bri Solution') }}
                     </x-nav-link>
                     @endrole
 
