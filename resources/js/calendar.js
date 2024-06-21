@@ -9,41 +9,24 @@ const holidays = [
     // Tambahkan hari libur lainnya di sini
 ];
 
-// Array warna yang telah ditentukan sebelumnya
-const predefinedColors = [
-    "#435585",
-    "#CC9500",
-    "#3F0071",
-    "#005561",
-    "#571622",
-    "#007D57",
-    "#000000",
-    "#747687",
-    "#6D3500",
-    "#404040",
-    "#A26953",
-];
-
-// Fungsi untuk mendapatkan warna berdasarkan ID modul
-// Update the getColorForModule function to use color fetched from backend
-async function getColorForModule(moduleId) {
+async function getColorForModule(cmStatus) {
     try {
         const response = await fetch(`/api/deployments/events`); // Adjust API endpoint as per your route
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        return data.color;
+        // Find the color that matches the cmStatus value
+        const color = data.find(event => event.status_cm === cmStatus)?.color;
+        return color || '#fff'; // Return the color or a default color if not found
     } catch (error) {
         console.error('Error fetching color:', error);
-        // Fallback color if fetching fails
-        return data.color;
+        return '#fff'; // Return a default color if fetching fails
     }
 }
 
-
 // Fungsi bantuan untuk mengubah string menjadi hash code
-String.prototype.hashCode = function() {
+String.prototype.hashCode = function () {
     let hash = 0,
         i, chr;
     for (i = 0; i < this.length; i++) {
@@ -57,8 +40,6 @@ String.prototype.hashCode = function() {
 // Store module colors for events
 let moduleColors = {};
 
-// Update the legend showing the colors associated with different modules
-// Update the legend showing the colors associated with different modules
 function updateLegend() {
     const legendDiv = document.getElementById("calendarLegend");
     legendDiv.innerHTML = "";
@@ -68,26 +49,24 @@ function updateLegend() {
         colorBox.style.width = "20px";
         colorBox.style.height = "20px";
         colorBox.style.display = "inline-block";
-        colorBox.style.border = "none"; // Pastikan tidak ada border
-        colorBox.style.marginRight = "5px"; // Contoh pengaturan margin jika diperlukan
+        colorBox.style.border = "none";
+        colorBox.style.marginRight = "5px";
 
         const text = document.createElement("span");
         text.innerHTML = ` : ${cmStatus} &nbsp;`;
         legendDiv.appendChild(colorBox);
-        // legendDiv.appendChild(text);
+        legendDiv.appendChild(text);
     }
 }
 
-
-
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const calendarEl = document.getElementById("calendar");
 
-    // Initialize and render the full calendar
     const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin],
         events: "/api/deployments/events",
-        eventContent: function(arg) {
+
+        eventContent: function (arg) {
             const truncatedTitle = arg.event.title.substring(0, 20);
             const title = document.createElement("div");
             title.innerHTML =
@@ -114,16 +93,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
             return { domNodes: [title, module, serverType] };
         },
-        eventDidMount: async function(info) {
+        eventDidMount: async function (info) {
             info.el.style.cursor = "pointer";
             info.el.style.maxWidth = "100%";
             const cmStatus = info.event.extendedProps.status_cm;
             const color = await getColorForModule(cmStatus);
-            moduleColors[cmStatusy] = color;
+            moduleColors[cmStatus] = color;
             updateLegend();
             info.el.style.backgroundColor = color;
         },
-        eventClick: function(info) {
+
+        eventClick: function (info) {
             const modalTitle = document.getElementById("modalTitle");
             const modalBody = document.getElementById("modalBody");
             const modal = document.getElementById("eventInfoModal");
@@ -133,25 +113,25 @@ document.addEventListener("DOMContentLoaded", function() {
                 "id-ID", { year: "numeric", month: "long", day: "numeric" }
             );
             modalBody.innerHTML = `
-                <p><strong>Deploy:</strong> ${formattedDate}</p>
-                <p><strong>Module:</strong> ${info.event.extendedProps.module}</p>
-                <p><strong>Server :</strong> ${info.event.extendedProps.server_type}</p>
-                <p><strong>Status Doc:</strong> ${info.event.extendedProps.status_doc}</p>
-                <p><strong>Deskripsi Dokumen:</strong> ${info.event.extendedProps.document_description}</p>
-                <p><strong>Status CM:</strong> ${info.event.extendedProps.status_cm}</p>
-                <p><strong>Deskripsi CM:</strong> ${info.event.extendedProps.cm_description}</p>
-            `;
+                        <p><strong>Deploy:</strong> ${formattedDate}</p>
+                        <p><strong>Module:</strong> ${info.event.extendedProps.module}</p>
+                        <p><strong>Server :</strong> ${info.event.extendedProps.server_type}</p>
+                        <p><strong>Status Doc:</strong> ${info.event.extendedProps.status_doc}</p>
+                        <p><strong>Deskripsi Dokumen:</strong> ${info.event.extendedProps.document_description}</p>
+                        <p><strong>Status CM:</strong> ${info.event.extendedProps.status_cm}</p>
+                        <p><strong>Deskripsi CM:</strong> ${info.event.extendedProps.cm_description}</p>
+                    `;
             modal.classList.remove("hidden");
             modal.classList.add("flex");
 
             document
                 .getElementById("modalCloseButton")
-                .addEventListener("click", function() {
+                .addEventListener("click", function () {
                     modal.classList.add("hidden");
                     modal.classList.remove("flex");
                 });
         },
-        dayCellDidMount: function(info) {
+        dayCellDidMount: function (info) {
             const dateStr = info.date.toISOString().split('T')[0];
             const dayIndex = info.date.getDay();
             if (dayIndex === 0 || dayIndex === 6 || holidays.includes(dateStr)) {
@@ -162,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document
         .getElementById("calendarFilterForm")
-        .addEventListener("submit", function(e) {
+        .addEventListener("submit", function (e) {
             e.preventDefault();
             const month = parseInt(document.getElementById("month").value, 10);
             const year = parseInt(document.getElementById("year").value, 10);
@@ -171,4 +151,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
     calendar.render();
+
 });
+
+
+

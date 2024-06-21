@@ -60,8 +60,7 @@
                     {
                         data: 'colour',
                         name: 'colour',
-                        
-                        //isian blom
+                    
                     },
                     {
                         data: 'action',
@@ -147,7 +146,7 @@
                                         CM Status Name</th>
                                     <th
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
-                                        Colour</th>
+                                        Color</th>
                                     <th style="max-width: 1%"
                                         class="px-6 py-3 bg-darker-blue text-left text-xs font-medium text-white dark:text-gray-400 uppercase tracking-wider">
                                         Action</th>

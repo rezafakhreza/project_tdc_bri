@@ -52,8 +52,9 @@ class DeploymentController extends Controller
                 'status_doc' => $deployment->document_status,
                 'document_description' => $deployment->document_description,
                 'status_cm' => $deployment->cmStatus->cm_status_name,
-                'cm_description' => $deployment->cm_description,
                 'color' =>  $deployment->cmStatus->colour,
+                'cm_description' => $deployment->cm_description,
+                
             ];
 
             

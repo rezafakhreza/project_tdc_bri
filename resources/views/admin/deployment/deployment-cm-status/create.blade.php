@@ -52,7 +52,7 @@
                         <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                                 for="colour">
-                                Warna*
+                                Color*
                             </label>
                             <div class="flex items-center">
                                 <input value="{{ old('colour') }}" name="colour"
