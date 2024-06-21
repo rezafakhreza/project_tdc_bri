@@ -1,5 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Admin</x-slot>
+    <x-slot name="shortcut icon"></x-slot>
     <x-slot name="header">
         <div x-data="{ open: false }" class="relative inline-block text-left font-poppins">
             <div>

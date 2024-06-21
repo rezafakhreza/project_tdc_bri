@@ -1,8 +1,5 @@
 @extends('layouts.homepage')
 
-@section('title')
-    <title>Top 5 Kanwil</title>
-@endsection
 
 @section('content')
     <div class="p-10 mx-auto my-10 rounded-lg shadow-lg" style="background-color: white; border: 1px solid #d9d9d9;">

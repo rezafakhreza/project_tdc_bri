@@ -1,5 +1,9 @@
 @extends('layouts.homepage')
 
+@section('title')
+    <title>Target Realization</title>
+@endsection
+
 @section('content')
     <div class="flex justify-center" style="margin-top: 50px">
         <h1 class="mb-4 text-5xl font-bold sm:text-4xl" style="color: #152C5B"><span class="text-blue-800">TDC</span>

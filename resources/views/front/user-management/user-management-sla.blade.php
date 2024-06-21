@@ -1,9 +1,5 @@
 @extends('layouts.homepage')
 
-@section('title')
-    <title>SLA Monthly Report</title>
-@endsection
-
 @section('content')
     <div class="p-10 mx-auto my-10 rounded-lg shadow-lg " style="background-color: white; border: 1px solid #d9d9d9;">
         <h1 class="mb-4 text-4xl font-bold sm:text-4xl" style="color: #152C5B">User Management</h1>
