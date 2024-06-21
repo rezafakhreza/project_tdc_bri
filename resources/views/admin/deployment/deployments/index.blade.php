@@ -187,7 +187,7 @@
                                         Date</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Document Status</th>
-                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">CM
+                                    <th style="width: 12%" class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">CM
                                         Status</th>
                                     <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
                                         Updated At</th>
@@ -215,14 +215,14 @@
         }
 
         .dataTables_wrapper {
-            margin-top: 40px;
+            margin-top: -80px;
         }
 
         .dataTables_wrapper .dataTables_filter {
             float: left;
             text-align: left;
             margin-bottom: 30px;
-            display: none;
+            /* display: none; */
         }
 
         .dataTables_wrapper .dataTables_length {

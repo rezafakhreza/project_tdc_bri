@@ -4,11 +4,12 @@ namespace App\Imports\UserManagement;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Models\UserManagement\UsmanSAP;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserSAPImport implements ToCollection, WithHeadingRow
-
+class UserSAPImport implements ToCollection, WithHeadingRow, WithChunkReading, ShouldQueue
 {
     /**
     * @param Collection $collection
@@ -32,9 +33,13 @@ class UserSAPImport implements ToCollection, WithHeadingRow
         }
     }
 
+    public function chunkSize(): int
+    {
+        return 20000;
+    }
+
     private function modelArray(array $row)
     {
-
         return [
             'user_pn' => $row['user_pn'],
             'creation_date' => $this->convertExcelDate($row['creation_date']),

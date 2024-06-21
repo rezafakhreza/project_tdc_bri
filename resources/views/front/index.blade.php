@@ -10,6 +10,8 @@
 
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+
+    <title>HALO</title>
 </head>
 
 <body>
