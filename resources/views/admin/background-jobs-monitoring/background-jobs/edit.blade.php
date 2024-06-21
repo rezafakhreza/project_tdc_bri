@@ -36,7 +36,7 @@
                 <div>
                     <!-- Type Dropdown -->
                     <div class="mb-4">
-                        <label for="type" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Module*</label>
+                        <label for="type" class="block mb-2 text-sm font-bold text-gray-600">Module*</label>
                         <select name="type"
                             class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                             id="type" required>
@@ -51,7 +51,7 @@
 
                     <!-- Process Dropdown -->
                     <div class="mb-4">
-                        <label for="process_id" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Job Name*</label>
+                        <label for="process_id" class="block mb-2 text-sm font-bold text-gray-600">Job Name*</label>
                         <select name="process_id" id="process_id" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" required>
                             @foreach($processes as $process)
                                 <option value="{{ $process->id }}" {{ ($job->process_id == $process->id) ? 'selected' : '' }}>
@@ -67,7 +67,7 @@
 
                     <!-- Data Amount to EIM -->
                     <div class="mb-4">
-                        <label for="data_amount_to_EIM" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Data Amount to EIM*</label>
+                        <label for="data_amount_to_EIM" class="block mb-2 text-sm font-bold text-gray-600">Data Amount to EIM*</label>
                         <input value="{{ old('data_amount_to_EIM', $job->data_amount_to_EIM) }}" name="data_amount_to_EIM"
                           class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                           id="data_amount_to_EIM" type="number" placeholder="Data Amount to EIM" required>
@@ -78,7 +78,7 @@
 
                      <!-- Data Amount to S4GL -->
                     <div class="mb-4">
-                        <label for="data_amount_to_S4GL" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Data Amount to S4GL*</label>
+                        <label for="data_amount_to_S4GL" class="block mb-2 text-sm font-bold text-gray-600">Data Amount to S4GL*</label>
                         <input value="{{ old('data_amount_to_S4GL', $job->data_amount_to_S4GL) }}" name="data_amount_to_S4GL"
                           class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                           id="data_amount_to_S4GL" type="number" placeholder="Data Amount to S4GL" required>
@@ -94,7 +94,7 @@
                 <div>
                     <!-- Duration -->
                     <div class="mb-4">
-                        <label for="duration_to_EIM" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Duration To EIM*</label>
+                        <label for="duration_to_EIM" class="block mb-2 text-sm font-bold text-gray-600">Duration To EIM*</label>
                         <input value="{{ old('duration_to_EIM', $job->duration_to_EIM) }}" name="duration_to_EIM"
                           class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                           id="duration_to_EIM" type="number" placeholder="Duration_to_EIM" required>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="mb-4">
-                        <label for="duration_to_S4GL" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Duration To S4GL*</label>
+                        <label for="duration_to_S4GL" class="block mb-2 text-sm font-bold text-gray-600">Duration To S4GL*</label>
                         <input value="{{ old('duration_to_S4GL', $job->duration_to_S4GL) }}" name="duration_to_S4GL"
                           class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                           id="duration_to_S4GL" type="number" placeholder="Duration_to_S4GL" required>
@@ -114,7 +114,7 @@
 
                     <!-- Status Dropdown -->
                     <div class="mb-4">
-                        <label for="status" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Status*</label>
+                        <label for="status" class="block mb-2 text-sm font-bold text-gray-600">Status*</label>
                         <select name="status"
                               class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                               id="status" required>
@@ -131,7 +131,7 @@
 
                     <!-- Notes -->
                     <div class="mb-4">
-                        <label for="notes" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Notes</label>
+                        <label for="notes" class="block mb-2 text-sm font-bold text-gray-600">Notes</label>
                         <textarea id="notes"
                                 name="notes"
                                 placeholder="Notes"
@@ -146,7 +146,7 @@
 
                     <!-- Execution Date -->
                     <div class="mb-4">
-                        <label for="execution_date" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Monitoring Date*</label>
+                        <label for="execution_date" class="block mb-2 text-sm font-bold text-gray-600">Monitoring Date*</label>
                         <input value="{{ old('execution_date', $job->execution_date) }}" name="execution_date"
                           class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                           id="execution_date" type="date" placeholder="Execution Date" required>

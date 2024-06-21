@@ -3,7 +3,11 @@
 
 <head>
     <title>Dashboard TDC</title>
-    <link rel="shortcut icon" type="image/png/jpg" href="img/logotdc.png">
+    <!-- <link rel="shortcut icon" type="image/png" href="img/logotdc.png"> -->
+
+    <!-- <link rel="icon" href="{{ asset('img/logotdc.png') }}" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="{{ asset('img/logotdc.png') }}" type="image/png">
+
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">

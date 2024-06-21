@@ -35,7 +35,7 @@
                     @method('put')
                     <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
                         <div class="w-full">
-                            <label class="block mt-4 mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                            <label class="block mt-4 mb-2 text-sm font-bold tracking-wide text-gray-700"
                                 for="cm_status_name">
                                 CM Status Name*
                             </label>
@@ -51,7 +51,7 @@
 
                     <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
                         <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                            <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700"
                                 for="colour">
                                 Color*
                             </label>

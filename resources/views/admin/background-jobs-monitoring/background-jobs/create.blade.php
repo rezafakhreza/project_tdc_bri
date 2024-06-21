@@ -40,7 +40,7 @@
                             <!-- Type Dropdown -->
                             <div class="mb-4">
                                 <label for="type"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Type*</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600">Type*</label>
                                 <select id="type" name="type"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                     required>
@@ -55,8 +55,7 @@
 
                             <!-- Process Dropdown -->
                             <div class="mb-4">
-                                <label for="process_id" class="block mb-2 text-sm font-bold text-gray-600 uppercase">Job
-                                    Name*</label>
+                                <label for="process_id" class="block mb-2 text-sm font-bold text-gray-600">Job Name*</label>
                                 <select id="process_id" name="process_id"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                     required>
@@ -71,8 +70,7 @@
                             <!-- Data Amount to EIM -->
                             <div class="mb-4">
                                 <label for="data_amount_to_EIM"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Data Amount to
-                                    EIM*</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600">Data Amount to EIM*</label>
                                 <input type="number" id="data_amount_to_EIM" name="data_amount_to_EIM"
                                     value="{{ old('data_amount_to_EIM') }}" placeholder="Data Amount to EIM"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
@@ -85,8 +83,7 @@
                             <!-- Data Amount to S4GL -->
                             <div class="mb-4">
                                 <label for="data_amount_to_S4GL"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Data Amount to
-                                    S4GL*</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600">Data Amount to S4GL*</label>
                                 <input type="number" id="data_amount_to_S4GL" name="data_amount_to_S4GL"
                                     value="{{ old('data_amount_to_S4GL') }}" placeholder="Data Amount to S4GL"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
@@ -103,7 +100,7 @@
                             <!-- Duration -->
                             <div class="mb-4">
                                 <label for="duration_to_EIM"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Duration to EIM</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600">Duration to EIM*</label>
                                 <input type="number" id="duration_to_EIM" name="duration_to_EIM"
                                     value="{{ old('duration_to_EIM') }}" placeholder="Duration To EIM"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
@@ -114,8 +111,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="duration_to_S4GL"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Duration to
-                                    S4GL</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600">Duration to S4GL*</label>
                                 <input type="number" id="duration_to_S4GL" name="duration_to_S4GL"
                                     value="{{ old('duration_to_S4GL') }}" placeholder="Duration To S4GL"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
@@ -128,7 +124,7 @@
                             <!-- Status Dropdown -->
                             <div class="mb-4">
                                 <label for="status"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Status*</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600">Status*</label>
                                 <select id="status" name="status"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                     required>
@@ -152,7 +148,7 @@
                             <!-- Notes -->
                             <div class="mb-4">
                                 <label for="notes"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Notes</label>
+                                    class="block mb-2 text-sm font-bold text-gray-600 ">Notes</label>
                                 <textarea id="notes" name="notes" placeholder="Notes"
                                     class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500">{{ old('notes') }}</textarea>
                                 <div class="mt-2 text-sm text-gray-500">
@@ -163,7 +159,7 @@
                             <!-- Execution Date -->
                             <div class="mb-4">
                                 <label for="execution_date"
-                                    class="block mb-2 text-sm font-bold text-gray-600 uppercase">Monitoring
+                                    class="block mb-2 text-sm font-bold text-gray-600 ">Monitoring
                                     Date*</label>
                                 <input type="date" id="execution_date" name="execution_date"
                                     value="{{ old('execution_date', date('Y-m-d')) }}" placeholder="YYYY-MM-DD"

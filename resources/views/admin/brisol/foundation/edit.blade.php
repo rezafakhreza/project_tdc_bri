@@ -37,7 +37,7 @@
                             <div>
 
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="buss_service">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="buss_service">
                                         Business Service*
                                     </label>
                                     <select name="buss_service" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="buss_service" required>
@@ -48,7 +48,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="level_uker">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="level_uker">
                                         Product Categorization Tier 1*
                                     </label>
                                     <select name="prd_tier1" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="prd_tier1" required>
@@ -58,7 +58,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="prd_tier2">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="prd_tier2">
                                         Product Categorization Tier 2*
                                     </label>
                                     <select name="prd_tier2" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="prd_tier2" required>
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="prd_tier3">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="prd_tier3">
                                         Product Categorization Tier 3*
                                     </label>
                                     <select name="prd_tier3" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white" id="prd_tier3" required>
@@ -92,7 +92,7 @@
 
                             <div>
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="op_tier1">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="op_tier1">
                                     Operational Categorization Tier 1*
                                     </label>
                                     <input value="{{ old('op_tier1') ?? $foundation->op_tier1 }}" name="op_tier1" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="op_tier1" type="text" placeholder="">
@@ -103,7 +103,7 @@
 
                                 <div class="mb-4">
 
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="op_tier2">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="op_tier2">
                                     Operational Categorization Tier 2*
                                     </label>
                                     <input value="{{ old('op_tier2') ?? $foundation->op_tier2 }}" name="op_tier2" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="op_tier2" type="text" placeholder="">
@@ -113,7 +113,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="op_tier3">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="op_tier3">
                                     Operational Categorization Tier 3*
                                     </label>
                                     <input value="{{ old('op_tier3') ?? $foundation->op_tier3 }}" name="op_tier3" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="op_tier3" type="text" placeholder="">
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="resolution_category">
+                                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="resolution_category">
                                     Resolution Categorization*
                                     </label>
                                     <input value="{{ old('resolution_category') ?? $foundation->resolution_category }}" name="resolution_category" class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500" id="resolution_category" type="text" placeholder="">

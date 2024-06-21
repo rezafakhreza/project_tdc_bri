@@ -33,7 +33,7 @@
 
         <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
             <div class="w-full">
-                <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="process_type">
+                <label class="block mb-2 text-sm font-bold tracking-wide text-gray-600" for="process_type">
                     Module Type*
                 </label>
                 <select name="type"
@@ -50,7 +50,7 @@
         </div>
           <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
             <div class="w-full">
-              <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="process_name">
+              <label class="block mb-2 text-sm font-bold tracking-wide text-gray-600" for="process_name">
                 Module Name*
               </label>
               <input value="{{ old('name') }}" name="name"
@@ -63,7 +63,7 @@
           </div>
             <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
                 <div class="w-full">
-                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="is_active">
+                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-600" for="is_active">
                         Status*
                     </label>
                     <select name="is_active" id="is_active"

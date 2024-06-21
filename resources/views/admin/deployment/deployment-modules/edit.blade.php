@@ -36,7 +36,7 @@
 
             <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
               <div class="w-full">
-                <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="module_name">
+                <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="module_name">
                   Module Name
                 </label>
                 <input value="{{ old('name') ?? $deploymentModule->name }}" name="name"
@@ -49,7 +49,7 @@
             </div>
             <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
                 <div class="w-full">
-                    <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="is_active">
+                    <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="is_active">
                         Status*
                     </label>
                     <select name="is_active" id="is_active"

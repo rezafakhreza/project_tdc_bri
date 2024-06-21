@@ -3,7 +3,7 @@
 
 <head>
     <title>Dashboard TDC</title>
-    <link rel="shortcut icon" type="image/png/jpg" href="img/logotdc.png">
+    <!-- <link rel="shortcut icon" type="image/png/jpg" href="img/logotdc.png"> -->
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">

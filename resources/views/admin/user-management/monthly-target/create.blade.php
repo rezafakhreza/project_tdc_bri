@@ -34,7 +34,7 @@
 
                     <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
                         <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="module_name">
+                            <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="module_name">
                                 Month
                             </label>
                             <?php
@@ -47,7 +47,7 @@
 
                         </div>
                         <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="module_name">
+                            <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="module_name">
                                 Year
                             </label>
                             <?php
@@ -60,7 +60,7 @@
                             </select>
                         </div>
                         <div class="w-full">
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="module_name">
+                            <label class="block mb-2 text-sm font-bold tracking-wide text-gray-700" for="module_name">
                                 Target
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 border border-gray-200 rounded shadow-sm focus:outline-none focus:bg-white focus:border-gray-500" id="monthly_target_value" name="monthly_target_value" type="number" placeholder="Target" step="0.01" min="0" max="999.99" required>

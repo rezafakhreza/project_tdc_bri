@@ -30,7 +30,7 @@
                                 <!-- Title -->
                                 <div class="mb-4">
                                     <label for="title"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Title:</label>
+                                        class="block mb-2 text-sm font-bold text-gray-600">Title*</label>
                                     <input type="text" id="title" name="title"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         value="{{ old('title', $deployment->title) }}" required>
@@ -43,7 +43,7 @@
                                 <!-- Deploy Date -->
                                 <div class="mb-4">
                                     <label for="deploy_date" class="block mb-2 text-sm font-bold text-gray-600">Deploy
-                                        Date:</label>
+                                        Date*</label>
                                     <input type="date" id="deploy_date" name="deploy_date"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         value="{{ old('deploy_date', $deployment->deploy_date) }}" required>
@@ -52,7 +52,7 @@
                                 <!-- Module ID Dropdown -->
                                 <div class="mb-4">
                                     <label for="module_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Module:</label>
+                                        class="block mb-2 text-sm font-bold text-gray-600">Module*</label>
                                     <select id="module_id" name="module_id[]" multiple="multiple"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         required>
@@ -76,7 +76,7 @@
                                 <!-- Server Type ID Dropdown -->
                                 <div class="mb-4">
                                     <label for="server_type_id"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Server Type:</label>
+                                        class="block mb-2 text-sm font-bold text-gray-600">Server Type*</label>
                                     <select id="server_type_id" name="server_type_id[]" multiple="multiple"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         required>
@@ -104,7 +104,7 @@
                                 <div class="mb-4">
                                     <label for="document_status"
                                         class="block mb-2 text-sm font-bold text-gray-600">Document
-                                        Status:</label>
+                                        Status*</label>
                                     <select id="document_status" name="document_status"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         required>
@@ -126,7 +126,7 @@
                                 <!-- Document Description -->
                                 <div class="mb-4">
                                     <label for="document_description"
-                                        class="block mb-2 text-sm font-bold text-gray-600">Document Description:</label>
+                                        class="block mb-2 text-sm font-bold text-gray-600">Document Description*</label>
                                     <textarea id="document_description" name="document_description" rows="4"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         required>{{ old('document_description', $deployment->document_description) }}</textarea>
@@ -149,7 +149,7 @@
                                 <!-- CM Description -->
                                 <div class="mb-4">
                                     <label for="cm_description" class="block mb-2 text-sm font-bold text-gray-600">CM
-                                        Description:</label>
+                                        Description*</label>
                                     <textarea id="cm_description" name="cm_description" rows="4"
                                         class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                                         required>{{ old('cm_description', $deployment->cm_description) }}</textarea>
