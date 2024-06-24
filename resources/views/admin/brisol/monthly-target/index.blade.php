@@ -17,9 +17,9 @@
             </div>
 
             <div x-show="open" @click.away="open = false"
-                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-                    
+
                     <a href="{{ route('admin.brisol.incidents.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         BRISolution
@@ -28,7 +28,7 @@
                     <a href="{{ route('admin.brisol.foundation.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
                         Foundation
-                    </a>                    
+                    </a>
                 </div>
             </div>
         </div>
@@ -143,10 +143,15 @@
                         <table id="dataTable" class="font-poppins font-medium text-sm rounded-table">
                             <thead>
                                 <tr>
-                                    <th  class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">Month</th>
-                                    <th  class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">Year</th>
-                                    <th  class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">Target</th>
-                                    <th style="max-width: 1%"  class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">Action</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Month</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Year</th>
+                                    <th class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Target</th>
+                                    <th style="max-width: 1%"
+                                        class="bg-darker-blue text-white uppercase tracking-wider text-left text-xs">
+                                        Action</th>
                                 </tr>
                             </thead>
 

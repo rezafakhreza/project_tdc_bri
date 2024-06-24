@@ -17,7 +17,7 @@
             </div>
 
             <div x-show="open" @click.away="open = false"
-                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+                class="absolute left-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
                     <a href="{{ route('admin.background-jobs-monitoring.jobs.index') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
