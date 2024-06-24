@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\Importable;
 use App\Models\UserManagement\Branch;
-use Illuminate\Support\Facades\Log;
 
 class IncidentsImport implements ToCollection, WithHeadingRow
 {
@@ -95,7 +94,7 @@ class IncidentsImport implements ToCollection, WithHeadingRow
         return null;
     }
 
-    private function extractBranchCode($detailedDescription)
+    public function extractBranchCode($detailedDescription)
     {
         // Ekstrak kode cabang dari detailed_description
         if (preg_match('/Code Branch:\s*(\d{4})/', $detailedDescription, $matches)) {
