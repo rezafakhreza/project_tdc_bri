@@ -105,9 +105,14 @@ class IncidentsImport implements ToCollection, WithHeadingRow
 
     private function getBranchIdByCode($branchCode)
     {
+
+        if ($branchCode === null) {
+            return '0000';
+        }
+
         // Dapatkan branch_id berdasarkan kode cabang
         $branch = Branch::where('branch_code', $branchCode)->first();
-        return $branch ? $branch->branch_code : null;
+        return $branch ? $branch->branch_code : '0000';
     }
 
     /**

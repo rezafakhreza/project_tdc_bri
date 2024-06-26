@@ -110,7 +110,7 @@ class IncidentsController extends Controller
 
                 // Jika kode UKER tidak ada di database, tambahkan ke array missingBranchCodes
                 if (!in_array($trimmedKodeUker, $branchCodes)) {
-                    $missingBranchCodes[] = $trimmedKodeUker;
+                    $trimmedKodeUker = '0000';
                 }
             }
 
