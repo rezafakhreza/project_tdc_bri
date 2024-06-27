@@ -114,11 +114,11 @@ class IncidentsController extends Controller
                 }
             }
 
-            if (!empty($missingBranchCodes)) {
-                unlink($filePath);
-                $errorMessage = 'Masukkan Kode Branch berikut terlebih dahulu dalam User Management : ' . implode(', ', $missingBranchCodes);
-                return redirect()->back()->withErrors(['file' => $errorMessage]);
-            }
+            // if (!empty($missingBranchCodes)) {
+            //     unlink($filePath);
+            //     $errorMessage = 'Masukkan Kode Branch berikut terlebih dahulu dalam User Management : ' . implode(', ', $missingBranchCodes);
+            //     return redirect()->back()->withErrors(['file' => $errorMessage]);
+            // }
         } else {
             // Jika tidak ada data branch, kembalikan dengan pesan error
             return redirect()->back()->withErrors(['file' => 'Tidak ada data Branch tersedia. Masukkan data Branch terlebih dahulu']);
